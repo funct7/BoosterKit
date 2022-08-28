@@ -14,6 +14,7 @@
 		0375116E28BC27820060D304 /* ToastController.AnimParams.SetUp+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375116D28BC27820060D304 /* ToastController.AnimParams.SetUp+Default.swift */; };
 		0375117028BC27CC0060D304 /* ToastController.AnimParams.Animation+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375116F28BC27CC0060D304 /* ToastController.AnimParams.Animation+Default.swift */; };
 		0375117228BC27F80060D304 /* ToastController.AnimParams.TearDown+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375117128BC27F80060D304 /* ToastController.AnimParams.TearDown+Default.swift */; };
+		0375117428BC29CC0060D304 /* ToastController.AnimParams+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375117328BC29CC0060D304 /* ToastController.AnimParams+Default.swift */; };
 		03A0FB4928BB25DD00B8D064 /* BoosterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A0FB3F28BB25DD00B8D064 /* BoosterKit.framework */; };
 		03A0FB4E28BB25DD00B8D064 /* BoosterKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB4D28BB25DD00B8D064 /* BoosterKitTests.swift */; };
 		03A0FB5028BB25DD00B8D064 /* BoosterKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 03A0FB4228BB25DD00B8D064 /* BoosterKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -39,6 +40,7 @@
 		0375116D28BC27820060D304 /* ToastController.AnimParams.SetUp+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToastController.AnimParams.SetUp+Default.swift"; sourceTree = "<group>"; };
 		0375116F28BC27CC0060D304 /* ToastController.AnimParams.Animation+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToastController.AnimParams.Animation+Default.swift"; sourceTree = "<group>"; };
 		0375117128BC27F80060D304 /* ToastController.AnimParams.TearDown+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToastController.AnimParams.TearDown+Default.swift"; sourceTree = "<group>"; };
+		0375117328BC29CC0060D304 /* ToastController.AnimParams+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToastController.AnimParams+Default.swift"; sourceTree = "<group>"; };
 		03A0FB3F28BB25DD00B8D064 /* BoosterKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BoosterKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		03A0FB4228BB25DD00B8D064 /* BoosterKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BoosterKit.h; sourceTree = "<group>"; };
 		03A0FB4328BB25DD00B8D064 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				0375116F28BC27CC0060D304 /* ToastController.AnimParams.Animation+Default.swift */,
 				0375116D28BC27820060D304 /* ToastController.AnimParams.SetUp+Default.swift */,
 				0375117128BC27F80060D304 /* ToastController.AnimParams.TearDown+Default.swift */,
+				0375117328BC29CC0060D304 /* ToastController.AnimParams+Default.swift */,
 				0375116B28BC26A70060D304 /* ToastController.swift */,
 			);
 			path = Toast;
@@ -259,6 +262,7 @@
 				0375116328BC23FE0060D304 /* Combinator+Transform.swift in Sources */,
 				0375116928BC26250060D304 /* CubicBezierPoint+Default.swift in Sources */,
 				0375115C28BC231D0060D304 /* CubicBezierPoint.swift in Sources */,
+				0375117428BC29CC0060D304 /* ToastController.AnimParams+Default.swift in Sources */,
 				0375116C28BC26A70060D304 /* ToastController.swift in Sources */,
 				0375117228BC27F80060D304 /* ToastController.AnimParams.TearDown+Default.swift in Sources */,
 				03A0FB5B28BB264400B8D064 /* Scoped.swift in Sources */,

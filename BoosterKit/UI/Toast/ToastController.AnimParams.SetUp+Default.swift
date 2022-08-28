@@ -12,7 +12,7 @@ public extension ToastController.AnimParams {
     enum SetUps {
         
         static func makeDefault(_ otherSetUp: SetUp? = nil) -> SetUp {
-            makeInset(hInset: 16.0, bottomInset: 8.0, makeAlpha(otherSetUp))
+            makeInset(makeAlpha(otherSetUp))
         }
         
         static func makeInset(
@@ -35,11 +35,19 @@ public extension ToastController.AnimParams {
             }
         }
         
-        static func makeAlpha(value: CGFloat = 0.0, _ otherSetUp: SetUp? = nil) -> SetUp {
+        static func makeInset(_ otherSetUp: SetUp? = nil) -> SetUp {
+            makeInset(hInset: 16.0, bottomInset: 8.0, otherSetUp)
+        }
+        
+        static func makeAlpha(value: CGFloat, _ otherSetUp: SetUp? = nil) -> SetUp {
             return {
                 $1.alpha = value
                 otherSetUp?($0, $1)
             }
+        }
+        
+        static func makeAlpha(_ otherSetUp: SetUp? = nil) -> SetUp {
+            makeAlpha(value: 0.0, otherSetUp)
         }
         
     }
