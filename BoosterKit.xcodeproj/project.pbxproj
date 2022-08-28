@@ -110,6 +110,7 @@
 		03A0FB5928BB263600B8D064 /* Function */ = {
 			isa = PBXGroup;
 			children = (
+				0375116228BC23FE0060D304 /* Combinator+Transform.swift */,
 				03A0FB5A28BB264400B8D064 /* Scoped.swift */,
 			);
 			path = Function;
