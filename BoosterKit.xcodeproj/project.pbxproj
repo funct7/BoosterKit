@@ -10,6 +10,7 @@
 		03A0FB4928BB25DD00B8D064 /* BoosterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A0FB3F28BB25DD00B8D064 /* BoosterKit.framework */; };
 		03A0FB4E28BB25DD00B8D064 /* BoosterKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB4D28BB25DD00B8D064 /* BoosterKitTests.swift */; };
 		03A0FB5028BB25DD00B8D064 /* BoosterKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 03A0FB4228BB25DD00B8D064 /* BoosterKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		03A0FB5B28BB264400B8D064 /* Scoped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB5A28BB264400B8D064 /* Scoped.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		03A0FB4828BB25DD00B8D064 /* BoosterKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoosterKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		03A0FB4D28BB25DD00B8D064 /* BoosterKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoosterKitTests.swift; sourceTree = "<group>"; };
 		03A0FB4F28BB25DD00B8D064 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03A0FB5A28BB264400B8D064 /* Scoped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoped.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 		03A0FB4128BB25DD00B8D064 /* BoosterKit */ = {
 			isa = PBXGroup;
 			children = (
+				03A0FB5928BB263600B8D064 /* Function */,
 				03A0FB4228BB25DD00B8D064 /* BoosterKit.h */,
 				03A0FB4328BB25DD00B8D064 /* Info.plist */,
 			);
@@ -84,6 +87,14 @@
 				03A0FB4F28BB25DD00B8D064 /* Info.plist */,
 			);
 			path = BoosterKitTests;
+			sourceTree = "<group>";
+		};
+		03A0FB5928BB263600B8D064 /* Function */ = {
+			isa = PBXGroup;
+			children = (
+				03A0FB5A28BB264400B8D064 /* Scoped.swift */,
+			);
+			path = Function;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,6 +158,7 @@
 				TargetAttributes = {
 					03A0FB3E28BB25DD00B8D064 = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1250;
 					};
 					03A0FB4728BB25DD00B8D064 = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -194,6 +206,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03A0FB5B28BB264400B8D064 /* Scoped.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +354,7 @@
 		03A0FB5428BB25DD00B8D064 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 78S7RATURK;
@@ -357,6 +371,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.funct7.BoosterKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -365,6 +380,7 @@
 		03A0FB5528BB25DD00B8D064 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 78S7RATURK;
@@ -389,6 +405,7 @@
 		03A0FB5728BB25DD00B8D064 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 78S7RATURK;
 				INFOPLIST_FILE = BoosterKitTests/Info.plist;
@@ -407,6 +424,7 @@
 		03A0FB5828BB25DD00B8D064 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 78S7RATURK;
 				INFOPLIST_FILE = BoosterKitTests/Info.plist;
