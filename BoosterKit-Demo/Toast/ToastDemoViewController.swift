@@ -15,10 +15,7 @@ class ToastDemoViewController: UIViewController {
     private lazy var _toastController = ToastController<ImageTextView>(
         nib: UINib(nibName: "Toast", bundle: .main),
         params: AnimParams(
-            setUp: AnimParams.SetUps.makeDefault {
-                $0.layoutIfNeeded()
-                $1.layer.cornerRadius = $1.frame.height * 0.5
-            },
+            setUp: AnimParams.SetUps.makeDefault(AnimParams.SetUps.makeRounded()),
             animation: AnimParams.Animations.makeAlpha(),
             tearDown: AnimParams.TearDowns.makeDefault()))
 

@@ -11,9 +11,13 @@ public extension ToastController.AnimParams {
     
     enum SetUps {
         
+        // MARK: Default
+        
         static public func makeDefault(_ otherSetUp: SetUp? = nil) -> SetUp {
             makeSafeAreaInset(makeAlpha(otherSetUp))
         }
+        
+        // MARK: Inset
         
         static public func makeSafeAreaInset(
             hInset: CGFloat,
@@ -63,6 +67,8 @@ public extension ToastController.AnimParams {
             makeInset(hInset: 16.0, bottomInset: 8.0, otherSetUp)
         }
         
+        // MARK: Alpha
+        
         static public func makeAlpha(value: CGFloat, _ otherSetUp: SetUp? = nil) -> SetUp {
             return {
                 $1.alpha = value
@@ -72,6 +78,28 @@ public extension ToastController.AnimParams {
         
         static public func makeAlpha(_ otherSetUp: SetUp? = nil) -> SetUp {
             makeAlpha(value: 0.0, otherSetUp)
+        }
+        
+        // MARK: Corner Radius
+        
+        static public func makeCornerRadius(value: CGFloat, _ otherSetUp: SetUp? = nil) -> SetUp {
+            return {
+                $1.layer.cornerRadius = value
+                otherSetUp?($0, $1)
+            }
+        }
+        
+        /**
+         - Note: This function may not work properly if the toast view is not in the view hierarchy of `canvas`,
+            Also, this function calls `layoutIfNeeded` on the superview of the toast view at the time of calling.
+            Unintended layout changes may occur.
+         */
+        static public func makeRounded(_ otherSetUp: SetUp? = nil) -> SetUp {
+            return {
+                $1.superview?.layoutIfNeeded()
+                $1.layer.cornerRadius = $1.frame.height * 0.5
+                otherSetUp?($0, $1)
+            }
         }
         
     }
