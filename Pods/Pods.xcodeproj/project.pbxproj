@@ -7,28 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2D5140207B5159C8BBABD3559A48279E /* StringRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2496CE8E2200C2D2DE0341A2D5E764E /* StringRenderer.swift */; };
-		2E2CC23D6D313DECCFA01728CB00DE39 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		309F0170C97E46E6483702612BCD2AF3 /* BoosterKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 231DD308B0613DC98CAB25163E2F341D /* BoosterKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		32772859D558D298C07ECD5F3F4F0DED /* Scoped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3035AF195FEFEEC844C484842168044C /* Scoped.swift */; };
-		591153DBA3575E673CF5B400D900EDFB /* ToastController.AnimParams+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D70DFB239B07B068743A96E9A12327 /* ToastController.AnimParams+Default.swift */; };
-		59ECF227A67122FD10C2D0A27B32FE0F /* BoosterKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DABA405232671CCF66B505DCFB0192A6 /* BoosterKit-dummy.m */; };
-		6FAF8EF3F323A20CA069E5220068C494 /* ToastController.AnimParams.Animation+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015C3F01BFBD7E46DA50EF128774742F /* ToastController.AnimParams.Animation+Default.swift */; };
-		8341601B3750DEE4CA5B69994CE88C04 /* ToastController.AnimParams.SetUp+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042329C904DBEA64A10B203CEABCAC90 /* ToastController.AnimParams.SetUp+Default.swift */; };
-		8A7608DDE945444AE1497DD075E15E1C /* ToastController.AnimParams.TearDown+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89024DDDAC5A87B6CBE721AA95D665F9 /* ToastController.AnimParams.TearDown+Default.swift */; };
-		8E87752CABD18AC0811ECF23E5FA8480 /* CubicBezierPoint+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF8F84BC37B21C17557CA2BF2B0CC05 /* CubicBezierPoint+Default.swift */; };
-		9495E3057F45075746390C72772D75C1 /* BoosterKitError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68786D35D7CB93B880D1BFB9AD882C40 /* BoosterKitError.swift */; };
-		BD4F8024D18CB24381715533D231F577 /* CGPoint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C40A97266717A3ECC2F50D9A8212AC1 /* CGPoint+Extension.swift */; };
+		0ADE4EA4F0AACC0B90B569E03FEC9FFF /* ToastController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D166918DCB743442620AD51951021DA /* ToastController+Extension.swift */; };
+		2B27CA714696BDAC850E8229E011A4DD /* CGPoint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C40A97266717A3ECC2F50D9A8212AC1 /* CGPoint+Extension.swift */; };
+		2BA1B40A4B5E6BCC7B4EB6C98068FE0D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		3F02DA70D49040687D212AAE4CED9929 /* BoosterKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DABA405232671CCF66B505DCFB0192A6 /* BoosterKit-dummy.m */; };
+		473699DA2DB8AD01BAD4009634A0A020 /* BoosterKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 231DD308B0613DC98CAB25163E2F341D /* BoosterKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6847D4D260BDA99D5A9FDC678F7D0347 /* CubicBezierPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819326171A1C3389AB7CD031502F4A71 /* CubicBezierPoint.swift */; };
+		6D8FA1A450512D4FC11021A00B076064 /* ToastController.AnimParams.Animation+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433428CD97E81B2171AB4A416B7AD773 /* ToastController.AnimParams.Animation+Default.swift */; };
+		9F6B5A21FCBB2A03131A248AA35DF2FB /* BoosterKitError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68786D35D7CB93B880D1BFB9AD882C40 /* BoosterKitError.swift */; };
+		A3A9B0618E76778E2FD1F69CA292309E /* CubicBezierPoint+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6814C07CA803FF273F7CE4777D0720A /* CubicBezierPoint+Default.swift */; };
+		B5A91B6654DE14D0597677E8D28C52AD /* ToastController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F39EBD25CFAA5B3F41A0865E49463B3 /* ToastController.swift */; };
+		B75D540EE4DC788D88BD73F0FD8DC19D /* ToastController.AnimParams.TearDown+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C4408B4EBB53550E6FEBC8DA0F25DA /* ToastController.AnimParams.TearDown+Default.swift */; };
 		C296D0B353617D08896631025620C9B9 /* Pods-BoosterKit-Demo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 810E16DA851728BA429809CB2E3CEDB6 /* Pods-BoosterKit-Demo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D451FA31301D5A36B410DE2F498762A8 /* StringRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9852289E4B921A1F4AA2958B6B4131 /* StringRenderer.swift */; };
 		DA764A8CC938C4F42C79B65A35517EE6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		E0A938C8A90631B82CB22E4DD5A35F64 /* ToastController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61FC6C25E8E227E410D4F8FE2302CD1 /* ToastController.swift */; };
-		E7928BC290E83A63492AEFF7214B03A8 /* Combinator+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1BF85DDAA2C68169A43F6AF51E3C34 /* Combinator+Transform.swift */; };
-		F05C6C630805CEAEC30FF9514E4F06F4 /* CubicBezierPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17105E78CF4CCA8C16786CF19871E6D /* CubicBezierPoint.swift */; };
+		E1DBCF715731A6D2BFA54474A0BD1870 /* ToastController.AnimParams+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC13A8352C535C5CF8A4F753F2E40F0 /* ToastController.AnimParams+Default.swift */; };
+		EF0540664BC4D125A6CFFE9E25997437 /* Combinator+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1BF85DDAA2C68169A43F6AF51E3C34 /* Combinator+Transform.swift */; };
+		F25A3AB386EE07328C9FA0485A9CB4B8 /* Scoped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3035AF195FEFEEC844C484842168044C /* Scoped.swift */; };
+		F63B00B6E022EAEC43C293BBEB34B912 /* ToastController.AnimParams.SetUp+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB712B9A2978AE0F4E6A837CDF130A84 /* ToastController.AnimParams.SetUp+Default.swift */; };
 		FE053703665822DAE15BF3199D3537FF /* Pods-BoosterKit-Demo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 89A2EF53234D1831C3A165597CEED520 /* Pods-BoosterKit-Demo-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		9888291AF328CA298F08E9BF99E4742B /* PBXContainerItemProxy */ = {
+		CF84355D0EC48343E83781160A735C83 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -38,8 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		015C3F01BFBD7E46DA50EF128774742F /* ToastController.AnimParams.Animation+Default.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ToastController.AnimParams.Animation+Default.swift"; sourceTree = "<group>"; };
-		042329C904DBEA64A10B203CEABCAC90 /* ToastController.AnimParams.SetUp+Default.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ToastController.AnimParams.SetUp+Default.swift"; sourceTree = "<group>"; };
+		0F39EBD25CFAA5B3F41A0865E49463B3 /* ToastController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ToastController.swift; sourceTree = "<group>"; };
 		1251BB6DBDCC9DAEB344BAF54FFF2005 /* Pods-BoosterKit-Demo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-BoosterKit-Demo-frameworks.sh"; sourceTree = "<group>"; };
 		1C40A97266717A3ECC2F50D9A8212AC1 /* CGPoint+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extension.swift"; sourceTree = "<group>"; };
 		1FC30FBAAB39BAE759775489DBA339BD /* Pods-BoosterKit-Demo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-BoosterKit-Demo-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -47,31 +47,33 @@
 		2A69B14EC0081245385AF4C9109A65B2 /* BoosterKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = BoosterKit.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		3035AF195FEFEEC844C484842168044C /* Scoped.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Scoped.swift; sourceTree = "<group>"; };
 		31D0E794CC3D1C81C04B04F76ABE773A /* Pods-BoosterKit-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BoosterKit-Demo.debug.xcconfig"; sourceTree = "<group>"; };
+		433428CD97E81B2171AB4A416B7AD773 /* ToastController.AnimParams.Animation+Default.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ToastController.AnimParams.Animation+Default.swift"; sourceTree = "<group>"; };
 		4D9077B1AEBF0442A56600727D5BF745 /* BoosterKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "BoosterKit-prefix.pch"; sourceTree = "<group>"; };
 		4FBC862A7E34421C2BAB78013365A639 /* Pods-BoosterKit-Demo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-BoosterKit-Demo.modulemap"; sourceTree = "<group>"; };
 		538D9EB5636BAFDD39B2CBE7B601AFE2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
 		5CAC3B31B8C541EB9D733497950CE9A7 /* BoosterKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = BoosterKit.release.xcconfig; sourceTree = "<group>"; };
 		5E49F0696DCD16FE3360EA0E56C34C80 /* BoosterKit */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = BoosterKit; path = BoosterKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		64C4408B4EBB53550E6FEBC8DA0F25DA /* ToastController.AnimParams.TearDown+Default.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ToastController.AnimParams.TearDown+Default.swift"; sourceTree = "<group>"; };
 		68786D35D7CB93B880D1BFB9AD882C40 /* BoosterKitError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BoosterKitError.swift; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		7BC13A8352C535C5CF8A4F753F2E40F0 /* ToastController.AnimParams+Default.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ToastController.AnimParams+Default.swift"; sourceTree = "<group>"; };
 		810E16DA851728BA429809CB2E3CEDB6 /* Pods-BoosterKit-Demo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-BoosterKit-Demo-umbrella.h"; sourceTree = "<group>"; };
+		819326171A1C3389AB7CD031502F4A71 /* CubicBezierPoint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CubicBezierPoint.swift; sourceTree = "<group>"; };
 		83424035B558B328552D073EB761982A /* Pods-BoosterKit-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BoosterKit-Demo.release.xcconfig"; sourceTree = "<group>"; };
-		88D70DFB239B07B068743A96E9A12327 /* ToastController.AnimParams+Default.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ToastController.AnimParams+Default.swift"; sourceTree = "<group>"; };
-		89024DDDAC5A87B6CBE721AA95D665F9 /* ToastController.AnimParams.TearDown+Default.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ToastController.AnimParams.TearDown+Default.swift"; sourceTree = "<group>"; };
 		89A2EF53234D1831C3A165597CEED520 /* Pods-BoosterKit-Demo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-BoosterKit-Demo-dummy.m"; sourceTree = "<group>"; };
 		923F8DB588089E0782D49B238CC31D3F /* Pods-BoosterKit-Demo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-BoosterKit-Demo-acknowledgements.plist"; sourceTree = "<group>"; };
 		9A68B92F4AAE962961BCEAB9CAB64C69 /* Pods-BoosterKit-Demo-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-BoosterKit-Demo-Info.plist"; sourceTree = "<group>"; };
 		9BB1287B5B9FB959532EA0A784B2D976 /* BoosterKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "BoosterKit-Info.plist"; sourceTree = "<group>"; };
+		9D166918DCB743442620AD51951021DA /* ToastController+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ToastController+Extension.swift"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9EF8F84BC37B21C17557CA2BF2B0CC05 /* CubicBezierPoint+Default.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CubicBezierPoint+Default.swift"; sourceTree = "<group>"; };
 		AA1BF85DDAA2C68169A43F6AF51E3C34 /* Combinator+Transform.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Combinator+Transform.swift"; sourceTree = "<group>"; };
-		C61FC6C25E8E227E410D4F8FE2302CD1 /* ToastController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ToastController.swift; sourceTree = "<group>"; };
+		BF9852289E4B921A1F4AA2958B6B4131 /* StringRenderer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StringRenderer.swift; sourceTree = "<group>"; };
 		C635F775786D27F64204CB01BE760B62 /* BoosterKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = BoosterKit.debug.xcconfig; sourceTree = "<group>"; };
+		C6814C07CA803FF273F7CE4777D0720A /* CubicBezierPoint+Default.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CubicBezierPoint+Default.swift"; sourceTree = "<group>"; };
 		DABA405232671CCF66B505DCFB0192A6 /* BoosterKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "BoosterKit-dummy.m"; sourceTree = "<group>"; };
-		E2496CE8E2200C2D2DE0341A2D5E764E /* StringRenderer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StringRenderer.swift; sourceTree = "<group>"; };
-		F17105E78CF4CCA8C16786CF19871E6D /* CubicBezierPoint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CubicBezierPoint.swift; sourceTree = "<group>"; };
 		F1EC62E324CB71FFAB9934A9737EF962 /* BoosterKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = BoosterKit.modulemap; sourceTree = "<group>"; };
 		F5D2AC93C99904B7DF195C5D74E20C09 /* Pods-BoosterKit-Demo */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-BoosterKit-Demo"; path = Pods_BoosterKit_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB712B9A2978AE0F4E6A837CDF130A84 /* ToastController.AnimParams.SetUp+Default.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ToastController.AnimParams.SetUp+Default.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,11 +85,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		359EB0D5B2791A0F6E23D7523FA03160 /* Frameworks */ = {
+		DEFDB4007551B32C4BEB3487D46CA5B2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E2CC23D6D313DECCFA01728CB00DE39 /* Foundation.framework in Frameworks */,
+				2BA1B40A4B5E6BCC7B4EB6C98068FE0D /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,19 +105,6 @@
 			name = Pod;
 			sourceTree = "<group>";
 		};
-		1A81B1697DD649D41E88E7480558276D /* Toast */ = {
-			isa = PBXGroup;
-			children = (
-				C61FC6C25E8E227E410D4F8FE2302CD1 /* ToastController.swift */,
-				88D70DFB239B07B068743A96E9A12327 /* ToastController.AnimParams+Default.swift */,
-				015C3F01BFBD7E46DA50EF128774742F /* ToastController.AnimParams.Animation+Default.swift */,
-				042329C904DBEA64A10B203CEABCAC90 /* ToastController.AnimParams.SetUp+Default.swift */,
-				89024DDDAC5A87B6CBE721AA95D665F9 /* ToastController.AnimParams.TearDown+Default.swift */,
-			);
-			name = Toast;
-			path = Toast;
-			sourceTree = "<group>";
-		};
 		26E6476476EABB92704F00D3DDE2558F /* BoosterKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -124,7 +113,7 @@
 				6A87265D179F1B493586EE20ABF8D593 /* Function */,
 				1569EB1541F73C7551C213ECCE9655C2 /* Pod */,
 				B155BDAE75288B485AFE5E082C6D5314 /* Support Files */,
-				67351E2ECFA27ABCF41C5FDD42A58D58 /* UI */,
+				9BF6701220450BC0EA62BD6D91135D79 /* UI */,
 			);
 			name = BoosterKit;
 			path = ..;
@@ -136,17 +125,6 @@
 				73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */,
 			);
 			name = iOS;
-			sourceTree = "<group>";
-		};
-		67351E2ECFA27ABCF41C5FDD42A58D58 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				E2496CE8E2200C2D2DE0341A2D5E764E /* StringRenderer.swift */,
-				8B60A679ABC9155EC6EC179F7F74F0EE /* Data */,
-				1A81B1697DD649D41E88E7480558276D /* Toast */,
-			);
-			name = UI;
-			path = BoosterKit/UI;
 			sourceTree = "<group>";
 		};
 		6A3B258AC5751A4FA1A5FBFEC3824CA6 /* Targets Support Files */ = {
@@ -176,16 +154,6 @@
 			path = BoosterKit/Extension;
 			sourceTree = "<group>";
 		};
-		8B60A679ABC9155EC6EC179F7F74F0EE /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				F17105E78CF4CCA8C16786CF19871E6D /* CubicBezierPoint.swift */,
-				9EF8F84BC37B21C17557CA2BF2B0CC05 /* CubicBezierPoint+Default.swift */,
-			);
-			name = Data;
-			path = Data;
-			sourceTree = "<group>";
-		};
 		98E7E6D1A370F94EF8460F531A7F8389 /* Error */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,6 +161,17 @@
 			);
 			name = Error;
 			path = BoosterKit/Error;
+			sourceTree = "<group>";
+		};
+		9BF6701220450BC0EA62BD6D91135D79 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				BF9852289E4B921A1F4AA2958B6B4131 /* StringRenderer.swift */,
+				CF5B46AC2DF85F6A2DD087378E129ECD /* Data */,
+				F80E7B605201EEB9518DC9C633E0F793 /* Toast */,
+			);
+			name = UI;
+			path = BoosterKit/UI;
 			sourceTree = "<group>";
 		};
 		B155BDAE75288B485AFE5E082C6D5314 /* Support Files */ = {
@@ -247,6 +226,16 @@
 			);
 			sourceTree = "<group>";
 		};
+		CF5B46AC2DF85F6A2DD087378E129ECD /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				819326171A1C3389AB7CD031502F4A71 /* CubicBezierPoint.swift */,
+				C6814C07CA803FF273F7CE4777D0720A /* CubicBezierPoint+Default.swift */,
+			);
+			name = Data;
+			path = Data;
+			sourceTree = "<group>";
+		};
 		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -263,17 +252,23 @@
 			name = "Development Pods";
 			sourceTree = "<group>";
 		};
+		F80E7B605201EEB9518DC9C633E0F793 /* Toast */ = {
+			isa = PBXGroup;
+			children = (
+				0F39EBD25CFAA5B3F41A0865E49463B3 /* ToastController.swift */,
+				9D166918DCB743442620AD51951021DA /* ToastController+Extension.swift */,
+				7BC13A8352C535C5CF8A4F753F2E40F0 /* ToastController.AnimParams+Default.swift */,
+				433428CD97E81B2171AB4A416B7AD773 /* ToastController.AnimParams.Animation+Default.swift */,
+				FB712B9A2978AE0F4E6A837CDF130A84 /* ToastController.AnimParams.SetUp+Default.swift */,
+				64C4408B4EBB53550E6FEBC8DA0F25DA /* ToastController.AnimParams.TearDown+Default.swift */,
+			);
+			name = Toast;
+			path = Toast;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		0E561D0B0F8E65875EE04CB13B652B94 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				309F0170C97E46E6483702612BCD2AF3 /* BoosterKit-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6DAE6F361D25E9717010EA3CE1DA8AB1 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -282,17 +277,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EA0BE9A96E25D71C33895AE0B010E733 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				473699DA2DB8AD01BAD4009634A0A020 /* BoosterKit-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		63CD4906056D58362A1284C7953D7A31 /* BoosterKit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AD7C9985D57821FBB07936A4E2CFCEDF /* Build configuration list for PBXNativeTarget "BoosterKit" */;
+			buildConfigurationList = 988529449B39216884DFDC5D0FAA9811 /* Build configuration list for PBXNativeTarget "BoosterKit" */;
 			buildPhases = (
-				0E561D0B0F8E65875EE04CB13B652B94 /* Headers */,
-				C8C5974260473A6DED690D3193D6966A /* Sources */,
-				359EB0D5B2791A0F6E23D7523FA03160 /* Frameworks */,
-				5712B5A49DBD0ABEC0C6E29FC86540FA /* Resources */,
+				EA0BE9A96E25D71C33895AE0B010E733 /* Headers */,
+				B1A5CF2F3BD061B4DDC8CF157C90F592 /* Sources */,
+				DEFDB4007551B32C4BEB3487D46CA5B2 /* Frameworks */,
+				91B9D795541350C0D9A0E290E0B30B8C /* Resources */,
 			);
 			buildRules = (
 			);
@@ -315,7 +318,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				0DF0B2D15B5E6913359D85F0DD0D548A /* PBXTargetDependency */,
+				3590DEE4086175259B37840359248F9F /* PBXTargetDependency */,
 			);
 			name = "Pods-BoosterKit-Demo";
 			productName = Pods_BoosterKit_Demo;
@@ -351,14 +354,14 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		5712B5A49DBD0ABEC0C6E29FC86540FA /* Resources */ = {
+		57CCEF1D24EB9554AC0F5860D7D8AD1E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		57CCEF1D24EB9554AC0F5860D7D8AD1E /* Resources */ = {
+		91B9D795541350C0D9A0E290E0B30B8C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -368,23 +371,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		C8C5974260473A6DED690D3193D6966A /* Sources */ = {
+		B1A5CF2F3BD061B4DDC8CF157C90F592 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59ECF227A67122FD10C2D0A27B32FE0F /* BoosterKit-dummy.m in Sources */,
-				9495E3057F45075746390C72772D75C1 /* BoosterKitError.swift in Sources */,
-				BD4F8024D18CB24381715533D231F577 /* CGPoint+Extension.swift in Sources */,
-				E7928BC290E83A63492AEFF7214B03A8 /* Combinator+Transform.swift in Sources */,
-				F05C6C630805CEAEC30FF9514E4F06F4 /* CubicBezierPoint.swift in Sources */,
-				8E87752CABD18AC0811ECF23E5FA8480 /* CubicBezierPoint+Default.swift in Sources */,
-				32772859D558D298C07ECD5F3F4F0DED /* Scoped.swift in Sources */,
-				2D5140207B5159C8BBABD3559A48279E /* StringRenderer.swift in Sources */,
-				E0A938C8A90631B82CB22E4DD5A35F64 /* ToastController.swift in Sources */,
-				591153DBA3575E673CF5B400D900EDFB /* ToastController.AnimParams+Default.swift in Sources */,
-				6FAF8EF3F323A20CA069E5220068C494 /* ToastController.AnimParams.Animation+Default.swift in Sources */,
-				8341601B3750DEE4CA5B69994CE88C04 /* ToastController.AnimParams.SetUp+Default.swift in Sources */,
-				8A7608DDE945444AE1497DD075E15E1C /* ToastController.AnimParams.TearDown+Default.swift in Sources */,
+				3F02DA70D49040687D212AAE4CED9929 /* BoosterKit-dummy.m in Sources */,
+				9F6B5A21FCBB2A03131A248AA35DF2FB /* BoosterKitError.swift in Sources */,
+				2B27CA714696BDAC850E8229E011A4DD /* CGPoint+Extension.swift in Sources */,
+				EF0540664BC4D125A6CFFE9E25997437 /* Combinator+Transform.swift in Sources */,
+				6847D4D260BDA99D5A9FDC678F7D0347 /* CubicBezierPoint.swift in Sources */,
+				A3A9B0618E76778E2FD1F69CA292309E /* CubicBezierPoint+Default.swift in Sources */,
+				F25A3AB386EE07328C9FA0485A9CB4B8 /* Scoped.swift in Sources */,
+				D451FA31301D5A36B410DE2F498762A8 /* StringRenderer.swift in Sources */,
+				B5A91B6654DE14D0597677E8D28C52AD /* ToastController.swift in Sources */,
+				0ADE4EA4F0AACC0B90B569E03FEC9FFF /* ToastController+Extension.swift in Sources */,
+				E1DBCF715731A6D2BFA54474A0BD1870 /* ToastController.AnimParams+Default.swift in Sources */,
+				6D8FA1A450512D4FC11021A00B076064 /* ToastController.AnimParams.Animation+Default.swift in Sources */,
+				F63B00B6E022EAEC43C293BBEB34B912 /* ToastController.AnimParams.SetUp+Default.swift in Sources */,
+				B75D540EE4DC788D88BD73F0FD8DC19D /* ToastController.AnimParams.TearDown+Default.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,15 +403,50 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0DF0B2D15B5E6913359D85F0DD0D548A /* PBXTargetDependency */ = {
+		3590DEE4086175259B37840359248F9F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = BoosterKit;
 			target = 63CD4906056D58362A1284C7953D7A31 /* BoosterKit */;
-			targetProxy = 9888291AF328CA298F08E9BF99E4742B /* PBXContainerItemProxy */;
+			targetProxy = CF84355D0EC48343E83781160A735C83 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		73572FB4CF2407D100634EA7585AD1AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C635F775786D27F64204CB01BE760B62 /* BoosterKit.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/BoosterKit/BoosterKit-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/BoosterKit/BoosterKit-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/BoosterKit/BoosterKit.modulemap";
+				PRODUCT_MODULE_NAME = BoosterKit;
+				PRODUCT_NAME = BoosterKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		903A0004D3E6651EFD5D2E16214D101B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -501,6 +540,42 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		A9127F9E8AFC38A2E1CCAAC378DBDD74 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5CAC3B31B8C541EB9D733497950CE9A7 /* BoosterKit.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/BoosterKit/BoosterKit-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/BoosterKit/BoosterKit-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/BoosterKit/BoosterKit.modulemap";
+				PRODUCT_MODULE_NAME = BoosterKit;
+				PRODUCT_NAME = BoosterKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -611,77 +686,6 @@
 			};
 			name = Debug;
 		};
-		DCE73B5CBDAAB75FF9A3358B6A0DB25A /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5CAC3B31B8C541EB9D733497950CE9A7 /* BoosterKit.release.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/BoosterKit/BoosterKit-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/BoosterKit/BoosterKit-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/BoosterKit/BoosterKit.modulemap";
-				PRODUCT_MODULE_NAME = BoosterKit;
-				PRODUCT_NAME = BoosterKit;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		E8EC0F1D6FC06632EA121081D9B85614 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = C635F775786D27F64204CB01BE760B62 /* BoosterKit.debug.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/BoosterKit/BoosterKit-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/BoosterKit/BoosterKit-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/BoosterKit/BoosterKit.modulemap";
-				PRODUCT_MODULE_NAME = BoosterKit;
-				PRODUCT_NAME = BoosterKit;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -703,11 +707,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AD7C9985D57821FBB07936A4E2CFCEDF /* Build configuration list for PBXNativeTarget "BoosterKit" */ = {
+		988529449B39216884DFDC5D0FAA9811 /* Build configuration list for PBXNativeTarget "BoosterKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E8EC0F1D6FC06632EA121081D9B85614 /* Debug */,
-				DCE73B5CBDAAB75FF9A3358B6A0DB25A /* Release */,
+				73572FB4CF2407D100634EA7585AD1AC /* Debug */,
+				A9127F9E8AFC38A2E1CCAAC378DBDD74 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

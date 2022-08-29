@@ -13,7 +13,7 @@ class ToastDemoViewController: UIViewController {
     private typealias AnimParams = ToastController<ImageTextView>.AnimParams
     
     private lazy var _toastController = ToastController<ImageTextView>(
-        toastViewFactory: { Bundle.main.loadNibNamed("Toast", owner: nil)![0] as! ImageTextView },
+        nib: UINib(nibName: "Toast", bundle: .main),
         params: AnimParams(
             setUp: AnimParams.SetUps.makeDefault {
                 $0.layoutIfNeeded()
