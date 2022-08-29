@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03554E9328BCF37C00073345 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03554E8328BCECF200073345 /* ViewController.swift */; };
+		03554E9328BCF37C00073345 /* ToastDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03554E8328BCECF200073345 /* ToastDemoViewController.swift */; };
 		03554E9428BCF38300073345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8428BCECF200073345 /* Assets.xcassets */; };
 		03554E9528BCF39000073345 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8528BCECF200073345 /* LaunchScreen.storyboard */; };
 		03554E9628BCF39400073345 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8728BCECF200073345 /* Main.storyboard */; };
@@ -25,6 +25,8 @@
 		03A0FB5028BB25DD00B8D064 /* BoosterKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 03A0FB4228BB25DD00B8D064 /* BoosterKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		03A0FB5B28BB264400B8D064 /* Scoped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB5A28BB264400B8D064 /* Scoped.swift */; };
 		03A0FB5E28BB268F00B8D064 /* StringRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB5D28BB268F00B8D064 /* StringRenderer.swift */; };
+		03AB9DA828BCF57400BD568B /* ImageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB9DA728BCF57400BD568B /* ImageTextView.swift */; };
+		03AB9DAA28BCF5AA00BD568B /* Toast.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03AB9DA928BCF5AA00BD568B /* Toast.xib */; };
 		3A59D44A12247A317E98847E /* Pods_BoosterKit_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7EC8F81B467B8B42FA1E2E2 /* Pods_BoosterKit_Demo.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +42,7 @@
 
 /* Begin PBXFileReference section */
 		03554E6E28BCECDD00073345 /* BoosterKit-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BoosterKit-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		03554E8328BCECF200073345 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		03554E8328BCECF200073345 /* ToastDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastDemoViewController.swift; sourceTree = "<group>"; };
 		03554E8428BCECF200073345 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		03554E8628BCECF200073345 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		03554E8828BCECF200073345 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -62,6 +64,8 @@
 		03A0FB4F28BB25DD00B8D064 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03A0FB5A28BB264400B8D064 /* Scoped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoped.swift; sourceTree = "<group>"; };
 		03A0FB5D28BB268F00B8D064 /* StringRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringRenderer.swift; sourceTree = "<group>"; };
+		03AB9DA728BCF57400BD568B /* ImageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTextView.swift; sourceTree = "<group>"; };
+		03AB9DA928BCF5AA00BD568B /* Toast.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Toast.xib; sourceTree = "<group>"; };
 		94F50EBF2BC646348760C578 /* Pods-BoosterKit-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoosterKit-Demo.debug.xcconfig"; path = "Target Support Files/Pods-BoosterKit-Demo/Pods-BoosterKit-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		9861FABEC4553D95F3BFD84F /* Pods-BoosterKit-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoosterKit-Demo.release.xcconfig"; path = "Target Support Files/Pods-BoosterKit-Demo/Pods-BoosterKit-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		A7EC8F81B467B8B42FA1E2E2 /* Pods_BoosterKit_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BoosterKit_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,12 +101,12 @@
 		03554E8228BCECF200073345 /* BoosterKit-Demo */ = {
 			isa = PBXGroup;
 			children = (
-				03554E8328BCECF200073345 /* ViewController.swift */,
+				03AB9DA628BCF55B00BD568B /* Toast */,
+				03554E8928BCECF200073345 /* AppDelegate.swift */,
 				03554E8428BCECF200073345 /* Assets.xcassets */,
+				03554E8A28BCECF200073345 /* Info.plist */,
 				03554E8528BCECF200073345 /* LaunchScreen.storyboard */,
 				03554E8728BCECF200073345 /* Main.storyboard */,
-				03554E8928BCECF200073345 /* AppDelegate.swift */,
-				03554E8A28BCECF200073345 /* Info.plist */,
 			);
 			path = "BoosterKit-Demo";
 			sourceTree = "<group>";
@@ -187,6 +191,16 @@
 				03A0FB5D28BB268F00B8D064 /* StringRenderer.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		03AB9DA628BCF55B00BD568B /* Toast */ = {
+			isa = PBXGroup;
+			children = (
+				03554E8328BCECF200073345 /* ToastDemoViewController.swift */,
+				03AB9DA728BCF57400BD568B /* ImageTextView.swift */,
+				03AB9DA928BCF5AA00BD568B /* Toast.xib */,
+			);
+			path = Toast;
 			sourceTree = "<group>";
 		};
 		C3A15F8B237C8CD49F0D57A4 /* Frameworks */ = {
@@ -322,6 +336,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03554E9628BCF39400073345 /* Main.storyboard in Resources */,
+				03AB9DAA28BCF5AA00BD568B /* Toast.xib in Resources */,
 				03554E9428BCF38300073345 /* Assets.xcassets in Resources */,
 				03554E9528BCF39000073345 /* LaunchScreen.storyboard in Resources */,
 			);
@@ -391,7 +406,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				03554E9828BCF39800073345 /* AppDelegate.swift in Sources */,
-				03554E9328BCF37C00073345 /* ViewController.swift in Sources */,
+				03AB9DA828BCF57400BD568B /* ImageTextView.swift in Sources */,
+				03554E9328BCF37C00073345 /* ToastDemoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

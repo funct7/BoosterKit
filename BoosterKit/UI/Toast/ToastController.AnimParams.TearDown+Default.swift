@@ -10,7 +10,7 @@ import UIKit
 public extension ToastController.AnimParams {
     
     enum TearDowns {
-        static func makeDefault(_ otherTearDown: TearDown? = nil) -> TearDown {
+        static public func makeDefault(_ otherTearDown: TearDown? = nil) -> TearDown {
             return {
                 $1.removeFromSuperview()
                 otherTearDown?($0, $1)
