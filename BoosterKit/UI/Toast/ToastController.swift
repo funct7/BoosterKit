@@ -37,8 +37,8 @@ public extension ToastController {
     
     struct AnimParams {
         public typealias Animation = (_ canvas: UIView, _ toastView: View) -> Void
-        public typealias SetUp = Animation
-        public typealias TearDown = Animation
+        public typealias SetUp = (_ canvas: UIView, _ toastView: View) -> Void
+        public typealias TearDown = (_ canvas: UIView, _ toastView: View) -> Void
         
         public var animDuration: TimeInterval
         public var displayDuration: TimeInterval
