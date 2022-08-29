@@ -50,7 +50,7 @@ public extension ToastController {
         public init(
             animDuration: TimeInterval = 0.35,
             displayDuration: TimeInterval = 1.0,
-            cubicBezierPoints: CubicBezierPoint = .easeOut,
+            cubicBezierPoints: CubicBezierPoint = .Defaults.easeOutCubic,
             setUp: @escaping SetUp,
             animation: @escaping Animation,
             tearDown: @escaping TearDown)

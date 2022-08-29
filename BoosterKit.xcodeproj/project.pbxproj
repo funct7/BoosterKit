@@ -14,9 +14,9 @@
 		03554E9828BCF39800073345 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03554E8928BCECF200073345 /* AppDelegate.swift */; };
 		0361FBEE28BD6B5000523A2B /* BoosterKitError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0361FBED28BD6B5000523A2B /* BoosterKitError.swift */; };
 		0361FBF128BD6CA600523A2B /* CGPoint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0361FBF028BD6CA600523A2B /* CGPoint+Extension.swift */; };
+		0361FBF228BD6D8A00523A2B /* CubicBezierPoint+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375116828BC26250060D304 /* CubicBezierPoint+Default.swift */; };
 		0375115C28BC231D0060D304 /* CubicBezierPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375115B28BC231D0060D304 /* CubicBezierPoint.swift */; };
 		0375116328BC23FE0060D304 /* Combinator+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375116228BC23FE0060D304 /* Combinator+Transform.swift */; };
-		0375116928BC26250060D304 /* CubicBezierPoint+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375116828BC26250060D304 /* CubicBezierPoint+Default.swift */; };
 		0375116C28BC26A70060D304 /* ToastController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375116B28BC26A70060D304 /* ToastController.swift */; };
 		0375116E28BC27820060D304 /* ToastController.AnimParams.SetUp+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375116D28BC27820060D304 /* ToastController.AnimParams.SetUp+Default.swift */; };
 		0375117028BC27CC0060D304 /* ToastController.AnimParams.Animation+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375116F28BC27CC0060D304 /* ToastController.AnimParams.Animation+Default.swift */; };
@@ -439,9 +439,9 @@
 			files = (
 				0375116E28BC27820060D304 /* ToastController.AnimParams.SetUp+Default.swift in Sources */,
 				0375117028BC27CC0060D304 /* ToastController.AnimParams.Animation+Default.swift in Sources */,
+				0361FBF228BD6D8A00523A2B /* CubicBezierPoint+Default.swift in Sources */,
 				0361FBF128BD6CA600523A2B /* CGPoint+Extension.swift in Sources */,
 				0375116328BC23FE0060D304 /* Combinator+Transform.swift in Sources */,
-				0375116928BC26250060D304 /* CubicBezierPoint+Default.swift in Sources */,
 				0375115C28BC231D0060D304 /* CubicBezierPoint.swift in Sources */,
 				0375117428BC29CC0060D304 /* ToastController.AnimParams+Default.swift in Sources */,
 				0375116C28BC26A70060D304 /* ToastController.swift in Sources */,
