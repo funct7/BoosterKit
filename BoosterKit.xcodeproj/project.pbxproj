@@ -13,6 +13,7 @@
 		03554E9628BCF39400073345 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8728BCECF200073345 /* Main.storyboard */; };
 		03554E9828BCF39800073345 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03554E8928BCECF200073345 /* AppDelegate.swift */; };
 		0361FBEE28BD6B5000523A2B /* BoosterKitError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0361FBED28BD6B5000523A2B /* BoosterKitError.swift */; };
+		0361FBF128BD6CA600523A2B /* CGPoint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0361FBF028BD6CA600523A2B /* CGPoint+Extension.swift */; };
 		0375115C28BC231D0060D304 /* CubicBezierPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375115B28BC231D0060D304 /* CubicBezierPoint.swift */; };
 		0375116328BC23FE0060D304 /* Combinator+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375116228BC23FE0060D304 /* Combinator+Transform.swift */; };
 		0375116928BC26250060D304 /* CubicBezierPoint+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375116828BC26250060D304 /* CubicBezierPoint+Default.swift */; };
@@ -50,6 +51,7 @@
 		03554E8928BCECF200073345 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03554E8A28BCECF200073345 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0361FBED28BD6B5000523A2B /* BoosterKitError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoosterKitError.swift; sourceTree = "<group>"; };
+		0361FBF028BD6CA600523A2B /* CGPoint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extension.swift"; sourceTree = "<group>"; };
 		0375115B28BC231D0060D304 /* CubicBezierPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubicBezierPoint.swift; sourceTree = "<group>"; };
 		0375116228BC23FE0060D304 /* Combinator+Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combinator+Transform.swift"; sourceTree = "<group>"; };
 		0375116828BC26250060D304 /* CubicBezierPoint+Default.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CubicBezierPoint+Default.swift"; sourceTree = "<group>"; };
@@ -121,6 +123,14 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
+		0361FBEF28BD6C9300523A2B /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				0361FBF028BD6CA600523A2B /* CGPoint+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		0375115A28BC230A0060D304 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				0361FBEC28BD6B4300523A2B /* Error */,
+				0361FBEF28BD6C9300523A2B /* Extension */,
 				03A0FB5928BB263600B8D064 /* Function */,
 				03A0FB5C28BB267D00B8D064 /* UI */,
 				03A0FB4228BB25DD00B8D064 /* BoosterKit.h */,
@@ -428,6 +439,7 @@
 			files = (
 				0375116E28BC27820060D304 /* ToastController.AnimParams.SetUp+Default.swift in Sources */,
 				0375117028BC27CC0060D304 /* ToastController.AnimParams.Animation+Default.swift in Sources */,
+				0361FBF128BD6CA600523A2B /* CGPoint+Extension.swift in Sources */,
 				0375116328BC23FE0060D304 /* Combinator+Transform.swift in Sources */,
 				0375116928BC26250060D304 /* CubicBezierPoint+Default.swift in Sources */,
 				0375115C28BC231D0060D304 /* CubicBezierPoint.swift in Sources */,
