@@ -17,7 +17,7 @@ Pod::Spec.new do |spec|
 
   spec.name         = "BoosterKit"
   spec.version      = "0.0.1"
-  spec.summary      = "A short description of BoosterKit."
+  spec.summary      = "An iOS library built to boost your productivity."
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -25,6 +25,17 @@ Pod::Spec.new do |spec|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   spec.description  = <<-DESC
+  This library is built to boost your productivity, especially when your app reaches a mature stage.
+
+  While there are lots of libraries that provide the functionality at first sight,
+  a lot of them fall short of providing the extended functionality as your app matures.
+  Some try to provide everything that everyone requests, but that can only go so far.
+  Some provide the functionality but makes a lot of assumptions, and you end up learning things the hard way.
+  Some are not very well-structured, and it's hard to retrofit those components into your app, which is built on top of an advanced architecture.
+
+  The goal of `BoosterKit` is to not only provide functionality, but provide it the right way.
+  The design goal of `BoosterKit` is to provide good abstractions for the core functionality, 
+  while maximizing "customizability" so that clients will be able to meet their needs.
                    DESC
 
   spec.homepage     = "https://github.com/funct7/BoosterKit"
@@ -38,7 +49,7 @@ Pod::Spec.new do |spec|
   #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
   #
 
-  spec.license      = "MIT (example)"
+  spec.license      = "MIT"
   # spec.license      = { :type => "MIT", :file => "FILE_LICENSE" }
 
 

@@ -1,0 +1,19 @@
+{
+  "name": "BoosterKit",
+  "version": "0.0.1",
+  "summary": "An iOS library built to boost your productivity.",
+  "description": "This library is built to boost your productivity, especially when your app reaches a mature stage.\n\nWhile there are lots of libraries that provide the functionality at first sight,\na lot of them fall short of providing the extended functionality as your app matures.\nSome try to provide everything that everyone requests, but that can only go so far.\nSome provide the functionality but makes a lot of assumptions, and you end up learning things the hard way.\nSome are not very well-structured, and it's hard to retrofit those components into your app, which is built on top of an advanced architecture.\n\nThe goal of `BoosterKit` is to not only provide functionality, but provide it the right way.\nThe design goal of `BoosterKit` is to provide good abstractions for the core functionality, \nwhile maximizing \"customizability\" so that clients will be able to meet their needs.",
+  "homepage": "https://github.com/funct7/BoosterKit",
+  "license": "MIT",
+  "authors": {
+    "Josh Park": "funct7.io@gmail.com"
+  },
+  "platforms": {
+    "ios": "11.0"
+  },
+  "source": {
+    "git": "https://github.com/funct7/BoosterKit.git",
+    "tag": "0.0.1"
+  },
+  "source_files": "BoosterKit/**/*.swift"
+}

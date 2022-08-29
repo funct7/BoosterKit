@@ -3,16 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03554E8C28BCECF200073345 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03554E8328BCECF200073345 /* ViewController.swift */; };
-		03554E8D28BCECF200073345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8428BCECF200073345 /* Assets.xcassets */; };
-		03554E8E28BCECF200073345 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8528BCECF200073345 /* LaunchScreen.storyboard */; };
-		03554E8F28BCECF200073345 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8728BCECF200073345 /* Main.storyboard */; };
-		03554E9028BCECF200073345 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03554E8928BCECF200073345 /* AppDelegate.swift */; };
-		03554E9128BCECF200073345 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8A28BCECF200073345 /* Info.plist */; };
+		03554E9328BCF37C00073345 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03554E8328BCECF200073345 /* ViewController.swift */; };
+		03554E9428BCF38300073345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8428BCECF200073345 /* Assets.xcassets */; };
+		03554E9528BCF39000073345 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8528BCECF200073345 /* LaunchScreen.storyboard */; };
+		03554E9628BCF39400073345 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8728BCECF200073345 /* Main.storyboard */; };
+		03554E9828BCF39800073345 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03554E8928BCECF200073345 /* AppDelegate.swift */; };
 		0375115C28BC231D0060D304 /* CubicBezierPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375115B28BC231D0060D304 /* CubicBezierPoint.swift */; };
 		0375116328BC23FE0060D304 /* Combinator+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375116228BC23FE0060D304 /* Combinator+Transform.swift */; };
 		0375116928BC26250060D304 /* CubicBezierPoint+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375116828BC26250060D304 /* CubicBezierPoint+Default.swift */; };
@@ -26,6 +25,7 @@
 		03A0FB5028BB25DD00B8D064 /* BoosterKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 03A0FB4228BB25DD00B8D064 /* BoosterKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		03A0FB5B28BB264400B8D064 /* Scoped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB5A28BB264400B8D064 /* Scoped.swift */; };
 		03A0FB5E28BB268F00B8D064 /* StringRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB5D28BB268F00B8D064 /* StringRenderer.swift */; };
+		3A59D44A12247A317E98847E /* Pods_BoosterKit_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7EC8F81B467B8B42FA1E2E2 /* Pods_BoosterKit_Demo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +62,9 @@
 		03A0FB4F28BB25DD00B8D064 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03A0FB5A28BB264400B8D064 /* Scoped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoped.swift; sourceTree = "<group>"; };
 		03A0FB5D28BB268F00B8D064 /* StringRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringRenderer.swift; sourceTree = "<group>"; };
+		94F50EBF2BC646348760C578 /* Pods-BoosterKit-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoosterKit-Demo.debug.xcconfig"; path = "Target Support Files/Pods-BoosterKit-Demo/Pods-BoosterKit-Demo.debug.xcconfig"; sourceTree = "<group>"; };
+		9861FABEC4553D95F3BFD84F /* Pods-BoosterKit-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoosterKit-Demo.release.xcconfig"; path = "Target Support Files/Pods-BoosterKit-Demo/Pods-BoosterKit-Demo.release.xcconfig"; sourceTree = "<group>"; };
+		A7EC8F81B467B8B42FA1E2E2 /* Pods_BoosterKit_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BoosterKit_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A59D44A12247A317E98847E /* Pods_BoosterKit_Demo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +135,8 @@
 				03A0FB4C28BB25DD00B8D064 /* BoosterKitTests */,
 				03554E8228BCECF200073345 /* BoosterKit-Demo */,
 				03A0FB4028BB25DD00B8D064 /* Products */,
+				DCFD3284AA15C50361D4DFB7 /* Pods */,
+				C3A15F8B237C8CD49F0D57A4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -183,6 +189,23 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		C3A15F8B237C8CD49F0D57A4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A7EC8F81B467B8B42FA1E2E2 /* Pods_BoosterKit_Demo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DCFD3284AA15C50361D4DFB7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				94F50EBF2BC646348760C578 /* Pods-BoosterKit-Demo.debug.xcconfig */,
+				9861FABEC4553D95F3BFD84F /* Pods-BoosterKit-Demo.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -201,9 +224,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 03554E8128BCECDE00073345 /* Build configuration list for PBXNativeTarget "BoosterKit-Demo" */;
 			buildPhases = (
+				E66F91104F1B1F0D4A30AE7D /* [CP] Check Pods Manifest.lock */,
 				03554E6A28BCECDD00073345 /* Sources */,
 				03554E6B28BCECDD00073345 /* Frameworks */,
 				03554E6C28BCECDD00073345 /* Resources */,
+				4AA35389DBD88DC7D33F93A9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -296,6 +321,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03554E9628BCF39400073345 /* Main.storyboard in Resources */,
+				03554E9428BCF38300073345 /* Assets.xcassets in Resources */,
+				03554E9528BCF39000073345 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,10 +331,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03554E9128BCECF200073345 /* Info.plist in Resources */,
-				03554E8F28BCECF200073345 /* Main.storyboard in Resources */,
-				03554E8D28BCECF200073345 /* Assets.xcassets in Resources */,
-				03554E8E28BCECF200073345 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,11 +343,55 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4AA35389DBD88DC7D33F93A9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BoosterKit-Demo/Pods-BoosterKit-Demo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BoosterKit-Demo/Pods-BoosterKit-Demo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BoosterKit-Demo/Pods-BoosterKit-Demo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E66F91104F1B1F0D4A30AE7D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BoosterKit-Demo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		03554E6A28BCECDD00073345 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03554E9828BCF39800073345 /* AppDelegate.swift in Sources */,
+				03554E9328BCF37C00073345 /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,12 +399,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03554E9028BCECF200073345 /* AppDelegate.swift in Sources */,
 				0375116E28BC27820060D304 /* ToastController.AnimParams.SetUp+Default.swift in Sources */,
 				0375117028BC27CC0060D304 /* ToastController.AnimParams.Animation+Default.swift in Sources */,
 				0375116328BC23FE0060D304 /* Combinator+Transform.swift in Sources */,
 				0375116928BC26250060D304 /* CubicBezierPoint+Default.swift in Sources */,
-				03554E8C28BCECF200073345 /* ViewController.swift in Sources */,
 				0375115C28BC231D0060D304 /* CubicBezierPoint.swift in Sources */,
 				0375117428BC29CC0060D304 /* ToastController.AnimParams+Default.swift in Sources */,
 				0375116C28BC26A70060D304 /* ToastController.swift in Sources */,
@@ -386,12 +452,13 @@
 /* Begin XCBuildConfiguration section */
 		03554E7F28BCECDE00073345 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 94F50EBF2BC646348760C578 /* Pods-BoosterKit-Demo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 78S7RATURK;
-				INFOPLIST_FILE = "BoosterKit-Demo/Info.plist";
+				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -405,12 +472,13 @@
 		};
 		03554E8028BCECDE00073345 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9861FABEC4553D95F3BFD84F /* Pods-BoosterKit-Demo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 78S7RATURK;
-				INFOPLIST_FILE = "BoosterKit-Demo/Info.plist";
+				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

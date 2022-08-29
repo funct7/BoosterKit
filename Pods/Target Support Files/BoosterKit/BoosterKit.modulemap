@@ -1,0 +1,6 @@
+framework module BoosterKit {
+  umbrella header "BoosterKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

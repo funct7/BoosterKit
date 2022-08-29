@@ -1,0 +1,16 @@
+PODS:
+  - BoosterKit (0.0.1)
+
+DEPENDENCIES:
+  - BoosterKit (from `.`)
+
+EXTERNAL SOURCES:
+  BoosterKit:
+    :path: "."
+
+SPEC CHECKSUMS:
+  BoosterKit: 7640e7588c0e99f407725382080f74d77a4e2750
+
+PODFILE CHECKSUM: e62b0fe708cd8c5eb0c77ceb540de7ca2be5c621
+
+COCOAPODS: 1.11.3
