@@ -12,6 +12,7 @@
 		03554E9528BCF39000073345 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8528BCECF200073345 /* LaunchScreen.storyboard */; };
 		03554E9628BCF39400073345 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8728BCECF200073345 /* Main.storyboard */; };
 		03554E9828BCF39800073345 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03554E8928BCECF200073345 /* AppDelegate.swift */; };
+		0361FBEE28BD6B5000523A2B /* BoosterKitError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0361FBED28BD6B5000523A2B /* BoosterKitError.swift */; };
 		0375115C28BC231D0060D304 /* CubicBezierPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375115B28BC231D0060D304 /* CubicBezierPoint.swift */; };
 		0375116328BC23FE0060D304 /* Combinator+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375116228BC23FE0060D304 /* Combinator+Transform.swift */; };
 		0375116928BC26250060D304 /* CubicBezierPoint+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375116828BC26250060D304 /* CubicBezierPoint+Default.swift */; };
@@ -48,6 +49,7 @@
 		03554E8828BCECF200073345 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		03554E8928BCECF200073345 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03554E8A28BCECF200073345 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0361FBED28BD6B5000523A2B /* BoosterKitError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoosterKitError.swift; sourceTree = "<group>"; };
 		0375115B28BC231D0060D304 /* CubicBezierPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubicBezierPoint.swift; sourceTree = "<group>"; };
 		0375116228BC23FE0060D304 /* Combinator+Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combinator+Transform.swift"; sourceTree = "<group>"; };
 		0375116828BC26250060D304 /* CubicBezierPoint+Default.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CubicBezierPoint+Default.swift"; sourceTree = "<group>"; };
@@ -111,6 +113,14 @@
 			path = "BoosterKit-Demo";
 			sourceTree = "<group>";
 		};
+		0361FBEC28BD6B4300523A2B /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				0361FBED28BD6B5000523A2B /* BoosterKitError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
 		0375115A28BC230A0060D304 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,6 +167,7 @@
 		03A0FB4128BB25DD00B8D064 /* BoosterKit */ = {
 			isa = PBXGroup;
 			children = (
+				0361FBEC28BD6B4300523A2B /* Error */,
 				03A0FB5928BB263600B8D064 /* Function */,
 				03A0FB5C28BB267D00B8D064 /* UI */,
 				03A0FB4228BB25DD00B8D064 /* BoosterKit.h */,
@@ -425,6 +436,7 @@
 				0375117228BC27F80060D304 /* ToastController.AnimParams.TearDown+Default.swift in Sources */,
 				03A0FB5B28BB264400B8D064 /* Scoped.swift in Sources */,
 				03A0FB5E28BB268F00B8D064 /* StringRenderer.swift in Sources */,
+				0361FBEE28BD6B5000523A2B /* BoosterKitError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
