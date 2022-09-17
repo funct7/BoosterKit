@@ -38,7 +38,7 @@ class ISO8601DateTests : XCTestCase {
         expect(sut2).to(equal(sut_sep7))
         expect(sut_sep7).to(equal(sut2))
         
-        expect(try ISO8601Date(year: 2022, month: 9, day: 31)).to(throwError(GeneralError.illegalArgument))
+        expect(try ISO8601Date(year: 2022, month: 9, day: 31)).to(throwError(BoosterKitError.illegalArgument))
         
         let sut3 = try ISO8601Date(string: stringRepresentation)
         expect(sut3.description).to(equal(stringRepresentation))
@@ -49,7 +49,7 @@ class ISO8601DateTests : XCTestCase {
     
     func test_instantRange() throws {
         let sut_sep7 = ISO8601Date(date: date_sep7)
-        let date_sep8 = date_sep7.addingDay(1)
+        let date_sep8 = date_sep7.adding(.day(1))
         let sut_sep8 = ISO8601Date(date: date_sep8)
         
         XCTAssertEqual(sut_sep7.instantRange, date_sep7 ..< date_sep8)
@@ -70,10 +70,10 @@ class ISO8601DateTests : XCTestCase {
     func test_containsInstant() {
         XCTAssertTrue(ISO8601Date().contains(instant: Date()))
         
-        let date_sep6 = date_sep7.addingTimeInterval(.makeMillis(-1)),
+        let date_sep6 = date_sep7.addingTimeInterval(-0.001),
             date_sep7_2 = cal.date(from: withVar(dc_sep7) { $0.hour = 8 })!,
             date_sep8 = cal.date(from: withVar(dc_sep7) { $0.day = 8 })!,
-            date_sep7_3 = date_sep8.addingTimeInterval(.makeMillis(-1))
+            date_sep7_3 = date_sep8.addingTimeInterval(-0.001)
         
         let sut_sep6 = ISO8601Date(date: date_sep6),
             sut_sep7 = ISO8601Date(date: date_sep7),

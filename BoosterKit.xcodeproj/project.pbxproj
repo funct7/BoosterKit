@@ -13,6 +13,7 @@
 		0313BA9728D56CC100307576 /* ISO8601DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0313BA9628D56CC100307576 /* ISO8601DateTests.swift */; };
 		0313BA9928D570B100307576 /* FixedTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0313BA9828D570B100307576 /* FixedTimeInterval.swift */; };
 		0313BA9C28D570CE00307576 /* Date+FixedTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0313BA9B28D570CE00307576 /* Date+FixedTimeInterval.swift */; };
+		034F930B28D572DF0035FDC9 /* FixedTimeIntervalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034F930A28D572DF0035FDC9 /* FixedTimeIntervalTests.swift */; };
 		03554E9328BCF37C00073345 /* ToastDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03554E8328BCECF200073345 /* ToastDemoViewController.swift */; };
 		03554E9428BCF38300073345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8428BCECF200073345 /* Assets.xcassets */; };
 		03554E9528BCF39000073345 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8528BCECF200073345 /* LaunchScreen.storyboard */; };
@@ -56,6 +57,7 @@
 		0313BA9628D56CC100307576 /* ISO8601DateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISO8601DateTests.swift; sourceTree = "<group>"; };
 		0313BA9828D570B100307576 /* FixedTimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedTimeInterval.swift; sourceTree = "<group>"; };
 		0313BA9B28D570CE00307576 /* Date+FixedTimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+FixedTimeInterval.swift"; sourceTree = "<group>"; };
+		034F930A28D572DF0035FDC9 /* FixedTimeIntervalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedTimeIntervalTests.swift; sourceTree = "<group>"; };
 		03554E6E28BCECDD00073345 /* BoosterKit-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BoosterKit-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03554E8328BCECF200073345 /* ToastDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastDemoViewController.swift; sourceTree = "<group>"; };
 		03554E8428BCECF200073345 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -131,9 +133,9 @@
 		0313BA9328D56ACF00307576 /* Time */ = {
 			isa = PBXGroup;
 			children = (
-				0313BA9128D56ABF00307576 /* Weekday.swift */,
-				0313BA9428D56C7100307576 /* ISO8601Date.swift */,
 				0313BA9828D570B100307576 /* FixedTimeInterval.swift */,
+				0313BA9428D56C7100307576 /* ISO8601Date.swift */,
+				0313BA9128D56ABF00307576 /* Weekday.swift */,
 			);
 			path = Time;
 			sourceTree = "<group>";
@@ -246,6 +248,7 @@
 		03A0FB4C28BB25DD00B8D064 /* BoosterKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				034F930A28D572DF0035FDC9 /* FixedTimeIntervalTests.swift */,
 				0313BA9628D56CC100307576 /* ISO8601DateTests.swift */,
 				03A0FB4F28BB25DD00B8D064 /* Info.plist */,
 			);
@@ -571,6 +574,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				034F930B28D572DF0035FDC9 /* FixedTimeIntervalTests.swift in Sources */,
 				0313BA9728D56CC100307576 /* ISO8601DateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
