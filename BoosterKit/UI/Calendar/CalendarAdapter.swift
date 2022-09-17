@@ -122,7 +122,3 @@ public struct Month : Equatable { }
 public struct ISO8601Date : Equatable { }
 
 public struct CalendarAdapterContext { }
-
-public enum Weekday {
-    case sunday, monday, tuesday, wednesday, thursday, friday, saturday
-}
