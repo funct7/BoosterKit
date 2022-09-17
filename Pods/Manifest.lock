@@ -1,8 +1,14 @@
 PODS:
   - BoosterKit (0.0.1)
+  - Nimble (10.0.0)
 
 DEPENDENCIES:
   - BoosterKit (from `.`)
+  - Nimble (= 10.0.0)
+
+SPEC REPOS:
+  trunk:
+    - Nimble
 
 EXTERNAL SOURCES:
   BoosterKit:
@@ -10,7 +16,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   BoosterKit: 7640e7588c0e99f407725382080f74d77a4e2750
+  Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
 
-PODFILE CHECKSUM: e62b0fe708cd8c5eb0c77ceb540de7ca2be5c621
+PODFILE CHECKSUM: c09efe9c6363bdc2009aa48bfc44c5a1e737f30d
 
 COCOAPODS: 1.11.3

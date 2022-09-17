@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		0313BA8E28D55C5600307576 /* CalendarAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A6E44628D0B2D400814DD5 /* CalendarAdapter.swift */; };
 		0313BA9228D56ABF00307576 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0313BA9128D56ABF00307576 /* Weekday.swift */; };
+		0313BA9528D56C7100307576 /* ISO8601Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0313BA9428D56C7100307576 /* ISO8601Date.swift */; };
+		0313BA9728D56CC100307576 /* ISO8601DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0313BA9628D56CC100307576 /* ISO8601DateTests.swift */; };
+		0313BA9928D570B100307576 /* FixedTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0313BA9828D570B100307576 /* FixedTimeInterval.swift */; };
+		0313BA9C28D570CE00307576 /* Date+FixedTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0313BA9B28D570CE00307576 /* Date+FixedTimeInterval.swift */; };
 		03554E9328BCF37C00073345 /* ToastDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03554E8328BCECF200073345 /* ToastDemoViewController.swift */; };
 		03554E9428BCF38300073345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8428BCECF200073345 /* Assets.xcassets */; };
 		03554E9528BCF39000073345 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8528BCECF200073345 /* LaunchScreen.storyboard */; };
@@ -26,12 +30,12 @@
 		0375117428BC29CC0060D304 /* ToastController.AnimParams+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375117328BC29CC0060D304 /* ToastController.AnimParams+Default.swift */; };
 		039E79AF28BD73F2004F356D /* ToastController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039E79AE28BD73F2004F356D /* ToastController+Extension.swift */; };
 		03A0FB4928BB25DD00B8D064 /* BoosterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A0FB3F28BB25DD00B8D064 /* BoosterKit.framework */; };
-		03A0FB4E28BB25DD00B8D064 /* BoosterKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB4D28BB25DD00B8D064 /* BoosterKitTests.swift */; };
 		03A0FB5028BB25DD00B8D064 /* BoosterKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 03A0FB4228BB25DD00B8D064 /* BoosterKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		03A0FB5B28BB264400B8D064 /* Scoped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB5A28BB264400B8D064 /* Scoped.swift */; };
 		03A0FB5E28BB268F00B8D064 /* StringRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB5D28BB268F00B8D064 /* StringRenderer.swift */; };
 		03AB9DA828BCF57400BD568B /* ImageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB9DA728BCF57400BD568B /* ImageTextView.swift */; };
 		03AB9DAA28BCF5AA00BD568B /* Toast.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03AB9DA928BCF5AA00BD568B /* Toast.xib */; };
+		1E245161C554809200B9E2AD /* Pods_BoosterKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47A1415A7F685026CA95891B /* Pods_BoosterKitTests.framework */; };
 		3A59D44A12247A317E98847E /* Pods_BoosterKit_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7EC8F81B467B8B42FA1E2E2 /* Pods_BoosterKit_Demo.framework */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +52,10 @@
 /* Begin PBXFileReference section */
 		0313BA8F28D55D3000307576 /* BoosterKit.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = BoosterKit.xctestplan; sourceTree = "<group>"; };
 		0313BA9128D56ABF00307576 /* Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
+		0313BA9428D56C7100307576 /* ISO8601Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISO8601Date.swift; sourceTree = "<group>"; };
+		0313BA9628D56CC100307576 /* ISO8601DateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISO8601DateTests.swift; sourceTree = "<group>"; };
+		0313BA9828D570B100307576 /* FixedTimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedTimeInterval.swift; sourceTree = "<group>"; };
+		0313BA9B28D570CE00307576 /* Date+FixedTimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+FixedTimeInterval.swift"; sourceTree = "<group>"; };
 		03554E6E28BCECDD00073345 /* BoosterKit-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BoosterKit-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03554E8328BCECF200073345 /* ToastDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastDemoViewController.swift; sourceTree = "<group>"; };
 		03554E8428BCECF200073345 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -70,16 +78,18 @@
 		03A0FB4228BB25DD00B8D064 /* BoosterKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BoosterKit.h; sourceTree = "<group>"; };
 		03A0FB4328BB25DD00B8D064 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03A0FB4828BB25DD00B8D064 /* BoosterKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoosterKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		03A0FB4D28BB25DD00B8D064 /* BoosterKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoosterKitTests.swift; sourceTree = "<group>"; };
 		03A0FB4F28BB25DD00B8D064 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03A0FB5A28BB264400B8D064 /* Scoped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoped.swift; sourceTree = "<group>"; };
 		03A0FB5D28BB268F00B8D064 /* StringRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringRenderer.swift; sourceTree = "<group>"; };
 		03A6E44628D0B2D400814DD5 /* CalendarAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAdapter.swift; sourceTree = "<group>"; };
 		03AB9DA728BCF57400BD568B /* ImageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTextView.swift; sourceTree = "<group>"; };
 		03AB9DA928BCF5AA00BD568B /* Toast.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Toast.xib; sourceTree = "<group>"; };
+		137DD1CF50D8D399383005F2 /* Pods-BoosterKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoosterKitTests.debug.xcconfig"; path = "Target Support Files/Pods-BoosterKitTests/Pods-BoosterKitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		47A1415A7F685026CA95891B /* Pods_BoosterKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BoosterKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94F50EBF2BC646348760C578 /* Pods-BoosterKit-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoosterKit-Demo.debug.xcconfig"; path = "Target Support Files/Pods-BoosterKit-Demo/Pods-BoosterKit-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		9861FABEC4553D95F3BFD84F /* Pods-BoosterKit-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoosterKit-Demo.release.xcconfig"; path = "Target Support Files/Pods-BoosterKit-Demo/Pods-BoosterKit-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		A7EC8F81B467B8B42FA1E2E2 /* Pods_BoosterKit_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BoosterKit_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EEEE6DBB4CD00D87D8114F30 /* Pods-BoosterKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoosterKitTests.release.xcconfig"; path = "Target Support Files/Pods-BoosterKitTests/Pods-BoosterKitTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +113,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03A0FB4928BB25DD00B8D064 /* BoosterKit.framework in Frameworks */,
+				1E245161C554809200B9E2AD /* Pods_BoosterKitTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,8 +132,26 @@
 			isa = PBXGroup;
 			children = (
 				0313BA9128D56ABF00307576 /* Weekday.swift */,
+				0313BA9428D56C7100307576 /* ISO8601Date.swift */,
+				0313BA9828D570B100307576 /* FixedTimeInterval.swift */,
 			);
 			path = Time;
+			sourceTree = "<group>";
+		};
+		0313BA9A28D570C600307576 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				0313BA9B28D570CE00307576 /* Date+FixedTimeInterval.swift */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
+		0313BA9D28D570EC00307576 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				0361FBF028BD6CA600523A2B /* CGPoint+Extension.swift */,
+			);
+			path = UIKit;
 			sourceTree = "<group>";
 		};
 		03554E8228BCECF200073345 /* BoosterKit-Demo */ = {
@@ -149,7 +178,8 @@
 		0361FBEF28BD6C9300523A2B /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				0361FBF028BD6CA600523A2B /* CGPoint+Extension.swift */,
+				0313BA9A28D570C600307576 /* Foundation */,
+				0313BA9D28D570EC00307576 /* UIKit */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -216,7 +246,7 @@
 		03A0FB4C28BB25DD00B8D064 /* BoosterKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				03A0FB4D28BB25DD00B8D064 /* BoosterKitTests.swift */,
+				0313BA9628D56CC100307576 /* ISO8601DateTests.swift */,
 				03A0FB4F28BB25DD00B8D064 /* Info.plist */,
 			);
 			path = BoosterKitTests;
@@ -264,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				A7EC8F81B467B8B42FA1E2E2 /* Pods_BoosterKit_Demo.framework */,
+				47A1415A7F685026CA95891B /* Pods_BoosterKitTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -273,6 +304,8 @@
 			children = (
 				94F50EBF2BC646348760C578 /* Pods-BoosterKit-Demo.debug.xcconfig */,
 				9861FABEC4553D95F3BFD84F /* Pods-BoosterKit-Demo.release.xcconfig */,
+				137DD1CF50D8D399383005F2 /* Pods-BoosterKitTests.debug.xcconfig */,
+				EEEE6DBB4CD00D87D8114F30 /* Pods-BoosterKitTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -332,9 +365,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 03A0FB5628BB25DD00B8D064 /* Build configuration list for PBXNativeTarget "BoosterKitTests" */;
 			buildPhases = (
+				09989838ED5DCDD572CB6999 /* [CP] Check Pods Manifest.lock */,
 				03A0FB4428BB25DD00B8D064 /* Sources */,
 				03A0FB4528BB25DD00B8D064 /* Frameworks */,
 				03A0FB4628BB25DD00B8D064 /* Resources */,
+				764611FD56638FE9EB32CF5F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -416,6 +451,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		09989838ED5DCDD572CB6999 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BoosterKitTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4AA35389DBD88DC7D33F93A9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -431,6 +488,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BoosterKit-Demo/Pods-BoosterKit-Demo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		764611FD56638FE9EB32CF5F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BoosterKitTests/Pods-BoosterKitTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BoosterKitTests/Pods-BoosterKitTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BoosterKitTests/Pods-BoosterKitTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E66F91104F1B1F0D4A30AE7D /* [CP] Check Pods Manifest.lock */ = {
@@ -476,17 +550,20 @@
 				039E79AF28BD73F2004F356D /* ToastController+Extension.swift in Sources */,
 				0375117028BC27CC0060D304 /* ToastController.AnimParams.Animation+Default.swift in Sources */,
 				0313BA8E28D55C5600307576 /* CalendarAdapter.swift in Sources */,
+				0313BA9528D56C7100307576 /* ISO8601Date.swift in Sources */,
 				0361FBF228BD6D8A00523A2B /* CubicBezierPoint+Default.swift in Sources */,
 				0361FBF128BD6CA600523A2B /* CGPoint+Extension.swift in Sources */,
 				0375116328BC23FE0060D304 /* Combinator+Transform.swift in Sources */,
 				0375115C28BC231D0060D304 /* CubicBezierPoint.swift in Sources */,
 				0375117428BC29CC0060D304 /* ToastController.AnimParams+Default.swift in Sources */,
+				0313BA9C28D570CE00307576 /* Date+FixedTimeInterval.swift in Sources */,
 				0375116C28BC26A70060D304 /* ToastController.swift in Sources */,
 				0375117228BC27F80060D304 /* ToastController.AnimParams.TearDown+Default.swift in Sources */,
 				0313BA9228D56ABF00307576 /* Weekday.swift in Sources */,
 				03A0FB5B28BB264400B8D064 /* Scoped.swift in Sources */,
 				03A0FB5E28BB268F00B8D064 /* StringRenderer.swift in Sources */,
 				0361FBEE28BD6B5000523A2B /* BoosterKitError.swift in Sources */,
+				0313BA9928D570B100307576 /* FixedTimeInterval.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,7 +571,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03A0FB4E28BB25DD00B8D064 /* BoosterKitTests.swift in Sources */,
+				0313BA9728D56CC100307576 /* ISO8601DateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -743,8 +820,9 @@
 		};
 		03A0FB5728BB25DD00B8D064 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 137DD1CF50D8D399383005F2 /* Pods-BoosterKitTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 78S7RATURK;
 				INFOPLIST_FILE = BoosterKitTests/Info.plist;
@@ -762,8 +840,9 @@
 		};
 		03A0FB5828BB25DD00B8D064 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EEEE6DBB4CD00D87D8114F30 /* Pods-BoosterKitTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 78S7RATURK;
 				INFOPLIST_FILE = BoosterKitTests/Info.plist;

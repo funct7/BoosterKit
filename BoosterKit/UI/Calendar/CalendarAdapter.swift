@@ -119,6 +119,4 @@ open class AnyCalendarAdapterDelegate<Cell> : CalendarAdapterDelegate where Cell
 
 public struct Month : Equatable { }
 
-public struct ISO8601Date : Equatable { }
-
 public struct CalendarAdapterContext { }
