@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0313BA8E28D55C5600307576 /* CalendarAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A6E44628D0B2D400814DD5 /* CalendarAdapter.swift */; };
 		03554E9328BCF37C00073345 /* ToastDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03554E8328BCECF200073345 /* ToastDemoViewController.swift */; };
 		03554E9428BCF38300073345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8428BCECF200073345 /* Assets.xcassets */; };
 		03554E9528BCF39000073345 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8528BCECF200073345 /* LaunchScreen.storyboard */; };
@@ -71,6 +72,7 @@
 		03A0FB4F28BB25DD00B8D064 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03A0FB5A28BB264400B8D064 /* Scoped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoped.swift; sourceTree = "<group>"; };
 		03A0FB5D28BB268F00B8D064 /* StringRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringRenderer.swift; sourceTree = "<group>"; };
+		03A6E44628D0B2D400814DD5 /* CalendarAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAdapter.swift; sourceTree = "<group>"; };
 		03AB9DA728BCF57400BD568B /* ImageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTextView.swift; sourceTree = "<group>"; };
 		03AB9DA928BCF5AA00BD568B /* Toast.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Toast.xib; sourceTree = "<group>"; };
 		94F50EBF2BC646348760C578 /* Pods-BoosterKit-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoosterKit-Demo.debug.xcconfig"; path = "Target Support Files/Pods-BoosterKit-Demo/Pods-BoosterKit-Demo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -213,11 +215,20 @@
 		03A0FB5C28BB267D00B8D064 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				03A6E44528D0B25C00814DD5 /* Calendar */,
 				0375115A28BC230A0060D304 /* Data */,
 				0375116A28BC26A70060D304 /* Toast */,
 				03A0FB5D28BB268F00B8D064 /* StringRenderer.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		03A6E44528D0B25C00814DD5 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				03A6E44628D0B2D400814DD5 /* CalendarAdapter.swift */,
+			);
+			path = Calendar;
 			sourceTree = "<group>";
 		};
 		03AB9DA628BCF55B00BD568B /* Toast */ = {
@@ -445,6 +456,7 @@
 				0375116E28BC27820060D304 /* ToastController.AnimParams.SetUp+Default.swift in Sources */,
 				039E79AF28BD73F2004F356D /* ToastController+Extension.swift in Sources */,
 				0375117028BC27CC0060D304 /* ToastController.AnimParams.Animation+Default.swift in Sources */,
+				0313BA8E28D55C5600307576 /* CalendarAdapter.swift in Sources */,
 				0361FBF228BD6D8A00523A2B /* CubicBezierPoint+Default.swift in Sources */,
 				0361FBF128BD6CA600523A2B /* CGPoint+Extension.swift in Sources */,
 				0375116328BC23FE0060D304 /* Combinator+Transform.swift in Sources */,
