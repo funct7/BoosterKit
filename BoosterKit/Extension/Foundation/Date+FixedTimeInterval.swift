@@ -9,8 +9,6 @@ import Foundation
 
 public extension Date {
     
-    func adding(_ fixedTimeInterval: FixedTimeInterval) -> Date {
-        self
-    }
+    func adding(_ fixedTimeInterval: FixedTimeInterval) -> Date { addingTimeInterval(fixedTimeInterval.value) }
     
 }
