@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "7CF128FE-30A5-424E-BF6B-2096E7049883",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:..\/BoosterKit.xcodeproj",
+        "identifier" : "03A0FB4728BB25DD00B8D064",
+        "name" : "BoosterKitTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -44,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0313BA8F28D55D3000307576 /* BoosterKit.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = BoosterKit.xctestplan; sourceTree = "<group>"; };
 		03554E6E28BCECDD00073345 /* BoosterKit-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BoosterKit-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03554E8328BCECF200073345 /* ToastDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastDemoViewController.swift; sourceTree = "<group>"; };
 		03554E8428BCECF200073345 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -158,6 +159,7 @@
 		03A0FB3528BB25DD00B8D064 = {
 			isa = PBXGroup;
 			children = (
+				0313BA8F28D55D3000307576 /* BoosterKit.xctestplan */,
 				03A0FB4128BB25DD00B8D064 /* BoosterKit */,
 				03A0FB4C28BB25DD00B8D064 /* BoosterKitTests */,
 				03554E8228BCECF200073345 /* BoosterKit-Demo */,
