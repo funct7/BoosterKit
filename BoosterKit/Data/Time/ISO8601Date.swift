@@ -23,7 +23,7 @@ public struct ISO8601Date {
     
     /**
      - Precondition: Each provided date component must be valid; i.e. providing `2022`, `9`, `31` will throw an error because there is no Sep 31st.
-     - Throws: `GeneralError.illegalArgument`
+     - Throws: `BoosterKitError.illegalArgument`
      */
     public init(year: Int, month: Int, day: Int, timeZone: TimeZone = .autoupdatingCurrent) throws {
         let dc = DateComponents(timeZone: timeZone, year: year, month: month, day: day)
@@ -49,8 +49,8 @@ public struct ISO8601Date {
     }
     
     /**
-     - Parameter string: `yyyyMMdd`, `yyyy-MM-dd` 형식의 `String`.
-     - Throws:`GeneralError.illegalArgument` - 형식과 다른 `String`.
+     - Parameter string: `yyyyMMdd`, `yyyy-MM-dd` formatted `String`.
+     - Throws:`BoosterKitError.illegalArgument` -  `String` with an unsupported format.
      */
     public init(string: String, timeZone: TimeZone = .autoupdatingCurrent) throws {
         let dateFormatter = ISO8601DateFormatter.with(timeZone: timeZone)
