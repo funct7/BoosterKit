@@ -51,10 +51,11 @@ class ISO8601MonthTests : XCTestCase {
     
     func test_instantRange() throws {
         let sut_sep = SUT(date: date_sep7)
-        let date_oct1 = cal.date(from: DateComponents(year: 2022, month: 10))!
+        let date_sep1 = cal.date(from: DateComponents(year: 2022, month: 9))!,
+            date_oct1 = cal.date(from: DateComponents(year: 2022, month: 10))!
         let sut_oct = SUT(date: date_oct1)
         
-        XCTAssertEqual(sut_sep.instantRange, date_sep7 ..< date_oct1)
+        XCTAssertEqual(sut_sep.instantRange, date_sep1 ..< date_oct1)
         XCTAssertEqual(sut_sep.instantRange.upperBound, sut_oct.instantRange.lowerBound)
     }
     
