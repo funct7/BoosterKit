@@ -37,6 +37,7 @@
 		03A0FB5028BB25DD00B8D064 /* BoosterKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 03A0FB4228BB25DD00B8D064 /* BoosterKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		03A0FB5B28BB264400B8D064 /* Scoped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB5A28BB264400B8D064 /* Scoped.swift */; };
 		03A0FB5E28BB268F00B8D064 /* StringRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB5D28BB268F00B8D064 /* StringRenderer.swift */; };
+		03A95EBF28D6EB5300F24949 /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A95EBE28D6EB5300F24949 /* Pair.swift */; };
 		03AB9DA828BCF57400BD568B /* ImageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB9DA728BCF57400BD568B /* ImageTextView.swift */; };
 		03AB9DAA28BCF5AA00BD568B /* Toast.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03AB9DA928BCF5AA00BD568B /* Toast.xib */; };
 		1E245161C554809200B9E2AD /* Pods_BoosterKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47A1415A7F685026CA95891B /* Pods_BoosterKitTests.framework */; };
@@ -90,6 +91,7 @@
 		03A0FB5A28BB264400B8D064 /* Scoped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoped.swift; sourceTree = "<group>"; };
 		03A0FB5D28BB268F00B8D064 /* StringRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringRenderer.swift; sourceTree = "<group>"; };
 		03A6E44628D0B2D400814DD5 /* CalendarAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAdapter.swift; sourceTree = "<group>"; };
+		03A95EBE28D6EB5300F24949 /* Pair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pair.swift; sourceTree = "<group>"; };
 		03AB9DA728BCF57400BD568B /* ImageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTextView.swift; sourceTree = "<group>"; };
 		03AB9DA928BCF5AA00BD568B /* Toast.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Toast.xib; sourceTree = "<group>"; };
 		137DD1CF50D8D399383005F2 /* Pods-BoosterKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoosterKitTests.debug.xcconfig"; path = "Target Support Files/Pods-BoosterKitTests/Pods-BoosterKitTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				0313BA9328D56ACF00307576 /* Time */,
+				03A95EBE28D6EB5300F24949 /* Pair.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 				0361FBF128BD6CA600523A2B /* CGPoint+Extension.swift in Sources */,
 				0375116328BC23FE0060D304 /* Combinator+Transform.swift in Sources */,
 				0375115C28BC231D0060D304 /* CubicBezierPoint.swift in Sources */,
+				03A95EBF28D6EB5300F24949 /* Pair.swift in Sources */,
 				0375117428BC29CC0060D304 /* ToastController.AnimParams+Default.swift in Sources */,
 				0313BA9C28D570CE00307576 /* Date+FixedTimeInterval.swift in Sources */,
 				0375116C28BC26A70060D304 /* ToastController.swift in Sources */,
