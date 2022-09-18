@@ -14,7 +14,7 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:..\/BoosterKit.xcodeproj",
+        "containerPath" : "container:BoosterKit.xcodeproj",
         "identifier" : "03A0FB4728BB25DD00B8D064",
         "name" : "BoosterKitTests"
       }
