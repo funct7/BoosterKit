@@ -36,11 +36,9 @@ public struct ISO8601Date {
     
     public init(date: Date = Date(), timeZone: TimeZone = .autoupdatingCurrent) {
         let cal = withVar(Calendar(identifier: .gregorian)) { $0.timeZone = timeZone }
-        let dc = cal.dateComponents([.year, .month, .day], from: date)
-        let midnight = cal.date(from: dc)!
         
         self.timeZone = timeZone
-        self._range = (midnight ..< midnight.adding(.day(1)))
+        self._range = Range(dateInterval: cal.dateInterval(of: .day, for: date)!)
         self._dateFormatter = .with(timeZone: timeZone)
     }
     
@@ -129,6 +127,14 @@ private extension ISO8601DateFormatter {
             $0.formatOptions = [.withFullDate, .withDashSeparatorInDate,]
             $0.timeZone = timeZone
         }
+    }
+    
+}
+
+private extension Range where Bound == Date {
+    
+    init(dateInterval: DateInterval) {
+        self = (dateInterval.start ..< dateInterval.end)
     }
     
 }
