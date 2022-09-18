@@ -9,6 +9,7 @@ import XCTest
 import BoosterKit
 import Nimble
 
+// TODO: test methods where the created ISO8601Date and provided arguments are in different time zones
 class ISO8601DateTests : XCTestCase {
 
     var cal: Calendar!

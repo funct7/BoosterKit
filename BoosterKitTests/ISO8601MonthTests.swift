@@ -9,6 +9,7 @@ import XCTest
 import BoosterKit
 import Nimble
 
+// TODO: test methods where the created ISO8601Month and provided arguments are in different time zones
 class ISO8601MonthTests : XCTestCase {
     
     typealias SUT = ISO8601Month
