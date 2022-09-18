@@ -15,6 +15,8 @@
 		0313BA9C28D570CE00307576 /* Date+FixedTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0313BA9B28D570CE00307576 /* Date+FixedTimeInterval.swift */; };
 		034F930B28D572DF0035FDC9 /* FixedTimeIntervalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034F930A28D572DF0035FDC9 /* FixedTimeIntervalTests.swift */; };
 		034F930E28D5761C0035FDC9 /* Date.FixedTimeIntervalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034F930D28D5761C0035FDC9 /* Date.FixedTimeIntervalTests.swift */; };
+		034F931028D578040035FDC9 /* ISO8601Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034F930F28D578040035FDC9 /* ISO8601Month.swift */; };
+		034F931228D578460035FDC9 /* ISO8601MonthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034F931128D578460035FDC9 /* ISO8601MonthTests.swift */; };
 		03554E9328BCF37C00073345 /* ToastDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03554E8328BCECF200073345 /* ToastDemoViewController.swift */; };
 		03554E9428BCF38300073345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8428BCECF200073345 /* Assets.xcassets */; };
 		03554E9528BCF39000073345 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03554E8528BCECF200073345 /* LaunchScreen.storyboard */; };
@@ -60,6 +62,8 @@
 		0313BA9B28D570CE00307576 /* Date+FixedTimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+FixedTimeInterval.swift"; sourceTree = "<group>"; };
 		034F930A28D572DF0035FDC9 /* FixedTimeIntervalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedTimeIntervalTests.swift; sourceTree = "<group>"; };
 		034F930D28D5761C0035FDC9 /* Date.FixedTimeIntervalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.FixedTimeIntervalTests.swift; sourceTree = "<group>"; };
+		034F930F28D578040035FDC9 /* ISO8601Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISO8601Month.swift; sourceTree = "<group>"; };
+		034F931128D578460035FDC9 /* ISO8601MonthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISO8601MonthTests.swift; sourceTree = "<group>"; };
 		03554E6E28BCECDD00073345 /* BoosterKit-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BoosterKit-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03554E8328BCECF200073345 /* ToastDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastDemoViewController.swift; sourceTree = "<group>"; };
 		03554E8428BCECF200073345 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -137,6 +141,7 @@
 			children = (
 				0313BA9828D570B100307576 /* FixedTimeInterval.swift */,
 				0313BA9428D56C7100307576 /* ISO8601Date.swift */,
+				034F930F28D578040035FDC9 /* ISO8601Month.swift */,
 				0313BA9128D56ABF00307576 /* Weekday.swift */,
 			);
 			path = Time;
@@ -261,6 +266,7 @@
 				034F930C28D576120035FDC9 /* Extension */,
 				034F930A28D572DF0035FDC9 /* FixedTimeIntervalTests.swift */,
 				0313BA9628D56CC100307576 /* ISO8601DateTests.swift */,
+				034F931128D578460035FDC9 /* ISO8601MonthTests.swift */,
 				03A0FB4F28BB25DD00B8D064 /* Info.plist */,
 			);
 			path = BoosterKitTests;
@@ -576,6 +582,7 @@
 				0313BA9228D56ABF00307576 /* Weekday.swift in Sources */,
 				03A0FB5B28BB264400B8D064 /* Scoped.swift in Sources */,
 				03A0FB5E28BB268F00B8D064 /* StringRenderer.swift in Sources */,
+				034F931028D578040035FDC9 /* ISO8601Month.swift in Sources */,
 				0361FBEE28BD6B5000523A2B /* BoosterKitError.swift in Sources */,
 				0313BA9928D570B100307576 /* FixedTimeInterval.swift in Sources */,
 			);
@@ -585,6 +592,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				034F931228D578460035FDC9 /* ISO8601MonthTests.swift in Sources */,
 				034F930B28D572DF0035FDC9 /* FixedTimeIntervalTests.swift in Sources */,
 				034F930E28D5761C0035FDC9 /* Date.FixedTimeIntervalTests.swift in Sources */,
 				0313BA9728D56CC100307576 /* ISO8601DateTests.swift in Sources */,
