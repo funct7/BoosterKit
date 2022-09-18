@@ -72,9 +72,22 @@ public extension ISO8601Month {
 
 extension ISO8601Month : CustomStringConvertible { }
 
-extension ISO8601Month : Equatable { }
+extension ISO8601Month : Equatable {
+    
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.instantRange == rhs.instantRange && lhs.timeZone == rhs.timeZone
+    }
+    
+}
 
-extension ISO8601Month : Hashable { }
+extension ISO8601Month : Hashable {
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(instantRange.hashValue)
+        hasher.combine(timeZone.hashValue)
+    }
+    
+}
 
 private extension ISO8601DateFormatter {
     

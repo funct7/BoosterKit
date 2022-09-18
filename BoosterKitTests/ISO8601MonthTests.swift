@@ -105,6 +105,15 @@ class ISO8601MonthTests : XCTestCase {
         XCTAssertTrue(sut_oct.contains(instant: date_oct1))
     }
     
+    func test_equatable() throws {
+        let sep_ko = try ISO8601Month(year: 2022, month: 9, timeZone: .seoul),
+            sep_jp = try ISO8601Month(year: 2022, month: 9, timeZone: .tokyo)
+        
+        XCTAssertNotEqual(sep_ko, sep_jp)
+        XCTAssertEqual(sep_ko, sep_ko)
+        XCTAssertEqual(sep_jp, sep_jp)
+    }
+    
     func test_hashable() {
         var set = Set<SUT>()
         let sut = SUT(date: date_sep7)
