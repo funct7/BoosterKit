@@ -115,15 +115,11 @@ class ISO8601DateTests : XCTestCase {
     }
     
     func test_comparable() throws {
-        let tz_ko = TimeZone(identifier: "Asia/Seoul")!,      // GMT + 9
-            tz_jp = TimeZone(identifier: "Asia/Tokyo")!,      // GMT + 9
-            tz_hk = TimeZone(identifier: "Asia/Hong_Kong")!   // GMT + 8
-        
         // When same time zone
         let year = 2022, month = 9, day = 18
-        let sut_sep17_ko = try ISO8601Date(year: year, month: month, day: day-1, timeZone: tz_ko),
-            sut_sep18_ko = try ISO8601Date(year: year, month: month, day: day, timeZone: tz_ko),
-            sut_sep19_ko = try ISO8601Date(year: year, month: month, day: day+1, timeZone: tz_ko)
+        let sut_sep17_ko = try ISO8601Date(year: year, month: month, day: day-1, timeZone: .seoul),
+            sut_sep18_ko = try ISO8601Date(year: year, month: month, day: day, timeZone: .seoul),
+            sut_sep19_ko = try ISO8601Date(year: year, month: month, day: day+1, timeZone: .seoul)
         
         XCTAssertFalse(sut_sep17_ko < sut_sep17_ko)
         XCTAssertFalse(sut_sep17_ko > sut_sep17_ko)
@@ -147,7 +143,7 @@ class ISO8601DateTests : XCTestCase {
         XCTAssertTrue(sut_sep19_ko > sut_sep18_ko)
         
         // When different time zone with same offset
-        let sut_sep18_jp = try ISO8601Date(year: year, month: month, day: day, timeZone: tz_jp)
+        let sut_sep18_jp = try ISO8601Date(year: year, month: month, day: day, timeZone: .tokyo)
         XCTAssertFalse(sut_sep18_ko < sut_sep18_jp)
         XCTAssertFalse(sut_sep18_ko > sut_sep18_jp)
         XCTAssertFalse(sut_sep18_jp < sut_sep18_ko)
@@ -161,9 +157,9 @@ class ISO8601DateTests : XCTestCase {
         XCTAssertTrue(sut_sep18_jp < sut_sep19_ko)
         
         // When different time zone
-        let sut_sep17_hk = try ISO8601Date(year: year, month: month, day: day-1, timeZone: tz_hk),
-            sut_sep18_hk = try ISO8601Date(year: year, month: month, day: day, timeZone: tz_hk),
-            sut_sep19_hk = try ISO8601Date(year: year, month: month, day: day+1, timeZone: tz_hk)
+        let sut_sep17_hk = try ISO8601Date(year: year, month: month, day: day-1, timeZone: .hongKong),
+            sut_sep18_hk = try ISO8601Date(year: year, month: month, day: day, timeZone: .hongKong),
+            sut_sep19_hk = try ISO8601Date(year: year, month: month, day: day+1, timeZone: .hongKong)
         
         XCTAssertTrue(sut_sep17_ko < sut_sep17_hk)
         XCTAssertFalse(sut_sep17_ko > sut_sep17_hk)
@@ -181,31 +177,36 @@ class ISO8601DateTests : XCTestCase {
         XCTAssertTrue(sut_sep19_hk > sut_sep19_ko)
     }
     
-    func test_strideable() throws {
-        let tz_ko = TimeZone(identifier: "Asia/Seoul")!,      // GMT + 9
-            tz_jp = TimeZone(identifier: "Asia/Tokyo")!       // GMT + 9
-
-        let sut_feb1_ko = try ISO8601Date(year: 2020, month: 2, day: 1, timeZone: tz_ko),
-            sut_feb29_ko = try ISO8601Date(year: 2020, month: 2, day: 29, timeZone: tz_ko),
-            sut_mar1_ko = try ISO8601Date(year: 2020, month: 3, day: 1, timeZone: tz_ko)
+    // A working implementation of `distance(to:)` could not be achieved,
+    // since there is no meaningful distance for instances whose time zones differ.
+    // For this reason, `Strideable` conformance is dropped,
+    // and methods with similar signatures are provided.
+    func test_strideableLike() throws {
+        let sut_feb1_ko = try ISO8601Date(year: 2020, month: 2, day: 1, timeZone: .seoul),
+            sut_feb29_ko = try ISO8601Date(year: 2020, month: 2, day: 29, timeZone: .seoul),
+            sut_mar1_ko = try ISO8601Date(year: 2020, month: 3, day: 1, timeZone: .seoul)
         
         XCTAssertEqual(sut_feb1_ko.advanced(by: 28), sut_feb29_ko)
         XCTAssertEqual(sut_feb1_ko.advanced(by: 29), sut_mar1_ko)
+        XCTAssertEqual(sut_feb29_ko.advanced(by: 0), sut_feb29_ko)
+        XCTAssertEqual(sut_feb29_ko.advanced(by: -28), sut_feb1_ko)
+        XCTAssertEqual(sut_mar1_ko.advanced(by: -29), sut_feb1_ko)
         
-        XCTAssertEqual(sut_feb1_ko.distance(to: sut_feb29_ko), 28)
-        XCTAssertEqual(sut_feb1_ko.distance(to: sut_mar1_ko), 29)
+        XCTAssertEqual(try sut_feb1_ko.distance(to: sut_feb29_ko), 28)
+        XCTAssertEqual(try sut_feb1_ko.distance(to: sut_mar1_ko), 29)
+
+        XCTAssertEqual(try sut_feb29_ko.distance(to: sut_feb1_ko), -28)
+        XCTAssertEqual(try sut_mar1_ko.distance(to: sut_feb1_ko), -29)
         
-        XCTAssertEqual(sut_feb29_ko.distance(to: sut_feb1_ko), -28)
-        XCTAssertEqual(sut_mar1_ko.distance(to: sut_feb1_ko), -29)
-        
-        let sut_feb1_jp = try ISO8601Date(year: 2020, month: 2, day: 1, timeZone: tz_jp),
-            sut_feb29_jp = try ISO8601Date(year: 2020, month: 2, day: 29, timeZone: tz_jp)
+        let sut_feb1_jp = try ISO8601Date(year: 2020, month: 2, day: 1, timeZone: .tokyo),
+            sut_feb29_jp = try ISO8601Date(year: 2020, month: 2, day: 29, timeZone: .tokyo)
         
         XCTAssertNotEqual(sut_feb1_ko.advanced(by: 0), sut_feb1_jp)
-        XCTAssertEqual(sut_feb1_ko.distance(to: sut_feb1_jp), 0)
-        XCTAssertEqual(sut_feb1_ko.distance(to: sut_feb29_jp), 28)
+        XCTAssertEqual(try sut_feb1_ko.distance(to: sut_feb1_jp), 0)
+        XCTAssertEqual(try sut_feb1_ko.distance(to: sut_feb29_jp), 28)
         
+        let sut_feb1_hk = try ISO8601Date(year: 2020, month: 2, day: 1, timeZone: .hongKong)
+        expect(try sut_feb1_hk.distance(to: sut_feb1_ko)).to(throwError(BoosterKitError.illegalArgument))
     }
     
 }
-

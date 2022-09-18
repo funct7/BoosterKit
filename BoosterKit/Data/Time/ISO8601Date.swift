@@ -80,19 +80,29 @@ extension ISO8601Date : Equatable {
 extension ISO8601Date : Comparable {
     
     public static func < (lhs: ISO8601Date, rhs: ISO8601Date) -> Bool {
-        true
+        lhs._range.lowerBound < rhs._range.lowerBound
     }
     
 }
 
-extension ISO8601Date : Strideable {
+
+extension ISO8601Date {
     
     public func advanced(by n: Int) -> ISO8601Date {
-        self
+        ISO8601Date(date: instantRange.lowerBound.adding(.day(n)), timeZone: timeZone)
     }
     
-    public func distance(to other: ISO8601Date) -> Int {
-        0
+    /**
+     - Throws:
+        - `BoosterKitError.illegalArgument`: The `timeZone` of `other` has a different UTC offset
+            from the `timeZone` value of  the instance on which the method is called.
+     */
+    public func distance(to other: ISO8601Date) throws -> Int {
+        guard timeZone.secondsFromGMT() == other.timeZone.secondsFromGMT()
+        else { throw BoosterKitError.illegalArgument }
+        
+        let cal = withVar(Calendar(identifier: .gregorian)) { $0.timeZone = timeZone }
+        return cal.dateComponents([.day], from: instantRange.lowerBound, to: other.instantRange.lowerBound).day!
     }
     
 }
