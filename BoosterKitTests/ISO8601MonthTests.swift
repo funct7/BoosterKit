@@ -133,5 +133,99 @@ class ISO8601MonthTests : XCTestCase {
         expect(set).to(haveCount(2))
     }
 
+    func test_comparable() throws {
+        // When same time zone
+        let year = 2022, month = 9
+        let sut_aug_ko = try ISO8601Month(year: year, month: month-1, timeZone: .seoul),
+            sut_sep_ko = try ISO8601Month(year: year, month: month, timeZone: .seoul),
+            sut_oct_ko = try ISO8601Month(year: year, month: month+1, timeZone: .seoul)
+        
+        XCTAssertFalse(sut_aug_ko < sut_aug_ko)
+        XCTAssertFalse(sut_aug_ko > sut_aug_ko)
+        
+        XCTAssertTrue(sut_aug_ko < sut_sep_ko)
+        XCTAssertFalse(sut_aug_ko > sut_sep_ko)
+        
+        XCTAssertFalse(sut_sep_ko < sut_aug_ko)
+        XCTAssertTrue(sut_sep_ko > sut_aug_ko)
+        
+        XCTAssertTrue(sut_aug_ko < sut_oct_ko)
+        XCTAssertFalse(sut_aug_ko > sut_oct_ko)
+        
+        XCTAssertFalse(sut_oct_ko < sut_aug_ko)
+        XCTAssertTrue(sut_oct_ko > sut_aug_ko)
+        
+        XCTAssertTrue(sut_sep_ko < sut_oct_ko)
+        XCTAssertFalse(sut_sep_ko > sut_oct_ko)
+        
+        XCTAssertFalse(sut_oct_ko < sut_sep_ko)
+        XCTAssertTrue(sut_oct_ko > sut_sep_ko)
+        
+        // When different time zone with same offset
+        let sut_sep_jp = try ISO8601Month(year: year, month: month, timeZone: .tokyo)
+        XCTAssertFalse(sut_sep_ko < sut_sep_jp)
+        XCTAssertFalse(sut_sep_ko > sut_sep_jp)
+        XCTAssertFalse(sut_sep_jp < sut_sep_ko)
+        XCTAssertFalse(sut_sep_jp > sut_sep_ko)
+        
+        XCTAssertTrue(sut_sep_jp != sut_sep_ko) // different time zone, so not equal
+        XCTAssertFalse(sut_sep_jp == sut_sep_ko)
+        XCTAssertTrue(sut_sep_jp.instantRange == sut_sep_ko.instantRange)
+        
+        XCTAssertTrue(sut_aug_ko < sut_sep_jp)
+        XCTAssertTrue(sut_sep_jp < sut_oct_ko)
+        
+        // When different time zone
+        let sut_aug_hk = try ISO8601Month(year: year, month: month-1, timeZone: .hongKong),
+            sut_sep_hk = try ISO8601Month(year: year, month: month, timeZone: .hongKong),
+            sut_oct_hk = try ISO8601Month(year: year, month: month+1, timeZone: .hongKong)
+        
+        XCTAssertTrue(sut_aug_ko < sut_aug_hk)
+        XCTAssertFalse(sut_aug_ko > sut_aug_hk)
+        XCTAssertFalse(sut_aug_hk < sut_aug_ko)
+        XCTAssertTrue(sut_aug_hk > sut_aug_ko)
+        
+        XCTAssertTrue(sut_sep_ko < sut_sep_hk)
+        XCTAssertFalse(sut_sep_ko > sut_sep_hk)
+        XCTAssertFalse(sut_sep_hk < sut_sep_ko)
+        XCTAssertTrue(sut_sep_hk > sut_sep_ko)
+        
+        XCTAssertTrue(sut_oct_ko < sut_oct_hk)
+        XCTAssertFalse(sut_oct_ko > sut_oct_hk)
+        XCTAssertFalse(sut_oct_hk < sut_oct_ko)
+        XCTAssertTrue(sut_oct_hk > sut_oct_ko)
+    }
+    
+    // A working implementation of `distance(to:)` could not be achieved,
+    // since there is no meaningful distance for instances whose time zones differ.
+    // For this reason, `Strideable` conformance is dropped,
+    // and methods with similar signatures are provided.
+    func test_strideableLike() throws {
+        let sut_jan2020_ko = try ISO8601Month(year: 2020, month: 1, timeZone: .seoul),
+            sut_dec2020_ko = try ISO8601Month(year: 2020, month: 12, timeZone: .seoul),
+            sut_jan2021_ko = try ISO8601Month(year: 2021, month: 1, timeZone: .seoul)
+        
+        XCTAssertEqual(sut_jan2020_ko.advanced(by: 11), sut_dec2020_ko)
+        XCTAssertEqual(sut_jan2020_ko.advanced(by: 12), sut_jan2021_ko)
+        XCTAssertEqual(sut_dec2020_ko.advanced(by: 0), sut_dec2020_ko)
+        XCTAssertEqual(sut_dec2020_ko.advanced(by: -11), sut_jan2020_ko)
+        XCTAssertEqual(sut_jan2021_ko.advanced(by: -12), sut_jan2020_ko)
+        
+        XCTAssertEqual(try sut_jan2020_ko.distance(to: sut_dec2020_ko), 11)
+        XCTAssertEqual(try sut_jan2020_ko.distance(to: sut_jan2021_ko), 12)
+
+        XCTAssertEqual(try sut_dec2020_ko.distance(to: sut_jan2020_ko), -11)
+        XCTAssertEqual(try sut_jan2021_ko.distance(to: sut_jan2020_ko), -12)
+        
+        let sut_jan2020_jp = try ISO8601Month(year: 2020, month: 1, timeZone: .tokyo),
+            sut_dec2020_jp = try ISO8601Month(year: 2020, month: 12, timeZone: .tokyo)
+        
+        XCTAssertNotEqual(sut_jan2020_ko.advanced(by: 0), sut_jan2020_jp)
+        XCTAssertEqual(try sut_jan2020_ko.distance(to: sut_jan2020_jp), 0)
+        XCTAssertEqual(try sut_jan2020_ko.distance(to: sut_dec2020_jp), 11)
+        
+        let sut_jan2020_hk = try ISO8601Month(year: 2020, month: 1, timeZone: .hongKong)
+        expect(try sut_jan2020_hk.distance(to: sut_jan2020_ko)).to(throwError(BoosterKitError.illegalArgument))
+    }
     
 }

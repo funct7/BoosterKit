@@ -80,6 +80,40 @@ extension ISO8601Month : Equatable {
     
 }
 
+extension ISO8601Month : Comparable {
+    
+    public static func < (lhs: ISO8601Month, rhs: ISO8601Month) -> Bool {
+        lhs.instantRange.lowerBound < rhs.instantRange.lowerBound
+    }
+    
+}
+
+extension ISO8601Month {
+    
+    public func advanced(by n: Int) -> ISO8601Month {
+        ISO8601Month(
+            date: assign {
+                let cal = withVar(Calendar(identifier: .gregorian)) { $0.timeZone = timeZone }
+                return cal.date(byAdding: .month, value: n, to: instantRange.lowerBound)!
+            },
+            timeZone: timeZone)
+    }
+    
+    /**
+     - Throws:
+        - `BoosterKitError.illegalArgument`: The `timeZone` of `other` has a different UTC offset
+            from the `timeZone` value of  the instance on which the method is called.
+     */
+    public func distance(to other: ISO8601Month) throws -> Int {
+        guard timeZone.secondsFromGMT() == other.timeZone.secondsFromGMT()
+        else { throw BoosterKitError.illegalArgument }
+        
+        let cal = withVar(Calendar(identifier: .gregorian)) { $0.timeZone = timeZone }
+        return cal.dateComponents([.month], from: instantRange.lowerBound, to: other.instantRange.lowerBound).month!
+    }
+    
+}
+
 extension ISO8601Month : Hashable {
     
     public func hash(into hasher: inout Hasher) {
