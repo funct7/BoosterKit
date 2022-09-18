@@ -9,10 +9,6 @@ import Foundation
 
 public struct ISO8601Date {
     
-    private enum _Constant {
-        static let calendar = Calendar(identifier: .gregorian)
-    }
-    
     public var timeZone: TimeZone {
         didSet {
             _dateFormatter.timeZone = timeZone
@@ -26,13 +22,12 @@ public struct ISO8601Date {
      - Throws: `BoosterKitError.illegalArgument`
      */
     public init(year: Int, month: Int, day: Int, timeZone: TimeZone = .autoupdatingCurrent) throws {
-        let dc = DateComponents(timeZone: timeZone, year: year, month: month, day: day)
+        let cal = withVar(Calendar(identifier: .gregorian)) { $0.timeZone = timeZone }
+        let dc = DateComponents(year: year, month: month, day: day)
         
-        guard let date = _Constant.calendar.date(from: dc)
-        else { throw BoosterKitError.illegalArgument }
+        guard let date = cal.date(from: dc) else { throw BoosterKitError.illegalArgument }
         
-        guard dc == withVar(_Constant.calendar.dateComponents([.year, .month, .day,], from: date), then: { $0.timeZone = timeZone })
-        else { throw BoosterKitError.illegalArgument }
+        guard dc == cal.dateComponents([.year, .month, .day,], from: date) else { throw BoosterKitError.illegalArgument }
         
         self.timeZone = timeZone
         self._range = (date ..< date.adding(.day(1)))
@@ -40,8 +35,9 @@ public struct ISO8601Date {
     }
     
     public init(date: Date = Date(), timeZone: TimeZone = .autoupdatingCurrent) {
-        let dc = _Constant.calendar.dateComponents([.year, .month, .day], from: date)
-        let midnight = _Constant.calendar.date(from: dc)!
+        let cal = withVar(Calendar(identifier: .gregorian)) { $0.timeZone = timeZone }
+        let dc = cal.dateComponents([.year, .month, .day], from: date)
+        let midnight = cal.date(from: dc)!
         
         self.timeZone = timeZone
         self._range = (midnight ..< midnight.adding(.day(1)))
@@ -77,6 +73,26 @@ extension ISO8601Date : Equatable {
     static public func == (lhs: Self, rhs: Self) -> Bool {
         return lhs._range == rhs._range
             && lhs.timeZone == rhs.timeZone
+    }
+    
+}
+
+extension ISO8601Date : Comparable {
+    
+    public static func < (lhs: ISO8601Date, rhs: ISO8601Date) -> Bool {
+        true
+    }
+    
+}
+
+extension ISO8601Date : Strideable {
+    
+    public func advanced(by n: Int) -> ISO8601Date {
+        self
+    }
+    
+    public func distance(to other: ISO8601Date) -> Int {
+        0
     }
     
 }
