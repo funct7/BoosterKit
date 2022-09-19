@@ -13,6 +13,7 @@
 		0313BA9728D56CC100307576 /* ISO8601DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0313BA9628D56CC100307576 /* ISO8601DateTests.swift */; };
 		0313BA9928D570B100307576 /* FixedTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0313BA9828D570B100307576 /* FixedTimeInterval.swift */; };
 		0313BA9C28D570CE00307576 /* Date+FixedTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0313BA9B28D570CE00307576 /* Date+FixedTimeInterval.swift */; };
+		031E6F2928D8A4D90012B3B1 /* CalendarAdapter.UICollectionViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031E6F2828D8A4D90012B3B1 /* CalendarAdapter.UICollectionViewAdapter.swift */; };
 		0337360C28D6FEA900CD49AC /* TimeZone+Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0337360B28D6FEA900CD49AC /* TimeZone+Constant.swift */; };
 		034F930B28D572DF0035FDC9 /* FixedTimeIntervalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034F930A28D572DF0035FDC9 /* FixedTimeIntervalTests.swift */; };
 		034F930E28D5761C0035FDC9 /* Date.FixedTimeIntervalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034F930D28D5761C0035FDC9 /* Date.FixedTimeIntervalTests.swift */; };
@@ -62,6 +63,7 @@
 		0313BA9628D56CC100307576 /* ISO8601DateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISO8601DateTests.swift; sourceTree = "<group>"; };
 		0313BA9828D570B100307576 /* FixedTimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedTimeInterval.swift; sourceTree = "<group>"; };
 		0313BA9B28D570CE00307576 /* Date+FixedTimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+FixedTimeInterval.swift"; sourceTree = "<group>"; };
+		031E6F2828D8A4D90012B3B1 /* CalendarAdapter.UICollectionViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAdapter.UICollectionViewAdapter.swift; sourceTree = "<group>"; };
 		0337360B28D6FEA900CD49AC /* TimeZone+Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeZone+Constant.swift"; sourceTree = "<group>"; };
 		034F930A28D572DF0035FDC9 /* FixedTimeIntervalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedTimeIntervalTests.swift; sourceTree = "<group>"; };
 		034F930D28D5761C0035FDC9 /* Date.FixedTimeIntervalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.FixedTimeIntervalTests.swift; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 			isa = PBXGroup;
 			children = (
 				03A6E44628D0B2D400814DD5 /* CalendarAdapter.swift */,
+				031E6F2828D8A4D90012B3B1 /* CalendarAdapter.UICollectionViewAdapter.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -586,6 +589,7 @@
 				0313BA9C28D570CE00307576 /* Date+FixedTimeInterval.swift in Sources */,
 				0375116C28BC26A70060D304 /* ToastController.swift in Sources */,
 				0375117228BC27F80060D304 /* ToastController.AnimParams.TearDown+Default.swift in Sources */,
+				031E6F2928D8A4D90012B3B1 /* CalendarAdapter.UICollectionViewAdapter.swift in Sources */,
 				0313BA9228D56ABF00307576 /* Weekday.swift in Sources */,
 				03A0FB5B28BB264400B8D064 /* Scoped.swift in Sources */,
 				03A0FB5E28BB268F00B8D064 /* StringRenderer.swift in Sources */,
