@@ -228,4 +228,12 @@ class ISO8601MonthTests : XCTestCase {
         expect(try sut_jan2020_hk.distance(to: sut_jan2020_ko)).to(throwError(BoosterKitError.illegalArgument))
     }
     
+    func test_initWithDate() throws {
+        let jan1_2022 = try ISO8601Date(year: 2022, month: 1, day: 1, timeZone: .tokyo),
+            mar23_2023 = try ISO8601Date(year: 2023, month: 3, day: 23)
+
+        XCTAssertEqual(ISO8601Month(date: jan1_2022), try ISO8601Month(year: 2022, month: 1, timeZone: .tokyo))
+        XCTAssertEqual(ISO8601Month(date: mar23_2023), try ISO8601Month(year: 2023, month: 3))
+    }
+
 }
