@@ -37,6 +37,8 @@
 		0375117428BC29CC0060D304 /* ToastController.AnimParams+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0375117328BC29CC0060D304 /* ToastController.AnimParams+Default.swift */; };
 		038BD8CD28D9D53700E3CE51 /* ISO8601Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038BD8CC28D9D53700E3CE51 /* ISO8601Date+Extension.swift */; };
 		038BD8CF28D9D54E00E3CE51 /* ISO8601Month+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038BD8CE28D9D54E00E3CE51 /* ISO8601Month+Extension.swift */; };
+		038BD8D128D9F80400E3CE51 /* Pair+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038BD8D028D9F80400E3CE51 /* Pair+Extension.swift */; };
+		038BD8D328D9F81900E3CE51 /* PairExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038BD8D228D9F81900E3CE51 /* PairExtensionTests.swift */; };
 		039E79AF28BD73F2004F356D /* ToastController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039E79AE28BD73F2004F356D /* ToastController+Extension.swift */; };
 		03A0FB4928BB25DD00B8D064 /* BoosterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A0FB3F28BB25DD00B8D064 /* BoosterKit.framework */; };
 		03A0FB5028BB25DD00B8D064 /* BoosterKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 03A0FB4228BB25DD00B8D064 /* BoosterKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -92,6 +94,8 @@
 		0375117328BC29CC0060D304 /* ToastController.AnimParams+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToastController.AnimParams+Default.swift"; sourceTree = "<group>"; };
 		038BD8CC28D9D53700E3CE51 /* ISO8601Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ISO8601Date+Extension.swift"; sourceTree = "<group>"; };
 		038BD8CE28D9D54E00E3CE51 /* ISO8601Month+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ISO8601Month+Extension.swift"; sourceTree = "<group>"; };
+		038BD8D028D9F80400E3CE51 /* Pair+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pair+Extension.swift"; sourceTree = "<group>"; };
+		038BD8D228D9F81900E3CE51 /* PairExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairExtensionTests.swift; sourceTree = "<group>"; };
 		039E79AE28BD73F2004F356D /* ToastController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToastController+Extension.swift"; sourceTree = "<group>"; };
 		03A0FB3F28BB25DD00B8D064 /* BoosterKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BoosterKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		03A0FB4228BB25DD00B8D064 /* BoosterKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BoosterKit.h; sourceTree = "<group>"; };
@@ -180,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				034F930D28D5761C0035FDC9 /* Date.FixedTimeIntervalTests.swift */,
+				038BD8D228D9F81900E3CE51 /* PairExtensionTests.swift */,
 				0337360B28D6FEA900CD49AC /* TimeZone+Constant.swift */,
 			);
 			path = Extension;
@@ -213,6 +218,7 @@
 				0313BA9D28D570EC00307576 /* UIKit */,
 				038BD8CC28D9D53700E3CE51 /* ISO8601Date+Extension.swift */,
 				038BD8CE28D9D54E00E3CE51 /* ISO8601Month+Extension.swift */,
+				038BD8D028D9F80400E3CE51 /* Pair+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -603,6 +609,7 @@
 				0313BA9228D56ABF00307576 /* Weekday.swift in Sources */,
 				03A0FB5B28BB264400B8D064 /* Scoped.swift in Sources */,
 				03A0FB5E28BB268F00B8D064 /* StringRenderer.swift in Sources */,
+				038BD8D128D9F80400E3CE51 /* Pair+Extension.swift in Sources */,
 				038BD8CF28D9D54E00E3CE51 /* ISO8601Month+Extension.swift in Sources */,
 				034F931028D578040035FDC9 /* ISO8601Month.swift in Sources */,
 				0361FBEE28BD6B5000523A2B /* BoosterKitError.swift in Sources */,
@@ -617,6 +624,7 @@
 				0337360C28D6FEA900CD49AC /* TimeZone+Constant.swift in Sources */,
 				034F931228D578460035FDC9 /* ISO8601MonthTests.swift in Sources */,
 				034F930B28D572DF0035FDC9 /* FixedTimeIntervalTests.swift in Sources */,
+				038BD8D328D9F81900E3CE51 /* PairExtensionTests.swift in Sources */,
 				031E6F2B28D8A56F0012B3B1 /* CalendarAdapter.UICollectionViewAdapter.LayoutPlanTests.swift in Sources */,
 				034F930E28D5761C0035FDC9 /* Date.FixedTimeIntervalTests.swift in Sources */,
 				0313BA9728D56CC100307576 /* ISO8601DateTests.swift in Sources */,
