@@ -33,3 +33,17 @@ public extension ISO8601Date {
     }
     
 }
+
+public extension ISO8601Date {
+    
+    /**
+     - Throws: `BoosterKitError.illegalArgument` - `day` doesn't exist for the given month.
+     */
+    init(month: ISO8601Month, day: Int) throws {
+        let firstDay = ISO8601Date(date: month.instantRange.lowerBound, timeZone: month.timeZone)
+        let targetDay = firstDay.advanced(by: day - 1)
+        guard targetDay.month == month else { throw BoosterKitError.illegalArgument }
+        self = targetDay
+    }
+    
+}

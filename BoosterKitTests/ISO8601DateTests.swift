@@ -224,4 +224,22 @@ class ISO8601DateTests : XCTestCase {
         XCTAssertEqual(oct1.month, try ISO8601Month(year: 2024, month: 10))
     }
     
+    func test_initWithMonth() throws {
+        let sep2022 = try ISO8601Month(year: 2022, month: 9)
+        
+        expect(try ISO8601Date(month: sep2022, day: 1)).to(equal(try ISO8601Date(year: 2022, month: 9, day: 1)))
+        expect(try ISO8601Date(month: sep2022, day: 30)).to(equal(try ISO8601Date(year: 2022, month: 9, day: 30)))
+        expect(try ISO8601Date(month: sep2022, day: 31)).to(throwError(BoosterKitError.illegalArgument))
+        
+        let feb2022 = try ISO8601Month(year: 2022, month: 2)
+        expect(try ISO8601Date(month: feb2022, day: 1)).to(equal(try ISO8601Date(year: 2022, month: 2, day: 1)))
+        expect(try ISO8601Date(month: feb2022, day: 28)).to(equal(try ISO8601Date(year: 2022, month: 2, day: 28)))
+        expect(try ISO8601Date(month: feb2022, day: 29)).to(throwError(BoosterKitError.illegalArgument))
+        
+        let feb2024 = try ISO8601Month(year: 2024, month: 2)
+        expect(try ISO8601Date(month: feb2024, day: 1)).to(equal(try ISO8601Date(year: 2024, month: 2, day: 1)))
+        expect(try ISO8601Date(month: feb2024, day: 29)).to(equal(try ISO8601Date(year: 2024, month: 2, day: 29)))
+        expect(try ISO8601Date(month: feb2024, day: 30)).to(throwError(BoosterKitError.illegalArgument))
+    }
+    
 }
