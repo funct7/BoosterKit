@@ -235,5 +235,17 @@ class ISO8601MonthTests : XCTestCase {
         XCTAssertEqual(ISO8601Month(date: jan1_2022), try ISO8601Month(year: 2022, month: 1, timeZone: .tokyo))
         XCTAssertEqual(ISO8601Month(date: mar23_2023), try ISO8601Month(year: 2023, month: 3))
     }
+    
+    func test_dateRange() throws {
+        let sep2022 = try ISO8601Month(year: 2022, month: 9, timeZone: .hongKong)
+        let sep1_2022 = try ISO8601Date(year: 2022, month: 9, day: 1, timeZone: .hongKong),
+            oct1_2022 = try ISO8601Date(year :2022, month: 10, day: 1, timeZone: .hongKong)
+        XCTAssertEqual(sep2022.dateRange, sep1_2022 ..< oct1_2022)
+        
+        let feb2022 = try ISO8601Month(year: 2022, month: 2)
+        let feb1_2022 = try ISO8601Date(year: 2022, month: 2, day: 1),
+            mar1_2022 = try ISO8601Date(year: 2022, month: 3, day: 1)
+        XCTAssertEqual(feb2022.dateRange, feb1_2022 ..< mar1_2022)
+    }
 
 }

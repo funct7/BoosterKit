@@ -14,3 +14,13 @@ public extension ISO8601Month {
     }
     
 }
+
+public extension ISO8601Month {
+    
+    var dateRange: Range<ISO8601Date> {
+        let lowerBound = ISO8601Date(date: instantRange.lowerBound, timeZone: timeZone)
+        let upperBound = ISO8601Date(date: instantRange.upperBound, timeZone: timeZone)
+        return lowerBound ..< upperBound
+    }
+    
+}
