@@ -39,6 +39,7 @@
 		038BD8CF28D9D54E00E3CE51 /* ISO8601Month+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038BD8CE28D9D54E00E3CE51 /* ISO8601Month+Extension.swift */; };
 		038BD8D128D9F80400E3CE51 /* Pair+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038BD8D028D9F80400E3CE51 /* Pair+Extension.swift */; };
 		038BD8D328D9F81900E3CE51 /* PairExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038BD8D228D9F81900E3CE51 /* PairExtensionTests.swift */; };
+		039A645328DA9F94007C1A90 /* CalendarAdapter.UICollectionViewAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039A645228DA9F94007C1A90 /* CalendarAdapter.UICollectionViewAdapterTests.swift */; };
 		039E79AF28BD73F2004F356D /* ToastController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039E79AE28BD73F2004F356D /* ToastController+Extension.swift */; };
 		03A0FB4928BB25DD00B8D064 /* BoosterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A0FB3F28BB25DD00B8D064 /* BoosterKit.framework */; };
 		03A0FB5028BB25DD00B8D064 /* BoosterKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 03A0FB4228BB25DD00B8D064 /* BoosterKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -96,6 +97,7 @@
 		038BD8CE28D9D54E00E3CE51 /* ISO8601Month+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ISO8601Month+Extension.swift"; sourceTree = "<group>"; };
 		038BD8D028D9F80400E3CE51 /* Pair+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pair+Extension.swift"; sourceTree = "<group>"; };
 		038BD8D228D9F81900E3CE51 /* PairExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairExtensionTests.swift; sourceTree = "<group>"; };
+		039A645228DA9F94007C1A90 /* CalendarAdapter.UICollectionViewAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAdapter.UICollectionViewAdapterTests.swift; sourceTree = "<group>"; };
 		039E79AE28BD73F2004F356D /* ToastController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToastController+Extension.swift"; sourceTree = "<group>"; };
 		03A0FB3F28BB25DD00B8D064 /* BoosterKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BoosterKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		03A0FB4228BB25DD00B8D064 /* BoosterKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BoosterKit.h; sourceTree = "<group>"; };
@@ -245,6 +247,15 @@
 			path = Toast;
 			sourceTree = "<group>";
 		};
+		039A645128DA9F81007C1A90 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				031E6F2A28D8A56F0012B3B1 /* CalendarAdapter.UICollectionViewAdapter.LayoutPlanTests.swift */,
+				039A645228DA9F94007C1A90 /* CalendarAdapter.UICollectionViewAdapterTests.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		03A0FB3528BB25DD00B8D064 = {
 			isa = PBXGroup;
 			children = (
@@ -285,12 +296,12 @@
 		03A0FB4C28BB25DD00B8D064 /* BoosterKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				039A645128DA9F81007C1A90 /* UI */,
 				034F930C28D576120035FDC9 /* Extension */,
 				034F930A28D572DF0035FDC9 /* FixedTimeIntervalTests.swift */,
 				0313BA9628D56CC100307576 /* ISO8601DateTests.swift */,
 				034F931128D578460035FDC9 /* ISO8601MonthTests.swift */,
 				03A0FB4F28BB25DD00B8D064 /* Info.plist */,
-				031E6F2A28D8A56F0012B3B1 /* CalendarAdapter.UICollectionViewAdapter.LayoutPlanTests.swift */,
 			);
 			path = BoosterKitTests;
 			sourceTree = "<group>";
@@ -621,6 +632,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				039A645328DA9F94007C1A90 /* CalendarAdapter.UICollectionViewAdapterTests.swift in Sources */,
 				0337360C28D6FEA900CD49AC /* TimeZone+Constant.swift in Sources */,
 				034F931228D578460035FDC9 /* ISO8601MonthTests.swift in Sources */,
 				034F930B28D572DF0035FDC9 /* FixedTimeIntervalTests.swift in Sources */,
