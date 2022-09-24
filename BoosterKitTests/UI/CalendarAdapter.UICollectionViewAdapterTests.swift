@@ -117,6 +117,49 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         XCTAssertEqual(run(0), 35)
         XCTAssertEqual(run(1), 28)
         XCTAssertEqual(run(2), 35)
+        
+        // edge cases
+        setUp(
+            initialMonth: sep2022,
+            monthRange: Pair(try ISO8601Month(year: 2022, month: 1), try ISO8601Month(year: 2022, month: 12)))
+        
+        let expected = [
+            42, 35, 35, 35,
+            35, 35, 42, 35,
+            35, 42, 35, 35,
+        ]
+        
+        zip((0 ... 11), expected).forEach { i, count in
+            XCTAssertEqual(run(i), count)
+        }
+        
+        setUp(
+            initialMonth: sep2022,
+            monthRange: Pair(nil, sep2022.advanced(by: 1)))
+        
+        XCTAssertEqual(run(0), 35)
+        XCTAssertEqual(run(1), 35)
+        XCTAssertEqual(run(2), 42) // oct 2022
+        
+        adapter.currentMonth = sep2022.advanced(by: 1)
+        XCTAssertEqual(run(1), 42) // oct 2022
+        XCTAssertEqual(run(0), 35)
+        
+        let oct2021 = try ISO8601Month(year: 2021, month: 10)
+        adapter.currentMonth = oct2021
+        XCTAssertEqual(run(0), 35)
+        XCTAssertEqual(run(1), 42) // oct 2021
+        XCTAssertEqual(run(2), 35)
+        
+        adapter.currentMonth = oct2021.advanced(by: 1)
+        XCTAssertEqual(run(0), 42) // oct 2021
+        XCTAssertEqual(run(1), 35)
+        XCTAssertEqual(run(2), 35)
+        
+        adapter.currentMonth = oct2021.advanced(by: -1)
+        XCTAssertEqual(run(0), 35)
+        XCTAssertEqual(run(1), 35)
+        XCTAssertEqual(run(2), 42) // oct 2021
     }
     
     // `CalendarAdapterDisplayOption.fillNextMonth` will always show 6 weeks

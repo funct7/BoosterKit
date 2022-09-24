@@ -19,25 +19,19 @@ extension CalendarAdapter {
         
         private var _cache: [ISO8601Month : LayoutPlan] = [:]
         
-        func numberOfSections(in collectionView: UICollectionView) -> Int {
-            switch calendarAdapter.monthRange.toTuple() {
-            case let (lowerBound?, upperBound?):
-                return try! lowerBound.distance(to: upperBound) + 1
-            case (let someBound?, nil), (nil, let someBound?):
-                return calendarAdapter.currentMonth == someBound ? 2 : 3
-            default:
-                return 3
-            }
-        }
+        func numberOfSections(in collectionView: UICollectionView) -> Int { _numberOfSections() }
         
         func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            precondition((0...2).contains(section))
-            
-            let month = calendarAdapter.currentMonth.advanced(by: section - 1)
+            let month = _getMonth(section: section)
             
             if _cache[month] == nil { _cache[month] = .create(month: month) }
             
-            return Int(_cache[month]!.numberOfDays)
+            switch calendarAdapter.displayOption {
+            case .flexibleDayHeight, .flexibleMonthHeight:
+                return Int(_cache[month]!.numberOfWeeks * 7)
+            case .fillNextMonth:
+                return 42
+            }
         }
         
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -83,4 +77,42 @@ extension CalendarAdapter.UICollectionViewAdapter {
         }
     }
 
+}
+
+private extension CalendarAdapter.UICollectionViewAdapter {
+
+    func _numberOfSections() -> Int {
+        switch calendarAdapter.monthRange.toTuple() {
+        case let (lowerBound?, upperBound?):
+            return try! lowerBound.distance(to: upperBound) + 1
+        case (let someBound?, nil), (nil, let someBound?):
+            return calendarAdapter.currentMonth == someBound ? 2 : 3
+        default:
+            return 3
+        }
+    }
+    
+    func _getMonth(section: Int) -> ISO8601Month {
+        switch calendarAdapter.monthRange.toTuple() {
+        case let (lowerBound?, _):
+            return lowerBound.advanced(by: section)
+        case let (nil, upperBound?):
+            if upperBound == calendarAdapter.currentMonth {
+                let offset = section + 1 - _numberOfSections()
+                return upperBound.advanced(by: offset)
+            } else {
+                fallthrough
+            }
+            
+        case (nil, nil):
+            precondition((0...2).contains(section))
+            return calendarAdapter.currentMonth.advanced(by: section - 1)
+        }
+    }
+    
+    func _getDate(indexPath: IndexPath) -> ISO8601Date {
+        let month = _getMonth(section: indexPath.section)
+        return ISO8601Date()
+    }
+    
 }
