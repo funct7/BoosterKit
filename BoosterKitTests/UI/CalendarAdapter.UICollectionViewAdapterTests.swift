@@ -384,7 +384,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         
         do {
             let itemCount1 = getItemCount(0)
-            let expected1 = try CalendarAdapterContext.create(year: 2022, month: 8, leadingDays: 6, trailingDays: 5)
+            let expected1 = try CalendarAdapterContext.create(year: 2022, month: 8, leadingDays: 1, trailingDays: 3)
             
             XCTAssertEqual(itemCount1, expected1.count)
             
@@ -393,7 +393,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
             }
             
             let itemCount2 = getItemCount(1)
-            let expected2 = try CalendarAdapterContext.create(year: 2022, month: 9, leadingDays: 2, trailingDays: 3)
+            let expected2 = try CalendarAdapterContext.create(year: 2022, month: 9, leadingDays: 4, trailingDays: 1)
             
             XCTAssertEqual(itemCount2, expected2.count)
             
@@ -402,7 +402,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
             }
             
             let itemCount3 = getItemCount(2)
-            let expected3 = try CalendarAdapterContext.create(year: 2022, month: 10, leadingDays: 4, trailingDays: 0)
+            let expected3 = try CalendarAdapterContext.create(year: 2022, month: 10, leadingDays: 6, trailingDays: 5)
             
             XCTAssertEqual(itemCount3, expected3.count)
             
@@ -437,7 +437,7 @@ private extension CalendarAdapterContext {
             res.append(Self(date: firstDayOfNext.advanced(by: d), position: .trailing))
         }
         
-        return res
+        return res.sorted(by: { $0.date < $1.date })
     }
     
 }

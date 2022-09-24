@@ -35,13 +35,20 @@ extension CalendarAdapter {
         }
         
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            calendarAdapter.viewProvider.getCell(
+            let date = _getDate(indexPath: indexPath)
+            
+            return calendarAdapter.viewProvider.getCell(
                 collectionView: collectionView,
-                for: _getLayoutContext(indexPath: indexPath))
-        }
-        
-        private func _getLayoutContext(indexPath: IndexPath) -> CalendarAdapterContext {
-            fatalError()
+                for: CalendarAdapterContext(date: date, position: assign {
+                    let sectionMonth = _getMonth(section: indexPath.section)
+                    if date.month < sectionMonth {
+                        return .leading
+                    } else if date.month == sectionMonth {
+                        return .main
+                    } else {
+                        return .trailing
+                    }
+                }))
         }
         
     }
@@ -112,7 +119,11 @@ private extension CalendarAdapter.UICollectionViewAdapter {
     
     func _getDate(indexPath: IndexPath) -> ISO8601Date {
         let month = _getMonth(section: indexPath.section)
-        return ISO8601Date()
+        
+        assert(_cache[month] != nil)
+        
+        let offset = indexPath.item - Int(_cache[month]!.leadingDays)
+        return month.dateRange.lowerBound.advanced(by: offset)
     }
     
 }
