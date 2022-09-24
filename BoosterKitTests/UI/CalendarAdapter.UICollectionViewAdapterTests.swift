@@ -59,13 +59,24 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         adapter.currentMonth = current.advanced(by: 1)
         XCTAssertEqual(run(), 3)
         
+        adapter.currentMonth = current
+        XCTAssertEqual(run(), 2)
+        
         adapter.currentMonth = current.advanced(by: 100)
         XCTAssertEqual(run(), 3)
         
         // monthRange has an upper bound
         setUp(initialMonth: current, monthRange: Pair(nil, current))
+        XCTAssertEqual(run(), 2)
+        
+        adapter.currentMonth = current.advanced(by: -1)
         XCTAssertEqual(run(), 3)
         
+        adapter.currentMonth = current
+        XCTAssertEqual(run(), 2)
+        
+        adapter.currentMonth = current.advanced(by: -12)
+        XCTAssertEqual(run(), 3)
         
         // monthRange is unbounded
         setUp(initialMonth: current, monthRange: Pair(nil, nil))

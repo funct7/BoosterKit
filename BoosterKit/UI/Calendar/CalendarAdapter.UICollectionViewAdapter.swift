@@ -19,7 +19,16 @@ extension CalendarAdapter {
         
         private var _cache: [ISO8601Month : LayoutPlan] = [:]
         
-        func numberOfSections(in collectionView: UICollectionView) -> Int { 3 }
+        func numberOfSections(in collectionView: UICollectionView) -> Int {
+            switch calendarAdapter.monthRange.toTuple() {
+            case let (lowerBound?, upperBound?):
+                return try! lowerBound.distance(to: upperBound) + 1
+            case (let someBound?, nil), (nil, let someBound?):
+                return calendarAdapter.currentMonth == someBound ? 2 : 3
+            default:
+                return 3
+            }
+        }
         
         func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
             precondition((0...2).contains(section))
