@@ -34,7 +34,18 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     open var delegate: AnyCalendarAdapterDelegate<Cell>? = nil
     open var displayOption: CalendarAdapterDisplayOption = .flexibleMonthHeight
     
+    /// - Invariant: `currentMonth` must be within `monthRange`.
     open var currentMonth: ISO8601Month
+    
+    /**
+     - Note: `first` and `second` form inclusive bounds if non-`nil`.
+     - Invariant: `currentMonth` must be within `monthRange`.
+        
+        If a new `monthRange` value does not include `currentMonth`, `currentMonth` is set to the closest value within the new range.
+        
+        For example, if `currentMonth` is Sep 2022 and `monthRange` is set to [Jan 2023, nil],
+        the value of `currentMonth` will be changed to Jan 2023.
+     */
     open var monthRange: Pair<ISO8601Month?, ISO8601Month?>
     open func getCell(date: ISO8601Date) -> Cell? { nil }
     open func scroll(to month: ISO8601Month) { }

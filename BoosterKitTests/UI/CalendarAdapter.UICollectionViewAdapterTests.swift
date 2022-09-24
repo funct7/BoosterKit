@@ -15,6 +15,9 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         static let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
     }
     
+    private typealias _ViewProvider = TestCalendarAdapterComponentViewProvider
+    private typealias _Cell = TestCalendarAdapterCell
+    
     private var viewProvider: _ViewProvider!
     private var adapter: CalendarAdapter<_Cell>!
     private var sut: CalendarAdapter<_Cell>.UICollectionViewAdapter!
@@ -49,13 +52,22 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         setUp(initialMonth: current, monthRange: Pair(current, current.advanced(by: 23)))
         XCTAssertEqual(run(), 24)
         
-        // monthRange is infinite (in any direction)
+        // monthRange has a lower bound
         setUp(initialMonth: current, monthRange: Pair(current, nil))
+        XCTAssertEqual(run(), 2)
+        
+        adapter.currentMonth = current.advanced(by: 1)
         XCTAssertEqual(run(), 3)
         
+        adapter.currentMonth = current.advanced(by: 100)
+        XCTAssertEqual(run(), 3)
+        
+        // monthRange has an upper bound
         setUp(initialMonth: current, monthRange: Pair(nil, current))
         XCTAssertEqual(run(), 3)
         
+        
+        // monthRange is unbounded
         setUp(initialMonth: current, monthRange: Pair(nil, nil))
         XCTAssertEqual(run(), 3)
     }
@@ -348,20 +360,6 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         }
     }
     
-}
-
-private class _Cell : UICollectionViewCell {
-    var context: CalendarAdapterContext!
-}
-
-private class _ViewProvider : CalendarAdapterComponentViewProvider {
-    func getCell(collectionView: UICollectionView, for context: CalendarAdapterContext) -> _Cell {
-        withVar(_Cell()) {
-            $0.context = context
-        }
-    }
-    func getDecorationView(collectionView: UICollectionView, for weekday: Weekday) -> UIView? { nil }
-    func getHeaderView(collectionView: UICollectionView, for weekday: Weekday) -> UIView? { nil }
 }
 
 private extension CalendarAdapterContext {
