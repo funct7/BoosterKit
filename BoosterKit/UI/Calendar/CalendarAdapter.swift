@@ -35,7 +35,16 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     open var displayOption: CalendarAdapterDisplayOption = .flexibleMonthHeight
     
     /// - Invariant: `currentMonth` must be within `monthRange`.
-    open var currentMonth: ISO8601Month
+    open var currentMonth: ISO8601Month {
+        willSet {
+            switch monthRange.toTuple() {
+            case (nil, nil): return
+            case (let lowerBound?, nil): precondition(lowerBound <= newValue)
+            case (nil, let upperBound?): precondition(newValue <= upperBound)
+            case (let lowerBound?, let upperBound?): precondition(lowerBound <= newValue && newValue <= upperBound)
+            }
+        }
+    }
     
     /**
      - Note: `first` and `second` form inclusive bounds if non-`nil`.
@@ -46,7 +55,18 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         For example, if `currentMonth` is Sep 2022 and `monthRange` is set to [Jan 2023, nil],
         the value of `currentMonth` will be changed to Jan 2023.
      */
-    open var monthRange: Pair<ISO8601Month?, ISO8601Month?>
+    open var monthRange: Pair<ISO8601Month?, ISO8601Month?> {
+        didSet {
+            switch monthRange.toTuple() {
+            case (let lowerBound?, nil) where currentMonth < lowerBound: currentMonth = lowerBound
+            case (nil, let upperBound?) where upperBound < currentMonth: currentMonth = upperBound
+            case (let lowerBound?, let upperBound?):
+                if currentMonth < lowerBound { currentMonth = lowerBound }
+                if upperBound < currentMonth { currentMonth = upperBound }
+            default: return
+            }
+        }
+    }
     open func getCell(date: ISO8601Date) -> Cell? { nil }
     open func scroll(to month: ISO8601Month) { }
     
