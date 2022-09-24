@@ -37,8 +37,16 @@ class CalendarAdapterTests : XCTestCase {
     }
     
     func test_monthRange_invariant() throws {
-        let sep2022 = try ISO8601Month(year: 2022, month: 9)
+        let sep2022 = try ISO8601Month(year: 2022, month: 9, timeZone: .seoul)
         setUp(initialMonth: sep2022, monthRange: Pair(sep2022, sep2022))
+        
+        expect(self.adapter.monthRange = Pair(sep2022, try ISO8601Month(year: 2022, month: 10, timeZone: .tokyo)))
+            .to(throwAssertion())
+        expect(self.adapter.monthRange = Pair(sep2022, try ISO8601Month(year: 2022, month: 10, timeZone: .hongKong)))
+            .to(throwAssertion())
+        
+        expect(self.adapter.monthRange = Pair(sep2022, sep2022.advanced(by: -1)))
+            .to(throwAssertion())
         
         adapter.monthRange = Pair(sep2022, sep2022.advanced(by: 10))
         XCTAssertEqual(adapter.currentMonth, sep2022)

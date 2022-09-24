@@ -48,14 +48,23 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     
     /**
      - Note: `first` and `second` form inclusive bounds if non-`nil`.
-     - Invariant: `currentMonth` must be within `monthRange`.
+     - Invariant:
+        - `first` and `second` must have the same `timeZone` value if non-`nil`.
+        - `first` <= `second` if non-`nil`.
+        - `currentMonth` must be within `monthRange`.
         
-        If a new `monthRange` value does not include `currentMonth`, `currentMonth` is set to the closest value within the new range.
+            If a new `monthRange` value does not include `currentMonth`, `currentMonth` is set to the closest value within the new range.
         
-        For example, if `currentMonth` is Sep 2022 and `monthRange` is set to [Jan 2023, nil],
-        the value of `currentMonth` will be changed to Jan 2023.
+            For example, if `currentMonth` is Sep 2022 and `monthRange` is set to [Jan 2023, nil],
+            the value of `currentMonth` will be changed to Jan 2023.
      */
     open var monthRange: Pair<ISO8601Month?, ISO8601Month?> {
+        willSet {
+            if let first = newValue.first, let second = newValue.second {
+                precondition(first.timeZone == second.timeZone)
+                precondition(first <= second)
+            }
+        }
         didSet {
             switch monthRange.toTuple() {
             case (let lowerBound?, nil) where currentMonth < lowerBound: currentMonth = lowerBound
