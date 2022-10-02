@@ -11,14 +11,17 @@ import UIKit
  A flag that determines the display behavior when `CalendarAdapter` displays a 6-week month.
  */
 public enum CalendarAdapterDisplayOption {
-    /// The height of the `UICollectionView` expands/shrinks while `Cell` heights are fixed.
-    case flexibleMonthHeight
-    /// The height of the `UICollectionView` is fixed to a 5-week calendar height while `Cell` height shrinks/expands.
-    case flexibleDayHeight
-    /// Both the height of tthe `UICollectionView` and `Cell` are fixed.
-    ///
-    /// Six weeks are shown for all months, and for 4 or 5-week months, days from the following month fills the bottom row(s).
-    case fillNextMonth
+    /**
+     Each month shows only the necessary number of weeks.
+     
+     For most months, 5 weeks will be shown.
+     For months like Feb 2015 or Oct 2022, 4 weeks and 6 weeks will be shown respectively.
+     */
+    case dynamic
+    /**
+     Six weeks are shown for all months, and for 4 or 5-week months, days from the following month fill the bottom row(s).
+     */
+    case fixed
 }
 
 // TODO: Generalize
@@ -32,7 +35,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     }
     open var viewProvider: AnyCalendarAdapterComponentViewProvider<Cell>
     open var delegate: AnyCalendarAdapterDelegate<Cell>? = nil
-    open var displayOption: CalendarAdapterDisplayOption = .flexibleMonthHeight
+    open var displayOption: CalendarAdapterDisplayOption = .dynamic
     
     /// - Invariant: `currentMonth` must be within `monthRange`.
     open var currentMonth: ISO8601Month {

@@ -27,9 +27,9 @@ extension CalendarAdapter {
             if _cache[month] == nil { _cache[month] = .create(month: month) }
             
             switch calendarAdapter.displayOption {
-            case .flexibleDayHeight, .flexibleMonthHeight:
+            case .dynamic:
                 return Int(_cache[month]!.numberOfWeeks * 7)
-            case .fillNextMonth:
+            case .fixed:
                 return 42
             }
         }

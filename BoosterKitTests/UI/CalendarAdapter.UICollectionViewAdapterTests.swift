@@ -83,10 +83,10 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         XCTAssertEqual(run(), 3)
     }
     
-    // `CalendarAdapterDisplayOption.flexible(Month|Day)Height` will show 5 weeks for most cases
+    // `CalendarAdapterDisplayOption.dynamic` will show 5 weeks for most cases
     // and either shrink to 4 weeks for months like Feb 2015,
     // or expand to 6 weeks for months like Oct 2022.
-    func test_numberOfItemsInSection_flexibleHeight() throws {
+    func test_numberOfItemsInSection_dynamic() throws {
         // 5-week month, flexibleMonthHeight
         let sep2022 = try ISO8601Month(year: 2022, month: 9)
         setUp(initialMonth: sep2022, monthRange: Pair(sep2022.advanced(by: -1), sep2022.advanced(by: 1)))
@@ -99,21 +99,10 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         XCTAssertEqual(run(1), 35)
         XCTAssertEqual(run(2), 42) // Oct 2022 is a 6-week month
         
-        // 5-week month, flexibleDayHeight
-        adapter.displayOption = .flexibleDayHeight
-        XCTAssertEqual(run(0), 35)
-        XCTAssertEqual(run(1), 35)
-        XCTAssertEqual(run(2), 42) // Oct 2022 is a 6-week month
-        
-        // 4-week month, flexibleMonthHeight
+        // 4-week month
         let feb2015 = try ISO8601Month(year: 2015, month: 2)
         setUp(initialMonth: feb2015, monthRange: Pair(feb2015.advanced(by: -1), feb2015.advanced(by: 1)))
         
-        XCTAssertEqual(run(0), 35)
-        XCTAssertEqual(run(1), 28)
-        XCTAssertEqual(run(2), 35)
-        
-        adapter.displayOption = .flexibleDayHeight
         XCTAssertEqual(run(0), 35)
         XCTAssertEqual(run(1), 28)
         XCTAssertEqual(run(2), 35)
@@ -162,13 +151,13 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         XCTAssertEqual(run(2), 42) // oct 2021
     }
     
-    // `CalendarAdapterDisplayOption.fillNextMonth` will always show 6 weeks
+    // `CalendarAdapterDisplayOption.fixed` will always show 6 weeks
     // and fill any remaining rows with days from the next month.
-    func test_numberOfItemsInSection_fillNextMonth() throws {
-        // 5-week month, flexibleMonthHeight
+    func test_numberOfItemsInSection_fixed() throws {
+        // 5-week month
         let sep2022 = try ISO8601Month(year: 2022, month: 9)
         setUp(initialMonth: sep2022, monthRange: Pair(sep2022.advanced(by: -1), sep2022.advanced(by: 1)))
-        adapter.displayOption = .fillNextMonth
+        adapter.displayOption = .fixed
         
         let run: (Int) -> Int = {
             self.sut.collectionView(_Constant.collectionView, numberOfItemsInSection: $0)
@@ -178,10 +167,10 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         XCTAssertEqual(run(1), 42)
         XCTAssertEqual(run(2), 42) // Oct 2022 is a 6-week month
         
-        // 4-week month, flexibleMonthHeight
+        // 4-week month
         let feb2015 = try ISO8601Month(year: 2015, month: 2)
         setUp(initialMonth: feb2015, monthRange: Pair(feb2015.advanced(by: -1), feb2015.advanced(by: 1)))
-        adapter.displayOption = .fillNextMonth
+        adapter.displayOption = .fixed
         
         XCTAssertEqual(run(0), 42)
         XCTAssertEqual(run(1), 42)
@@ -200,7 +189,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         let sep2022 = try ISO8601Month(year: 2022, month: 9)
         setUp(initialMonth: sep2022, monthRange: Pair(sep2022, sep2022))
         
-        // flexibleHeight
+        // dynamic
         do {
             let itemCount = getItemCount(0)
             let expected = try CalendarAdapterContext.create(year: 2022, month: 9, leadingDays: 4, trailingDays: 1)
@@ -214,8 +203,8 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
             XCTFail("error: \(error)")
         }
         
-        // fill
-        adapter.displayOption = .fillNextMonth
+        // fixed
+        adapter.displayOption = .fixed
         do {
             let itemCount = getItemCount(0)
             let expected = try CalendarAdapterContext.create(year: 2022, month: 9, leadingDays: 4, trailingDays: 8)
@@ -232,7 +221,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         // === 12-month range ===
         setUp(initialMonth: sep2022, monthRange: Pair(sep2022, sep2022.advanced(by: 11)))
         
-        // flexible height
+        // dynamic
         do {
             let itemCount1 = getItemCount(0)
             let expected1 = try CalendarAdapterContext.create(year: 2022, month: 9, leadingDays: 4, trailingDays: 1)
@@ -273,8 +262,8 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
             XCTFail("error: \(error)")
         }
         
-        // fill
-        adapter.displayOption = .fillNextMonth
+        // fixed
+        adapter.displayOption = .fixed
         
         do {
             let itemCount1 = getItemCount(0)
@@ -312,7 +301,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
             initialMonth: try ISO8601Month(year: 2015, month: 2),
             monthRange: Pair(nil, nil))
         
-        // flexible height
+        // dynamic
         do {
             let itemCount1 = getItemCount(0)
             let expected1 = try CalendarAdapterContext.create(year: 2015, month: 1, leadingDays: 4, trailingDays: 0)
@@ -344,8 +333,8 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
             XCTFail("error: \(error)")
         }
         
-        // fill
-        adapter.displayOption = .fillNextMonth
+        // fixed
+        adapter.displayOption = .fixed
         
         do {
             let itemCount1 = getItemCount(0)
@@ -380,7 +369,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         
         // change current month
         adapter.currentMonth = sep2022
-        adapter.displayOption = .flexibleMonthHeight
+        adapter.displayOption = .dynamic
         
         do {
             let itemCount1 = getItemCount(0)
