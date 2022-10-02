@@ -9,6 +9,8 @@ import UIKit
 
 open class CalendarLayout : UICollectionViewLayout {
     
+    open var weekdayHeight: CGFloat = 40.0
+    
     /**
      The base parameters to guide the layout.
      
@@ -17,7 +19,7 @@ open class CalendarLayout : UICollectionViewLayout {
      */
     open var params: Params!
     
-    open var mode: Mode = .centered
+    open var mode: Mode = .top
     
 }
 
@@ -46,28 +48,32 @@ public extension CalendarLayout {
     }
     
     /**
-     `Mode` determines how days are laid out in the calendar by giving different priority to the item size, spacing, padding, and frame.
+     `Mode` determines how days are laid out vertically in the calendar by giving different priority to the item size, spacing, padding, and frame.
+     
+     `top` will be content oriented--i.e. days will be laid out maintaining their size and spacing--whereas
+     `fill` and `spread` will be frame oriented. See each case for more details.
+     
+     In any case, the minimum content height will be maintained, which is the sum of `weekdayHeight` and values of `params`
+     applied to the number of weeks that is determined by `CalendarAdapter.displayOption`.
+     It is up to the client to adjust the frame of the collection view by observing changes to `sectionHeight` or `collectionViewContentSize` which is available via KVO.
      */
     enum Mode {
         /**
-         Gives priority to item size and spacing.
+         Gives priority to the item size and spacing.
          
-         Adjusts the calendar frame to fit days and spacing.
-         The monthly padding will be stretched to fill any remaininng space if the calendar frame is fixed to a size bigger than the layout content size.
+         Days will be laid out along the top of the section below the top padding and space will be left at the bottom if the frame is bigger than the content.
          */
-        case centered
+        case top
         /**
          Gives priority to spacing and padding.
          
-         Fits days and spacing to the frame size.
-         Days will be stretched to fill any remaininng space after layout.
+         Vertical padding and item spacing will be maintained while the item height is expanded to fill the frame.
          */
         case fill
         /**
          Gives priority to item size and padding.
          
-         Fits days and spacing to the frame size.
-         The spacing between days and weeks will be stretched to fill any remaininng space after layout.
+         Vertical padding and item height will be maintained while the item spacing is expanded to fill the frame.
          */
         case spread
     }
@@ -76,9 +82,9 @@ public extension CalendarLayout {
 
 extension CalendarLayout {
     
-    public var sectionHeight: CGFloat { 0.0 }
+    public dynamic var sectionHeight: CGFloat { 0.0 }
     
-    open override var collectionViewContentSize: CGSize {
+    open override dynamic var collectionViewContentSize: CGSize {
         .zero
     }
     
