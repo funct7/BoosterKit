@@ -7,6 +7,10 @@
 
 import UIKit
 
+/**
+ - Note: Supports horizontal scrolling only.
+ - Todo: Support vertical scrolling.
+ */
 open class CalendarLayout : UICollectionViewLayout {
     
     open var weekdayHeight: CGFloat = 40.0
@@ -82,6 +86,7 @@ public extension CalendarLayout {
 
 extension CalendarLayout {
     
+    @objc
     public dynamic var sectionHeight: CGFloat { 0.0 }
     
     open override dynamic var collectionViewContentSize: CGSize {
