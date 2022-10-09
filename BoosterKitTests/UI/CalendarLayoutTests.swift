@@ -336,10 +336,10 @@ class CalendarLayoutTests : XCTestCase {
                 guard attribs.indices == (0..<35) else { return XCTFail() }
                 
                 // V:|-16-[WEEK1: 40][WEEK2: 40][WEEK3: 40][WEEK4: 40][WEEK5: 40]->=16-|
-                expect(attribs[0].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 16.5, y: 16), size: .short), within: 0.1))    // week 1, sun
-                expect(attribs[8].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 67.5, y: 56), size: .short), within: 0.1))    // week 2, mon
-                expect(attribs[26].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 271.5, y: 136), size: .short), within: 0.1)) // week 4, fri
-                expect(attribs[34].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 322.5, y: 176), size: .short), within: 0.1)) // week 5, sat
+                expect(attribs.attributes(at: [0, 0])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 16.5, y: 16), size: .short), within: 0.1))    // week 1, sun
+                expect(attribs.attributes(at: [0, 8])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 67.5, y: 56), size: .short), within: 0.1))    // week 2, mon
+                expect(attribs.attributes(at: [0, 26])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 271.5, y: 136), size: .short), within: 0.1)) // week 4, fri
+                expect(attribs.attributes(at: [0, 34])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 322.5, y: 176), size: .short), within: 0.1)) // week 5, sat
             } else {
                 XCTFail("expected a non-nil array")
             }
@@ -348,10 +348,10 @@ class CalendarLayoutTests : XCTestCase {
                 guard attribs.indices == (0..<42) else { return XCTFail() }
                 
                 // V:|-16-[WEEK1: 40][WEEK2: 40][WEEK3: 40][WEEK4: 40][WEEK5: 40][WEEK6: 40]->=0-16-|
-                expect(attribs[0].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 796.5, y: 16), size: .short), within: 0.1))    // week 1, sun
-                expect(attribs[8].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 847.5, y: 56), size: .short), within: 0.1))    // week 2, mon
-                expect(attribs[33].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 1051.5, y: 176), size: .short), within: 0.1)) // week 5, fri
-                expect(attribs[41].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 1102.5, y: 216), size: .short), within: 0.1)) // week 6, sat
+                expect(attribs.attributes(at: [2, 0])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 796.5, y: 16), size: .short), within: 0.1))    // week 1, sun
+                expect(attribs.attributes(at: [2, 8])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 847.5, y: 56), size: .short), within: 0.1))    // week 2, mon
+                expect(attribs.attributes(at: [2, 33])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 1051.5, y: 176), size: .short), within: 0.1)) // week 5, fri
+                expect(attribs.attributes(at: [2, 41])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 1102.5, y: 216), size: .short), within: 0.1)) // week 6, sat
             } else {
                 XCTFail("expected a non-nil array")
             }
@@ -370,10 +370,10 @@ class CalendarLayoutTests : XCTestCase {
                 
                 // V:|-16-[WEEK1: >=40]-2-[WEEK2: >=40]-2-[WEEK3: >=40]-2-[WEEK4: >=40]-2-[WEEK5: >=40]-16-|
                 let expectedSize = CGSize(width: 51, height: 56)
-                expect(attribs[0].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 16.5, y: 16), size: expectedSize), within: 0.1))    // week 1, sun
-                expect(attribs[8].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 67.5, y: 74), size: expectedSize), within: 0.1))    // week 2, mon
-                expect(attribs[26].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 271.5, y: 190), size: expectedSize), within: 0.1)) // week 4, fri
-                expect(attribs[34].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 322.5, y: 248), size: expectedSize), within: 0.1)) // week 5, sat
+                expect(attribs.attributes(at: [0, 0])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 16.5, y: 16), size: expectedSize), within: 0.1))    // week 1, sun
+                expect(attribs.attributes(at: [0, 8])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 67.5, y: 74), size: expectedSize), within: 0.1))    // week 2, mon
+                expect(attribs.attributes(at: [0, 26])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 271.5, y: 190), size: expectedSize), within: 0.1)) // week 4, fri
+                expect(attribs.attributes(at: [0, 34])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 322.5, y: 248), size: expectedSize), within: 0.1)) // week 5, sat
             } else {
                 XCTFail("expected a non-nil array")
             }
@@ -383,10 +383,10 @@ class CalendarLayoutTests : XCTestCase {
                 
                 // |-16-[WEEK1: >=40]-2-[WEEK2: >=40]-2-[WEEK3: >=40]-2-[WEEK4: >=40]-2-[WEEK5: >=40]-2-[WEEK6: >=40]-16-|
                 let expectedSize = CGSize(width: 51, height: 46.33333333)
-                expect(attribs[0].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 796.5, y: 16), size: expectedSize), within: 0.1))             // week 1, sun
-                expect(attribs[8].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 847.5, y: 64.33333333), size: expectedSize), within: 0.1))    // week 2, mon
-                expect(attribs[33].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 1051.5, y: 209.33333334), size: expectedSize), within: 0.1)) // week 5, fri
-                expect(attribs[41].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 1102.5, y: 257.66666667), size: expectedSize), within: 0.1)) // week 6, sat
+                expect(attribs.attributes(at: [2, 0])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 796.5, y: 16), size: expectedSize), within: 0.1))             // week 1, sun
+                expect(attribs.attributes(at: [2, 8])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 847.5, y: 64.33333333), size: expectedSize), within: 0.1))    // week 2, mon
+                expect(attribs.attributes(at: [2, 33])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 1051.5, y: 209.33333334), size: expectedSize), within: 0.1)) // week 5, fri
+                expect(attribs.attributes(at: [2, 41])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 1102.5, y: 257.66666667), size: expectedSize), within: 0.1)) // week 6, sat
             } else {
                 XCTFail("expected a non-nil array")
             }
@@ -403,10 +403,10 @@ class CalendarLayoutTests : XCTestCase {
                 guard attribs.indices == (0..<35) else { return XCTFail() }
                 
                 // V:|-16-[WEEK1: 40]->=2-[WEEK2: 40]->=2-[WEEK3: 40]->=2-[WEEK4: 40]->=2-[WEEK5: 40]-16-| -> spacing: 22
-                expect(attribs[0].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 16.5, y: 16), size: .short), within: 0.1))    // week 1, sun
-                expect(attribs[8].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 67.5, y: 78), size: .short), within: 0.1))    // week 2, mon
-                expect(attribs[26].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 271.5, y: 202), size: .short), within: 0.1)) // week 4, fri
-                expect(attribs[34].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 322.5, y: 264), size: .short), within: 0.1)) // week 5, sat
+                expect(attribs.attributes(at: [0, 0])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 16.5, y: 16), size: .short), within: 0.1))    // week 1, sun
+                expect(attribs.attributes(at: [0, 8])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 67.5, y: 78), size: .short), within: 0.1))    // week 2, mon
+                expect(attribs.attributes(at: [0, 26])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 271.5, y: 202), size: .short), within: 0.1)) // week 4, fri
+                expect(attribs.attributes(at: [0, 34])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 322.5, y: 264), size: .short), within: 0.1)) // week 5, sat
             } else {
                 XCTFail("expected a non-nil array")
             }
@@ -415,10 +415,10 @@ class CalendarLayoutTests : XCTestCase {
                 guard attribs.indices == (0..<42) else { return XCTFail() }
                 
                 // V:|-16-[WEEK1: 40]->=2-[WEEK2: 40]->=2-[WEEK3: 40]->=2-[WEEK4: 40]->=2-[WEEK5: 40]->=2-[WEEK6: 40]16-| -> spacing: 9.6
-                expect(attribs[0].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 796.5, y: 16), size: .short), within: 0.1))      // week 1, sun
-                expect(attribs[8].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 847.5, y: 65.6), size: .short), within: 0.1))    // week 2, mon
-                expect(attribs[33].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 1051.5, y: 214.4), size: .short), within: 0.1)) // week 5, fri
-                expect(attribs[41].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 1102.5, y: 264), size: .short), within: 0.1))   // week 6, sat
+                expect(attribs.attributes(at: [2, 0])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 796.5, y: 16), size: .short), within: 0.1))      // week 1, sun
+                expect(attribs.attributes(at: [2, 8])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 847.5, y: 65.6), size: .short), within: 0.1))    // week 2, mon
+                expect(attribs.attributes(at: [2, 33])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 1051.5, y: 214.4), size: .short), within: 0.1)) // week 5, fri
+                expect(attribs.attributes(at: [2, 41])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 1102.5, y: 264), size: .short), within: 0.1))   // week 6, sat
             } else {
                 XCTFail("expected a non-nil array")
             }
@@ -441,10 +441,10 @@ class CalendarLayoutTests : XCTestCase {
             if let attribs = sut.layoutAttributesForElements(in: page1) {
                 guard attribs.indices == (0..<42) else { return XCTFail() }
                 
-                expect(attribs[0].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 16, y: 16), size: expectedSize), within: 0.1))                      // week 1, sun
-                expect(attribs[8].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 67.42857142, y: 64.33333333), size: expectedSize), within: 0.1))    // week 2, mon
-                expect(attribs[33].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 273.1428571, y: 209.33333334), size: expectedSize), within: 0.1))  // week 5, fri
-                expect(attribs[41].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 324.57142858, y: 257.66666667), size: expectedSize), within: 0.1)) // week 6, sat
+                expect(attribs.attributes(at: [0, 0])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 16, y: 16), size: expectedSize), within: 0.1))                      // week 1, sun
+                expect(attribs.attributes(at: [0, 8])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 67.42857142, y: 64.33333333), size: expectedSize), within: 0.1))    // week 2, mon
+                expect(attribs.attributes(at: [0, 33])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 273.1428571, y: 209.33333334), size: expectedSize), within: 0.1))  // week 5, fri
+                expect(attribs.attributes(at: [0, 41])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 324.57142858, y: 257.66666667), size: expectedSize), within: 0.1)) // week 6, sat
             } else {
                 XCTFail("expected a non-nil array")
             }
@@ -452,8 +452,8 @@ class CalendarLayoutTests : XCTestCase {
             if let attribs = sut.layoutAttributesForElements(in: page3) {
                 guard attribs.indices == (0..<42) else { return XCTFail() }
                 
-                expect(attribs[0].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 796, y: 16), size: expectedSize), within: 0.1))
-                expect(attribs[41].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 1104.57142858, y: 257.66666667), size: expectedSize), within: 0.1))
+                expect(attribs.attributes(at: [2, 0])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 796, y: 16), size: expectedSize), within: 0.1))
+                expect(attribs.attributes(at: [2, 41])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 1104.57142858, y: 257.66666667), size: expectedSize), within: 0.1))
             } else {
                 XCTFail("expected a non-nil array")
             }
@@ -472,10 +472,10 @@ class CalendarLayoutTests : XCTestCase {
             if let attribs = sut.layoutAttributesForElements(in: page1) {
                 guard attribs.indices == (0..<42) else { return XCTFail() }
                 
-                expect(attribs[0].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 16, y: 16), size: expectedSize), within: 0.1))      // week 1, sun
-                expect(attribs[8].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 69, y: 65.6), size: expectedSize), within: 0.1))    // week 2, mon
-                expect(attribs[33].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 281, y: 214.4), size: expectedSize), within: 0.1)) // week 5, fri
-                expect(attribs[41].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 334, y: 264), size: expectedSize), within: 0.1))   // week 6, sat
+                expect(attribs.attributes(at: [0, 0])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 16, y: 16), size: expectedSize), within: 0.1))      // week 1, sun
+                expect(attribs.attributes(at: [0, 8])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 69, y: 65.6), size: expectedSize), within: 0.1))    // week 2, mon
+                expect(attribs.attributes(at: [0, 33])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 281, y: 214.4), size: expectedSize), within: 0.1)) // week 5, fri
+                expect(attribs.attributes(at: [0, 41])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 334, y: 264), size: expectedSize), within: 0.1))   // week 6, sat
             } else {
                 XCTFail("expected a non-nil array")
             }
@@ -483,8 +483,8 @@ class CalendarLayoutTests : XCTestCase {
             if let attribs = sut.layoutAttributesForElements(in: page3) {
                 guard attribs.indices == (0..<42) else { return XCTFail() }
                 
-                expect(attribs[0].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 796, y: 16), size: expectedSize), within: 0.1))
-                expect(attribs[41].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 1114, y: 264), size: expectedSize), within: 0.1))
+                expect(attribs.attributes(at: [2, 0])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 796, y: 16), size: expectedSize), within: 0.1))
+                expect(attribs.attributes(at: [2, 41])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 1114, y: 264), size: expectedSize), within: 0.1))
             } else {
                 XCTFail("expected a non-nil array")
             }
@@ -504,10 +504,10 @@ class CalendarLayoutTests : XCTestCase {
                 guard attribs.indices == (0..<36) else { return XCTFail() }
                 
                 let expectedSize = CGSize(width: 50, height: 50)
-                expect(attribs[0].frame).to(beCloseTo(CGRect(origin: .zero, size: expectedSize), within: 0.1))                 // week 1, sun
-                expect(attribs[7].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 50, y: 50), size: expectedSize), within: 0.1)) // week 2, mon (only 6 days fit in the view frame)
-                expect(attribs[28].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 200, y: 200), size: expectedSize), within: 0.1))    // week 5, thu
-                expect(attribs[35].frame).to(beCloseTo(CGRect(origin: CGPoint(x: 250, y: 250), size: expectedSize), within: 0.1))    // week 6, fri
+                expect(attribs.attributes(at: [0, 0])?.frame).to(beCloseTo(CGRect(origin: .zero, size: expectedSize), within: 0.1))                 // week 1, sun
+                expect(attribs.attributes(at: [0, 7])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 50, y: 50), size: expectedSize), within: 0.1)) // week 2, mon (only 6 days fit in the view frame)
+                expect(attribs.attributes(at: [0, 28])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 200, y: 200), size: expectedSize), within: 0.1))    // week 5, thu
+                expect(attribs.attributes(at: [0, 35])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 250, y: 250), size: expectedSize), within: 0.1))    // week 6, fri
             } else {
                 XCTFail("expected a non-nil array")
             }
