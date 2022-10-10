@@ -10,3 +10,5 @@ import Foundation
 public enum Weekday {
     case sunday, monday, tuesday, wednesday, thursday, friday, saturday
 }
+
+extension Weekday : CaseIterable { }

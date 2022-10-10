@@ -14,6 +14,4 @@ class TestCalendarAdapterComponentViewProvider : CalendarAdapterComponentViewPro
             $0.context = context
         }
     }
-    func getDecorationView(collectionView: UICollectionView, for weekday: Weekday) -> UIView? { nil }
-    func getHeaderView(collectionView: UICollectionView, for weekday: Weekday) -> UIView? { nil }
 }

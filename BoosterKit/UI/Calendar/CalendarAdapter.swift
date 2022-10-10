@@ -126,35 +126,6 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
 public protocol CalendarAdapterComponentViewProvider : AnyObject {
     associatedtype Cell : UICollectionViewCell
     func getCell(collectionView: UICollectionView, for context: CalendarAdapterContext) -> Cell
-    /**
-     A method to provide a **decoration view** to show a weekday at the top of the calendar.
-     
-     Return a view that presents the given weekday to have a fixed *decoration view* above the calendar;
-     i.e. the weekday row will be fixed, and won't be scrolled with the monthly calendar.
-     
-     To have weekdays scroll with the monthly calendar, i.e. a header, return `nil` from this method,
-     and return a valid view from `getHeaderView(collectionView:for:)` instead.
-     
-     - Warning: Returning a view for both this method **and** `getHeaderView(collectionView:for:)` will result in undefined behavior.
-     - Note: The position of the decoration view is at the top of the calendar. Report an issue if other uses cases need to be supported.
-     - Returns: A view that presents `weekday`.
-     */
-    func getDecorationView(collectionView: UICollectionView, for weekday: Weekday) -> UIView?
-    
-    /**
-     A method to provide a **header view** to show a weekday at the top of the calendar.
-     
-     Return a view that presents the given weekday to have a scrolling *header view* above the calendar;
-     i.e. the weekday row will be scrolled with the monthly calendar.
-     
-     To have weekdays fixed above monthly calendar, i.e. a decoration view, return `nil` from this method,
-     and return a valid view from `getDecorationView(collectionView:for:)` instead.
-     
-     - Warning: Returning a view for both this method **and** `getDecorationView(collectionView:for:)` will result in undefined behavior.
-     - Note: The position of the decoration view is at the top of the calendar. Report an issue if other uses cases need to be supported.
-     - Returns: A view that presents `weekday`.
-     */
-    func getHeaderView(collectionView: UICollectionView, for weekday: Weekday) -> UIView?
 }
 
 /**
@@ -165,20 +136,12 @@ open class AnyCalendarAdapterComponentViewProvider<Cell> : CalendarAdapterCompon
     private let _getCellForContext: (UICollectionView, CalendarAdapterContext) -> Cell
     public func getCell(collectionView: UICollectionView, for context: CalendarAdapterContext) -> Cell { _getCellForContext(collectionView, context) }
     
-    private let _getDecorationViewForWeekday: (UICollectionView, Weekday) -> UIView?
-    public func getDecorationView(collectionView: UICollectionView, for weekday: Weekday) -> UIView? { _getDecorationViewForWeekday(collectionView, weekday) }
-    
-    private let _getHeaderViewForWeekday: (UICollectionView, Weekday) -> UIView?
-    public func getHeaderView(collectionView: UICollectionView, for weekday: Weekday) -> UIView? { _getHeaderViewForWeekday(collectionView, weekday) }
-    
     /**
      - Attention: The constructed instance will hold an **unowned reference** to the `viewProvider`.
         It is up to the caller to make sure that `viewProvider` lives throughout the lifecycle of the created `AnyCalendarAdapterComponentViewProvider` instance.
      */
     public init<P>(_ viewProvider: P) where P : CalendarAdapterComponentViewProvider, P.Cell == Cell {
         self._getCellForContext = { [unowned viewProvider] in viewProvider.getCell(collectionView: $0, for: $1) }
-        self._getDecorationViewForWeekday = { [unowned viewProvider] in viewProvider.getDecorationView(collectionView: $0, for: $1) }
-        self._getHeaderViewForWeekday = { [unowned viewProvider] in viewProvider.getHeaderView(collectionView: $0, for: $1) }
     }
 }
 

@@ -13,8 +13,6 @@ import UIKit
  */
 open class CalendarLayout : UICollectionViewLayout {
     
-    open var weekdayHeight: CGFloat = 40.0
-    
     /**
      The base parameters to guide the layout.
      
@@ -106,6 +104,15 @@ extension CalendarLayout {
     @objc
     public dynamic var sectionHeight: CGFloat { 0.0 }
     
+    /**
+     The `ColumnSpan` for each weekday.
+     
+     Use this as a guide when implementing a weekday view for the calendar.
+     - Invariant: `weekdaySpans.count == 7`
+     */
+    @objc
+    public dynamic var weekdaySpans: [ColumnSpan] { [] }
+    
     open override dynamic var collectionViewContentSize: CGSize {
         .zero
     }
@@ -115,14 +122,6 @@ extension CalendarLayout {
     }
     
     open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        nil
-    }
-    
-    open override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        nil
-    }
-    
-    open override func layoutAttributesForDecorationView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         nil
     }
     

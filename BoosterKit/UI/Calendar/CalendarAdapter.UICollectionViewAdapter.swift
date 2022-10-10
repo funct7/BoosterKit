@@ -57,6 +57,8 @@ extension CalendarAdapter {
 
 extension CalendarAdapter.UICollectionViewAdapter {
     
+//    static var weekdayViewID: String { "WEEKDAY_VIEW" }
+    
     struct LayoutPlan : Hashable {
         let leadingDays: UInt
         let numberOfDays: UInt
