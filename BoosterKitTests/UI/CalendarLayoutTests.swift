@@ -639,8 +639,26 @@ class CalendarLayoutTests : XCTestCase {
         XCTAssertNil(sut.layoutAttributesForItem(at: IndexPath(indexes: [2, 0])))
     }
     
-    func test_shouldInvalidateLayout() throws {
-        XCTFail()
+    func test_shouldInvalidateLayoutForBoundsChange() {
+        let initialFrame = CGRect(origin: .zero, size: CGSize(width: 390, height: 320))
+                                  
+        setUp(
+            params: CalendarLayout.Params(itemSize: .short),
+            frame: initialFrame)
+        
+        // v-align .packed is unaffected by height changes
+        sut.params.alignment.horizontal = [.filled, .packed, .spread].randomElement()!
+        sut.params.alignment.vertical = .packed
+        
+        XCTAssertTrue(sut.shouldInvalidateLayout(forBoundsChange: withVar(initialFrame) { $0.size.width = 400 }))
+        XCTAssertFalse(sut.shouldInvalidateLayout(forBoundsChange: withVar(initialFrame) { $0.size.height = 30 }))
+        XCTAssertFalse(sut.shouldInvalidateLayout(forBoundsChange: withVar(initialFrame) { $0.size.height = 390 }))
+        
+        // otherwise, invalidated
+        sut.params.alignment.vertical = [.filled, .spread].randomElement()!
+        XCTAssertTrue(sut.shouldInvalidateLayout(forBoundsChange: withVar(initialFrame) { $0.size.width = 400 }))
+        XCTAssertTrue(sut.shouldInvalidateLayout(forBoundsChange: withVar(initialFrame) { $0.size.height = 30 }))
+        XCTAssertTrue(sut.shouldInvalidateLayout(forBoundsChange: withVar(initialFrame) { $0.size.height = 390 }))
     }
     
 }
