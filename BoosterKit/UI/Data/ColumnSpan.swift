@@ -32,3 +32,13 @@ public extension ColumnSpan {
     var width: CGFloat { end - start }
     
 }
+
+extension ColumnSpan {
+    
+    public override func isEqual(_ object: Any?) -> Bool {
+        guard let object = object as? ColumnSpan else { return false }
+        return start == object.start
+            && end == object.end
+    }
+    
+}

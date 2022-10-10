@@ -33,6 +33,136 @@ class CalendarLayoutTests : XCTestCase {
         adapter.view = collectionView
     }
     
+    func test_contentSize_sectionHeight_observation() throws {
+        let sep2022 = try ISO8601Month(year: 2022, month: 9)
+        
+        let frame = CGRect(
+            x: 0, y: 0,
+            width: CGSize.Device.iPhone12.width,
+            height: 320)
+        
+        setUp(
+            params: .init(sectionInset: .test, itemSize: .short),
+            frame: frame,
+            initialMonth: sep2022)
+        
+        var contentSizeList = [CGSize]()
+        var sectionHeightList = [CGFloat]()
+        
+        let contentObsToken = sut.observe(\.collectionViewContentSize, options: [.initial, .new]) { contentSizeList.append($1.newValue!) }
+        let heightObsToken = sut.observe(\.sectionHeight, options: [.initial, .new]) { sectionHeightList.append($1.newValue!) }
+        let _ = [contentObsToken, heightObsToken] // code inserted to suppress unused value compiler warning
+        
+        let width = frame.width * 3
+        
+        // dynamic, top, 5 week
+        XCTAssertEqual(contentSizeList.count, 1)
+        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: .short5week))
+        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
+        
+        // dynamic, top, 6 week
+        adapter.currentMonth = sep2022.advanced(by: 1)
+        
+        XCTAssertEqual(contentSizeList.count, 2)
+        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: .short6week))
+        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
+        
+        // fixed, filled
+        adapter.displayOption = .fixed
+        sut.params.alignment.vertical = .filled
+        
+        XCTAssertEqual(contentSizeList.count, 4)
+        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: frame.height))
+        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
+        
+        // fixed, filled, tall items
+        sut.params.itemSize = .tall
+        XCTAssertEqual(contentSizeList.count, 5)
+        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: .tall6week))
+        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
+        
+        // dynamic, top, 5 week, tall items
+        adapter.displayOption = .dynamic
+        sut.params.alignment.vertical = .packed
+        adapter.currentMonth = sep2022
+        XCTAssertEqual(contentSizeList.count, 8)
+        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: .tall5week))
+        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
+        
+        // dynamic, filled, 5 week
+        sut.params.alignment.vertical = .filled
+        sut.params.itemSize = .short
+        XCTAssertEqual(contentSizeList.count, 10)
+        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: frame.height))
+        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
+        
+        zip(contentSizeList, sectionHeightList).forEach { XCTAssertEqual($0.height, $1) }
+    }
+    
+    func test_weekdaySpans() throws {
+        let sep2022 = try ISO8601Month(year: 2022, month: 9)
+        setUp(
+            params: .init(itemSize: .short),
+            frame: CGRect(origin: .zero, size: .Device.iPhone12),
+            initialMonth: sep2022)
+        
+        var weekdaySpansList = [[ColumnSpan]]()
+        let obsToken = sut.observe(\.weekdaySpans, options: [.initial, .new]) { weekdaySpansList.append($1.newValue!) }
+        let _ = [obsToken] // code to silence compiler warning about unused reference
+        
+        do { // h-align: .packed
+            let expected = [
+                ColumnSpan(start: 16.5, end: 67.5),
+                ColumnSpan(start: 67.5, end: 118.5),
+                ColumnSpan(start: 118.5, end: 169.5),
+                ColumnSpan(start: 169.5, end: 220.5),
+                ColumnSpan(start: 220.5, end: 271.5),
+                ColumnSpan(start: 271.5, end: 322.5),
+                ColumnSpan(start: 322.5, end: 373.5),
+            ]
+            XCTAssertEqual(sut.weekdaySpans, expected)
+            expect(weekdaySpansList).to(equal([expected]))
+        }
+        
+        do { // h-align: .filled, section insets - 7, spacing - 2
+            sut.params.sectionInset = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7)
+            sut.params.spacing.width = 2
+            sut.params.alignment.horizontal = .filled
+            
+            let expected = [
+                ColumnSpan(start: 7, end: 59),
+                ColumnSpan(start: 61, end: 113),
+                ColumnSpan(start: 115, end: 167),
+                ColumnSpan(start: 169, end: 221),
+                ColumnSpan(start: 223, end: 275),
+                ColumnSpan(start: 277, end: 329),
+                ColumnSpan(start: 331, end: 383),
+            ]
+            XCTAssertEqual(sut.weekdaySpans, expected)
+            expect(weekdaySpansList).to(haveCount(2))
+            expect(weekdaySpansList.last).to(equal(expected))
+        }
+        
+        do { // h-align: .spread, section insets - 16, item width - 40 -> spacing: 13
+            sut.params.alignment.horizontal = .spread
+            sut.params.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+            sut.params.itemSize.width = 40
+            
+            let expected = [
+                ColumnSpan(start: 16, end: 56),
+                ColumnSpan(start: 69, end: 109),
+                ColumnSpan(start: 122, end: 162),
+                ColumnSpan(start: 175, end: 215),
+                ColumnSpan(start: 228, end: 268),
+                ColumnSpan(start: 281, end: 321),
+                ColumnSpan(start: 334, end: 374),
+            ]
+            XCTAssertEqual(sut.weekdaySpans, expected)
+            expect(weekdaySpansList).to(haveCount(3))
+            expect(weekdaySpansList.last).to(equal(expected))
+        }
+    }
+    
     func test_contentSize_packedVertical() throws {
         let sep2022 = try ISO8601Month(year: 2022, month: 9)
         
@@ -231,72 +361,6 @@ class CalendarLayoutTests : XCTestCase {
 
         XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
         XCTAssertEqual(sut.collectionViewContentSize.height, .tall6week)
-    }
-    
-    func test_contentSize_sectionHeight_observation() throws {
-        let sep2022 = try ISO8601Month(year: 2022, month: 9)
-        
-        let frame = CGRect(
-            x: 0, y: 0,
-            width: CGSize.Device.iPhone12.width,
-            height: 320)
-        
-        setUp(
-            params: .init(sectionInset: .test, itemSize: .short),
-            frame: frame,
-            initialMonth: sep2022)
-        
-        var contentSizeList = [CGSize]()
-        var sectionHeightList = [CGFloat]()
-        
-        let contentObsToken = sut.observe(\.collectionViewContentSize, options: [.initial, .new]) { contentSizeList.append($1.newValue!) }
-        let heightObsToken = sut.observe(\.sectionHeight, options: [.initial, .new]) { sectionHeightList.append($1.newValue!) }
-        let _ = [contentObsToken, heightObsToken] // code inserted to suppress unused value compiler warning
-        
-        let width = frame.width * 3
-        
-        // dynamic, top, 5 week
-        XCTAssertEqual(contentSizeList.count, 1)
-        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: .short5week))
-        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
-        
-        // dynamic, top, 6 week
-        adapter.currentMonth = sep2022.advanced(by: 1)
-        
-        XCTAssertEqual(contentSizeList.count, 2)
-        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: .short6week))
-        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
-        
-        // fixed, filled
-        adapter.displayOption = .fixed
-        sut.params.alignment.vertical = .filled
-        
-        XCTAssertEqual(contentSizeList.count, 4)
-        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: frame.height))
-        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
-        
-        // fixed, filled, tall items
-        sut.params.itemSize = .tall
-        XCTAssertEqual(contentSizeList.count, 5)
-        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: .tall6week))
-        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
-        
-        // dynamic, top, 5 week, tall items
-        adapter.displayOption = .dynamic
-        sut.params.alignment.vertical = .packed
-        adapter.currentMonth = sep2022
-        XCTAssertEqual(contentSizeList.count, 8)
-        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: .tall5week))
-        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
-        
-        // dynamic, filled, 5 week
-        sut.params.alignment.vertical = .filled
-        sut.params.itemSize = .short
-        XCTAssertEqual(contentSizeList.count, 10)
-        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: frame.height))
-        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
-        
-        zip(contentSizeList, sectionHeightList).forEach { XCTAssertEqual($0.height, $1) }
     }
     
     private typealias LayoutPlan = CalendarAdapter<TestCalendarAdapterCell>.UICollectionViewAdapter.LayoutPlan
@@ -574,88 +638,6 @@ class CalendarLayoutTests : XCTestCase {
         XCTAssertNotNil(sut.layoutAttributesForItem(at: IndexPath(indexes: [1, 0])))
         XCTAssertNil(sut.layoutAttributesForItem(at: IndexPath(indexes: [2, 0])))
     }
-    
-//    private typealias UICollectionViewAdapter = CalendarAdapter<TestCalendarAdapterCell>.UICollectionViewAdapter
-//
-//    func test_layoutAttributesForSupplementaryView() throws {
-//        let sep2022 = try ISO8601Month(year: 2022, month: 9)
-//        setUp(
-//            params: .init(itemSize: .short),
-//            frame: CGRect(origin: .zero, size: .Device.iPhone12),
-//            initialMonth: sep2022)
-//
-//        // no view provider
-//        XCTAssertNil(sut.layoutAttributesForSupplementaryView(ofKind: UICollectionViewAdapter.weekdayViewID, at: IndexPath(indexes: [0, 0])))
-//
-//        // has view provider
-//        var createdViews = [TestCalendarAdapterReusableView]()
-//        let viewProvider: TestCalendarAdapterComponentViewProvider = withVar(.init()) {
-//            $0.getDecorationViewHandler = { _, weekday in
-//                withVar(TestCalendarAdapterReusableView()) {
-//                    $0.weekday = weekday
-//                    createdViews.append($0)
-//                }
-//            }
-//        }
-//        adapter.viewProvider = AnyCalendarAdapterComponentViewProvider(viewProvider)
-//
-//        do { // h-align: .packed
-//            let expectedSize = CGSize(width: 51, height: sut.weekdayHeight)
-//
-//            if let attribs1 = sut.layoutAttributesForSupplementaryView(ofKind: UICollectionViewAdapter.weekdayViewID, at: IndexPath(indexes: [0, 0])),
-//               let attribs2 = sut.layoutAttributesForSupplementaryView(ofKind: UICollectionViewAdapter.weekdayViewID, at: IndexPath(indexes: [0, 6]))
-//            {
-//                expect(attribs1.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 16.5, y: 0), size: expectedSize), within: 0.1))
-//                expect(attribs2.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 322.5, y: 0), size: expectedSize), within: 0.1))
-//            } else {
-//                XCTFail()
-//            }
-//
-//            XCTAssertNil(sut.layoutAttributesForSupplementaryView(ofKind: UICollectionViewAdapter.weekdayViewID, at: IndexPath(indexes: [0, 7])))
-//        }
-//
-//        do { // h-align: .filled, section insets - 7, spacing - 2
-//            sut.params.sectionInset = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7)
-//            sut.params.spacing.width = 2
-//            sut.params.alignment.horizontal = .filled
-//
-//            let expectedSize = CGSize(width: 52, height: 40)
-//
-//            if let attribs1 = sut.layoutAttributesForSupplementaryView(ofKind: UICollectionViewAdapter.weekdayViewID, at: IndexPath(indexes: [1, 0])),
-//               let attribs2 = sut.layoutAttributesForSupplementaryView(ofKind: UICollectionViewAdapter.weekdayViewID, at: IndexPath(indexes: [1, 6]))
-//            {
-//                // section is below weekday. origin.x and width are adjusted only to align weekdays with the days under them
-//                expect(attribs1.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 397, y: 0), size: expectedSize), within: 0.1))
-//                expect(attribs2.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 721, y: 0), size: expectedSize), within: 0.1))
-//            } else {
-//                XCTFail()
-//            }
-//
-//            XCTAssertNil(sut.layoutAttributesForSupplementaryView(ofKind: UICollectionViewAdapter.weekdayViewID, at: IndexPath(indexes: [1, 7])))
-//        }
-//
-//        do { // h-align: .spread, section insets - 16, item width - 40 -> spacing: 13
-//            sut.params.alignment.horizontal = .spread
-//            sut.params.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-//            sut.params.itemSize.width = 40
-//
-//            if let attribs1 = sut.layoutAttributesForSupplementaryView(ofKind: UICollectionViewAdapter.weekdayViewID, at: IndexPath(indexes: [2, 0])),
-//               let attribs2 = sut.layoutAttributesForSupplementaryView(ofKind: UICollectionViewAdapter.weekdayViewID, at: IndexPath(indexes: [2, 1])),
-//               let attribs3 = sut.layoutAttributesForSupplementaryView(ofKind: UICollectionViewAdapter.weekdayViewID, at: IndexPath(indexes: [2, 6]))
-//            {
-//                // section is below weekday. origin.x and width are adjusted only to align weekdays with the days under them
-//                expect(attribs1.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 796, y: 0), size: .short), within: 0.1))
-//                expect(attribs2.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 849, y: 0), size: .short), within: 0.1))
-//                expect(attribs3.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 1114, y: 0), size: .short), within: 0.1))
-//            } else {
-//                XCTFail()
-//            }
-//
-//            XCTAssertNil(sut.layoutAttributesForSupplementaryView(ofKind: UICollectionViewAdapter.weekdayViewID, at: IndexPath(indexes: [2, 7])))
-//        }
-//
-//        XCTAssertNil(sut.layoutAttributesForDecorationView(ofKind: UICollectionViewAdapter.weekdayViewID, at: IndexPath(indexes: [0, 0])))
-//    }
     
     func test_shouldInvalidateLayout() throws {
         XCTFail()
