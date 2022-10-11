@@ -1,5 +1,5 @@
 //
-//  ColumnSpan.swift
+//  Span.swift
 //  BoosterKit
 //
 //  Created by Josh Woomin Park on 2022/10/10.
@@ -13,7 +13,7 @@ import UIKit
  - Todo: Replace with a struct version.
  - Invariant: `start <= end`
  */
-public final class ColumnSpan : NSObject {
+public final class Span : NSObject {
     public let start: CGFloat
     public let end: CGFloat
     
@@ -27,16 +27,26 @@ public final class ColumnSpan : NSObject {
     }
 }
 
-public extension ColumnSpan {
+public extension Span {
     
-    var width: CGFloat { end - start }
+    convenience init(start: CGFloat, length: CGFloat) {
+        self.init(start: start, end: start + length)
+    }
+    
+    func withStart(_ value: CGFloat) -> Span { Span(start: value, end: end) }
+    
+    func withLength(_ value: CGFloat) -> Span { Span(start: start, length: value) }
+    
+    func withEnd(_ value: CGFloat) -> Span { Span(start: start, end: value) }
+    
+    var length: CGFloat { end - start }
     
 }
 
-extension ColumnSpan {
+extension Span {
     
     public override func isEqual(_ object: Any?) -> Bool {
-        guard let object = object as? ColumnSpan else { return false }
+        guard let object = object as? Span else { return false }
         return start == object.start
             && end == object.end
     }

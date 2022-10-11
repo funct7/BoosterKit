@@ -105,13 +105,13 @@ extension CalendarLayout {
     public dynamic var sectionHeight: CGFloat { 0.0 }
     
     /**
-     The `ColumnSpan` for each weekday.
+     The x-axis `Span` for each weekday.
      
      Use this as a guide when implementing a weekday view for the calendar.
      - Invariant: `weekdaySpans.count == 7`
      */
     @objc
-    public dynamic var weekdaySpans: [ColumnSpan] { [] }
+    public dynamic var weekdaySpans: [Span] { [] }
     
     open override dynamic var collectionViewContentSize: CGSize {
         .zero

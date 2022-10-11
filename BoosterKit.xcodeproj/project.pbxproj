@@ -44,7 +44,7 @@
 		038BD8CF28D9D54E00E3CE51 /* ISO8601Month+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038BD8CE28D9D54E00E3CE51 /* ISO8601Month+Extension.swift */; };
 		038BD8D128D9F80400E3CE51 /* Pair+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038BD8D028D9F80400E3CE51 /* Pair+Extension.swift */; };
 		038BD8D328D9F81900E3CE51 /* PairExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038BD8D228D9F81900E3CE51 /* PairExtensionTests.swift */; };
-		03975DCF28F3AA33000485CF /* ColumnSpan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03975DCE28F3AA33000485CF /* ColumnSpan.swift */; };
+		03975DCF28F3AA33000485CF /* Span.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03975DCE28F3AA33000485CF /* Span.swift */; };
 		039A645328DA9F94007C1A90 /* CalendarAdapter.UICollectionViewAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039A645228DA9F94007C1A90 /* CalendarAdapter.UICollectionViewAdapterTests.swift */; };
 		039E79AF28BD73F2004F356D /* ToastController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039E79AE28BD73F2004F356D /* ToastController+Extension.swift */; };
 		039EC08528DEA2F800331AAF /* CalendarAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039EC08428DEA2F800331AAF /* CalendarAdapterTests.swift */; };
@@ -111,7 +111,7 @@
 		038BD8CE28D9D54E00E3CE51 /* ISO8601Month+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ISO8601Month+Extension.swift"; sourceTree = "<group>"; };
 		038BD8D028D9F80400E3CE51 /* Pair+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pair+Extension.swift"; sourceTree = "<group>"; };
 		038BD8D228D9F81900E3CE51 /* PairExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairExtensionTests.swift; sourceTree = "<group>"; };
-		03975DCE28F3AA33000485CF /* ColumnSpan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnSpan.swift; sourceTree = "<group>"; };
+		03975DCE28F3AA33000485CF /* Span.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Span.swift; sourceTree = "<group>"; };
 		039A645228DA9F94007C1A90 /* CalendarAdapter.UICollectionViewAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAdapter.UICollectionViewAdapterTests.swift; sourceTree = "<group>"; };
 		039E79AE28BD73F2004F356D /* ToastController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToastController+Extension.swift"; sourceTree = "<group>"; };
 		039EC08428DEA2F800331AAF /* CalendarAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAdapterTests.swift; sourceTree = "<group>"; };
@@ -249,9 +249,9 @@
 		0375115A28BC230A0060D304 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				03975DCE28F3AA33000485CF /* ColumnSpan.swift */,
 				0375115B28BC231D0060D304 /* CubicBezierPoint.swift */,
 				0375116828BC26250060D304 /* CubicBezierPoint+Default.swift */,
+				03975DCE28F3AA33000485CF /* Span.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -651,7 +651,7 @@
 				038BD8D128D9F80400E3CE51 /* Pair+Extension.swift in Sources */,
 				038BD8CF28D9D54E00E3CE51 /* ISO8601Month+Extension.swift in Sources */,
 				034F931028D578040035FDC9 /* ISO8601Month.swift in Sources */,
-				03975DCF28F3AA33000485CF /* ColumnSpan.swift in Sources */,
+				03975DCF28F3AA33000485CF /* Span.swift in Sources */,
 				0361FBEE28BD6B5000523A2B /* BoosterKitError.swift in Sources */,
 				0313BA9928D570B100307576 /* FixedTimeInterval.swift in Sources */,
 			);

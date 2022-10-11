@@ -106,19 +106,19 @@ class CalendarLayoutTests : XCTestCase {
             frame: CGRect(origin: .zero, size: .Device.iPhone12),
             initialMonth: sep2022)
         
-        var weekdaySpansList = [[ColumnSpan]]()
+        var weekdaySpansList = [[Span]]()
         let obsToken = sut.observe(\.weekdaySpans, options: [.initial, .new]) { weekdaySpansList.append($1.newValue!) }
         let _ = [obsToken] // code to silence compiler warning about unused reference
         
         do { // h-align: .packed
             let expected = [
-                ColumnSpan(start: 16.5, end: 67.5),
-                ColumnSpan(start: 67.5, end: 118.5),
-                ColumnSpan(start: 118.5, end: 169.5),
-                ColumnSpan(start: 169.5, end: 220.5),
-                ColumnSpan(start: 220.5, end: 271.5),
-                ColumnSpan(start: 271.5, end: 322.5),
-                ColumnSpan(start: 322.5, end: 373.5),
+                Span(start: 16.5, end: 67.5),
+                Span(start: 67.5, end: 118.5),
+                Span(start: 118.5, end: 169.5),
+                Span(start: 169.5, end: 220.5),
+                Span(start: 220.5, end: 271.5),
+                Span(start: 271.5, end: 322.5),
+                Span(start: 322.5, end: 373.5),
             ]
             XCTAssertEqual(sut.weekdaySpans, expected)
             expect(weekdaySpansList).to(equal([expected]))
@@ -130,13 +130,13 @@ class CalendarLayoutTests : XCTestCase {
             sut.params.alignment.horizontal = .filled
             
             let expected = [
-                ColumnSpan(start: 7, end: 59),
-                ColumnSpan(start: 61, end: 113),
-                ColumnSpan(start: 115, end: 167),
-                ColumnSpan(start: 169, end: 221),
-                ColumnSpan(start: 223, end: 275),
-                ColumnSpan(start: 277, end: 329),
-                ColumnSpan(start: 331, end: 383),
+                Span(start: 7, end: 59),
+                Span(start: 61, end: 113),
+                Span(start: 115, end: 167),
+                Span(start: 169, end: 221),
+                Span(start: 223, end: 275),
+                Span(start: 277, end: 329),
+                Span(start: 331, end: 383),
             ]
             XCTAssertEqual(sut.weekdaySpans, expected)
             expect(weekdaySpansList).to(haveCount(2))
@@ -149,13 +149,13 @@ class CalendarLayoutTests : XCTestCase {
             sut.params.itemSize.width = 40
             
             let expected = [
-                ColumnSpan(start: 16, end: 56),
-                ColumnSpan(start: 69, end: 109),
-                ColumnSpan(start: 122, end: 162),
-                ColumnSpan(start: 175, end: 215),
-                ColumnSpan(start: 228, end: 268),
-                ColumnSpan(start: 281, end: 321),
-                ColumnSpan(start: 334, end: 374),
+                Span(start: 16, end: 56),
+                Span(start: 69, end: 109),
+                Span(start: 122, end: 162),
+                Span(start: 175, end: 215),
+                Span(start: 228, end: 268),
+                Span(start: 281, end: 321),
+                Span(start: 334, end: 374),
             ]
             XCTAssertEqual(sut.weekdaySpans, expected)
             expect(weekdaySpansList).to(haveCount(3))
