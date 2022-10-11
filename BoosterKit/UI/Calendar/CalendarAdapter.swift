@@ -27,7 +27,13 @@ public enum CalendarAdapterDisplayOption {
 // TODO: Generalize
 open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     
+    /**
+     - Precondition: `view.collectionViewLayout is CalendarLayout`
+     */
     @IBOutlet open weak var view: UICollectionView! = nil {
+        willSet {
+            assert(newValue.collectionViewLayout is CalendarLayout)
+        }
         didSet {
             view.dataSource = _adapter
             view.delegate = _adapter

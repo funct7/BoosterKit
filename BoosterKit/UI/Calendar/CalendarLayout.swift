@@ -21,6 +21,8 @@ open class CalendarLayout : UICollectionViewLayout {
      */
     open var params: Params!
     
+    private var _dataSet: DataSet!
+    
 }
 
 public extension CalendarLayout {
@@ -101,6 +103,24 @@ public extension CalendarLayout {
 
 extension CalendarLayout {
     
+    // MARK: Inherited
+    
+    open override var collectionViewContentSize: CGSize { .zero }
+    
+    open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        nil
+    }
+    
+    open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        nil
+    }
+    
+    open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        false
+    }
+    
+    // MARK: Public
+    
     @objc
     public dynamic var sectionHeight: CGFloat { 0.0 }
     
@@ -113,20 +133,20 @@ extension CalendarLayout {
     @objc
     public dynamic var weekdaySpans: [Span] { [] }
     
-    open override dynamic var collectionViewContentSize: CGSize {
-        .zero
+    // MARK: Internal
+    
+    func invalidateLayoutIfNeeded(dataSet: DataSet) {
+        _dataSet = dataSet
     }
     
-    open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        nil
-    }
+}
+
+extension CalendarLayout {
     
-    open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        nil
-    }
-    
-    open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        false
+    struct DataSet : Equatable {
+        let displayOption: CalendarAdapterDisplayOption
+        let monthRange: Pair<ISO8601Month?, ISO8601Month?>
+        let currentMonth: ISO8601Month
     }
     
 }
