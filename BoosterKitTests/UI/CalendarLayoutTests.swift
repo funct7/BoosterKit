@@ -163,7 +163,52 @@ class CalendarLayoutTests : XCTestCase {
         }
     }
     
-    func test_contentSize_packedVertical() throws {
+    func test_contentSize_width() throws {
+        let sep2022 = try ISO8601Month(year: 2022, month: 9)
+        
+        let frame = CGRect(
+            x: 0, y: 0,
+            width: CGSize.Device.iPhone12.width,
+            height: 320)
+        
+        setUp(
+            params: .init(sectionInset: .test, itemSize: .short),
+            frame: frame,
+            initialMonth: sep2022)
+        
+        // Infinite range
+        adapter.displayOption = .dynamic
+        
+        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
+        
+        adapter.currentMonth = sep2022.advanced(by: 1)
+        adapter.monthRange = Pair(sep2022, nil)
+        
+        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
+        
+        adapter.monthRange = Pair(nil, sep2022.advanced(by: 1))
+        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
+
+        // 3-month range
+        adapter.currentMonth = sep2022
+        adapter.monthRange = Pair(sep2022.advanced(by: -1), sep2022.advanced(by: 1))
+        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
+        
+        // 2-month range
+        adapter.monthRange = Pair(sep2022, sep2022.advanced(by: 1))
+        
+        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 2)
+        
+        adapter.currentMonth = sep2022.advanced(by: 1)
+        
+        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 2)
+        
+        // 1-month range
+        adapter.monthRange = Pair(sep2022.advanced(by: 1), sep2022.advanced(by: 1))
+        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width)
+    }
+    
+    func test_contentSize_height_packedVertical() throws {
         let sep2022 = try ISO8601Month(year: 2022, month: 9)
         
         let frame = CGRect(
@@ -180,24 +225,20 @@ class CalendarLayoutTests : XCTestCase {
         adapter.displayOption = .dynamic
         
         // frame > content height
-        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
-        XCTAssertEqual(sut.collectionViewContentSize.height, .short5week)
+        XCTAssertEqual(sut.collectionViewContentSize, CGSize(width: frame.size.width * 3, height: .short5week))
         
         adapter.currentMonth = sep2022.advanced(by: 1)
         
-        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
-        XCTAssertEqual(sut.collectionViewContentSize.height, .short6week)
-        
+        XCTAssertEqual(sut.collectionViewContentSize, CGSize(width: frame.size.width * 3, height: .short6week))
+
         // frame < content height
         sut.params.itemSize = .tall
         
-        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
-        XCTAssertEqual(sut.collectionViewContentSize.height, .tall6week)
-        
+        XCTAssertEqual(sut.collectionViewContentSize, CGSize(width: frame.size.width * 3, height: .tall6week))
+
         adapter.currentMonth = sep2022
         
-        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
-        XCTAssertEqual(sut.collectionViewContentSize.height, .tall5week)
+        XCTAssertEqual(sut.collectionViewContentSize, CGSize(width: frame.size.width * 3, height: .tall5week))
         
         // displayOption - fixed
         adapter.displayOption = .fixed
@@ -206,27 +247,23 @@ class CalendarLayoutTests : XCTestCase {
         sut.params.itemSize = .short
         adapter.currentMonth = sep2022
         
-        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
-        XCTAssertEqual(sut.collectionViewContentSize.height, .short6week)
+        XCTAssertEqual(sut.collectionViewContentSize, CGSize(width: frame.size.width * 3, height: .short6week))
         
         adapter.currentMonth = sep2022.advanced(by: 1)
         
-        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
-        XCTAssertEqual(sut.collectionViewContentSize.height, .short6week)
+        XCTAssertEqual(sut.collectionViewContentSize, CGSize(width: frame.size.width * 3, height: .short6week))
         
         // frame < content height
         sut.params.itemSize = .tall
         
-        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
-        XCTAssertEqual(sut.collectionViewContentSize.height, .short6week)
+        XCTAssertEqual(sut.collectionViewContentSize, CGSize(width: frame.size.width * 3, height: .short6week))
         
         adapter.currentMonth = sep2022
         
-        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
-        XCTAssertEqual(sut.collectionViewContentSize.height, .short6week)
+        XCTAssertEqual(sut.collectionViewContentSize, CGSize(width: frame.size.width * 3, height: .short6week))
     }
     
-    func test_contentSize_filledVertical() throws {
+    func test_contentSize_height_filledVertical() throws {
         let sep2022 = try ISO8601Month(year: 2022, month: 9)
 
         let frame = CGRect(
@@ -295,7 +332,7 @@ class CalendarLayoutTests : XCTestCase {
         XCTAssertEqual(sut.collectionViewContentSize.height, .tall6week)
     }
 
-    func test_contentSize_spreadVertical() throws {
+    func test_contentSize_height_spreadVertical() throws {
         let sep2022 = try ISO8601Month(year: 2022, month: 9)
 
         let frame = CGRect(
