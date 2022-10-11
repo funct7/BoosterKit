@@ -13,6 +13,28 @@ import UIKit
  */
 open class CalendarLayout : UICollectionViewLayout {
     
+    // MARK: Inherited
+    
+    private var _contentSize: CGSize = .zero {
+        willSet { willChangeValue(for: \.collectionViewContentSize) }
+        didSet { didChangeValue(for: \.collectionViewContentSize) }
+    }
+    open override var collectionViewContentSize: CGSize { _contentSize }
+    
+    open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        nil
+    }
+    
+    open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        nil
+    }
+    
+    open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        false
+    }
+    
+    // MARK: Public
+    
     /**
      The base parameters to guide the layout.
      
@@ -21,7 +43,24 @@ open class CalendarLayout : UICollectionViewLayout {
      */
     open var params: Params!
     
+    @objc
+    public dynamic var sectionHeight: CGFloat { 0.0 }
+    
+    /**
+     The x-axis `Span` for each weekday.
+     
+     Use this as a guide when implementing a weekday view for the calendar.
+     - Invariant: `weekdaySpans.count == 7`
+     */
+    @objc
+    public dynamic var weekdaySpans: [Span] { [] }
+    
+    // MARK: Internal
+    
     private var _dataSet: DataSet!
+    func invalidateLayoutIfNeeded(dataSet: DataSet) {
+        _dataSet = dataSet
+    }
     
 }
 
@@ -97,46 +136,6 @@ public extension CalendarLayout {
             self.horizontal = horizontal
             self.vertical = vertical
         }
-    }
-    
-}
-
-extension CalendarLayout {
-    
-    // MARK: Inherited
-    
-    open override var collectionViewContentSize: CGSize { .zero }
-    
-    open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        nil
-    }
-    
-    open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        nil
-    }
-    
-    open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        false
-    }
-    
-    // MARK: Public
-    
-    @objc
-    public dynamic var sectionHeight: CGFloat { 0.0 }
-    
-    /**
-     The x-axis `Span` for each weekday.
-     
-     Use this as a guide when implementing a weekday view for the calendar.
-     - Invariant: `weekdaySpans.count == 7`
-     */
-    @objc
-    public dynamic var weekdaySpans: [Span] { [] }
-    
-    // MARK: Internal
-    
-    func invalidateLayoutIfNeeded(dataSet: DataSet) {
-        _dataSet = dataSet
     }
     
 }
