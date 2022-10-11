@@ -665,9 +665,6 @@ class CalendarLayoutTests : XCTestCase {
 
 private extension UIEdgeInsets {
     static let test = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-    
-    var vertical: CGFloat { top + bottom }
-    var horizontal: CGFloat { left + right }
 }
 
 private extension CGSize {
