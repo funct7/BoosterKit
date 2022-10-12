@@ -27,8 +27,12 @@ public enum CalendarAdapterDisplayOption {
 // TODO: Generalize
 open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     
+    private var _calendarLayout: CalendarLayout! {
+        guard let view = view else { return nil }
+        return (view.collectionViewLayout as! CalendarLayout)
+    }
     /**
-     - Precondition: `view.collectionViewLayout is CalendarLayout`
+     - Invariant: `view.collectionViewLayout is CalendarLayout`
      */
     @IBOutlet open weak var view: UICollectionView! = nil {
         willSet {
@@ -41,7 +45,11 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     }
     open var viewProvider: AnyCalendarAdapterComponentViewProvider<Cell>
     open var delegate: AnyCalendarAdapterDelegate<Cell>? = nil
-    open var displayOption: CalendarAdapterDisplayOption = .dynamic
+    
+    private var _dataSet: CalendarLayout.DataSet { .init(displayOption: displayOption, monthRange: monthRange, currentMonth: currentMonth) }
+    open var displayOption: CalendarAdapterDisplayOption = .dynamic {
+        didSet { _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet) }
+    }
     
     /// - Invariant: `currentMonth` must be within `monthRange`.
     open var currentMonth: ISO8601Month {
@@ -53,6 +61,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
             case (let lowerBound?, let upperBound?): precondition(lowerBound <= newValue && newValue <= upperBound)
             }
         }
+        didSet { _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet) }
     }
     
     /**
@@ -80,8 +89,10 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
             case (nil, let upperBound?) where upperBound < currentMonth: currentMonth = upperBound
             case (let lowerBound?, let upperBound?):
                 if currentMonth < lowerBound { currentMonth = lowerBound }
-                if upperBound < currentMonth { currentMonth = upperBound }
-            default: return
+                else if upperBound < currentMonth { currentMonth = upperBound }
+                else { _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet) }
+            default:
+                _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet)
             }
         }
     }
