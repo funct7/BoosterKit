@@ -65,6 +65,8 @@ class CalendarAdapterTests : XCTestCase {
         let layout = MockCalendarLayout()
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         sut.view = view
+        // calls method for initial setting of data
+        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(1))
         
         // same as the current value, but `invalidLayoutIfNeeded` is called regardless.
         // it is up to the `CalendarLayout` instance to check for changes.
@@ -72,24 +74,24 @@ class CalendarAdapterTests : XCTestCase {
         
         typealias DataSet = CalendarLayout.DataSet
         
-        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(1))
+        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(2))
         expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(DataSet(displayOption: .dynamic, monthRange: Pair(nil, nil), currentMonth: sep2022)))
         
         sut.displayOption = .fixed
-        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(2))
+        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(3))
         expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(DataSet(displayOption: .fixed, monthRange: Pair(nil, nil), currentMonth: sep2022)))
         
         sut.monthRange.first = sep2022
-        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(3))
+        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(4))
         expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(DataSet(displayOption: .fixed, monthRange: Pair(sep2022, nil), currentMonth: sep2022)))
         
         sut.monthRange.second = sep2022
-        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(4))
+        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(5))
         expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(DataSet(displayOption: .fixed, monthRange: Pair(sep2022, sep2022), currentMonth: sep2022)))
         
         sut.monthRange = Pair(nil, nil)
         sut.currentMonth = sep2022.advanced(by: 1)
-        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(6))
+        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(7))
         expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(DataSet(displayOption: .fixed, monthRange: Pair(nil, nil), currentMonth: sep2022.advanced(by: 1))))
     }
     

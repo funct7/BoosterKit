@@ -41,6 +41,9 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         didSet {
             view.dataSource = _adapter
             view.delegate = _adapter
+            // layout object needs initial data
+            _calendarLayout.invalidateLayoutIfNeeded(dataSet: _dataSet)
+            view.reloadData()
         }
     }
     open var viewProvider: AnyCalendarAdapterComponentViewProvider<Cell>
