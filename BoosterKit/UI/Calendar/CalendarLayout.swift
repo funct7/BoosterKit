@@ -59,7 +59,9 @@ open class CalendarLayout : UICollectionViewLayout {
     
     private var _dataSet: DataSet!
     func invalidateLayoutIfNeeded(dataSet: DataSet) {
+        let shouldInvalidate = _dataSet != dataSet
         _dataSet = dataSet
+        if shouldInvalidate { invalidateLayout() }
     }
     
 }
