@@ -35,13 +35,77 @@ open class CalendarLayout : UICollectionViewLayout {
     
     // MARK: Public
     
+    @IBInspectable
+    open var topInset: CGFloat {
+        get { params.sectionInset.top }
+        set { params.sectionInset.top = newValue }
+    }
+    
+    @IBInspectable
+    open var rightInset: CGFloat {
+        get { params.sectionInset.right }
+        set { params.sectionInset.right = newValue }
+    }
+    
+    @IBInspectable
+    open var bottomInset: CGFloat {
+        get { params.sectionInset.bottom }
+        set { params.sectionInset.bottom = newValue }
+    }
+    
+    @IBInspectable
+    open var leftInset: CGFloat {
+        get { params.sectionInset.left }
+        set { params.sectionInset.left = newValue }
+    }
+    
+    @IBInspectable
+    open var itemSize: CGSize {
+        get { params.itemSize }
+        set { params.itemSize = newValue }
+    }
+    
+    @IBInspectable
+    open var spacing: CGSize {
+        get { params.spacing }
+        set { params.spacing = newValue }
+    }
+    
+    /**
+     A `String` representation of `params.alignment.horizontal`.
+     
+     Check `CalendarLayout.Mode.RawValue` for possible values.
+     */
+    @IBInspectable
+    open var horizontalAlignment: String {
+        get { params.alignment.horizontal.toRawValue() }
+        set {
+            guard let alignment = try? Mode.from(rawValue: newValue) else { return }
+            params.alignment.horizontal = alignment
+        }
+    }
+    
+    /**
+     A `String` representation of `params.alignment.vertical`.
+     
+     Check `CalendarLayout.Mode.RawValue` for possible values.
+     */
+    @IBInspectable
+    open var verticalAlignment: String {
+        get { params.alignment.vertical.toRawValue() }
+        set {
+            guard let aligment = try? Mode.from(rawValue: newValue) else { return }
+            params.alignment.vertical = aligment
+        }
+    }
+    
     /**
      The base parameters to guide the layout.
      
      These values are the **minimum** guidelines for layout,
-     and each property will be given different priority based on which `mode` is assigned.
+     and each property will be given different priority based on which `alignment` is assigned.
      */
-    open var params: Params!
+    open var params: Params
     
     @objc
     public dynamic var sectionHeight: CGFloat { 0.0 }
@@ -62,6 +126,22 @@ open class CalendarLayout : UICollectionViewLayout {
         let shouldInvalidate = _dataSet != dataSet
         _dataSet = dataSet
         if shouldInvalidate { invalidateLayout() }
+    }
+    
+    // MARK: Initializer
+    
+    public init(params: Params) {
+        self.params = params
+        super.init()
+    }
+    
+    convenience override init() {
+        self.init(params: Params(itemSize: .zero))
+    }
+    
+    required public init?(coder: NSCoder) {
+        self.params = Params(itemSize: .zero)
+        super.init(coder: coder)
     }
     
 }
@@ -148,6 +228,33 @@ extension CalendarLayout {
         let displayOption: CalendarAdapterDisplayOption
         let monthRange: Pair<ISO8601Month?, ISO8601Month?>
         let currentMonth: ISO8601Month
+    }
+    
+}
+
+public extension CalendarLayout.Mode {
+    
+    enum RawValue {
+        static let packed = "packed"
+        static let filled = "filled"
+        static let spread = "spread"
+    }
+    
+    func toRawValue() -> String {
+        switch self {
+        case .packed: return RawValue.packed
+        case .filled: return RawValue.filled
+        case .spread: return RawValue.spread
+        }
+    }
+    
+    static func from(rawValue: String) throws -> Self {
+        switch rawValue {
+        case RawValue.packed: return .packed
+        case RawValue.filled: return .filled
+        case RawValue.spread: return .spread
+        default: throw BoosterKitError.illegalArgument
+        }
     }
     
 }
