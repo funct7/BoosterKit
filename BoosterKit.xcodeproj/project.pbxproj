@@ -20,6 +20,7 @@
 		031E6F2928D8A4D90012B3B1 /* CalendarAdapter.UICollectionViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031E6F2828D8A4D90012B3B1 /* CalendarAdapter.UICollectionViewAdapter.swift */; };
 		031E6F2B28D8A56F0012B3B1 /* CalendarAdapter.UICollectionViewAdapter.LayoutPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031E6F2A28D8A56F0012B3B1 /* CalendarAdapter.UICollectionViewAdapter.LayoutPlanTests.swift */; };
 		0337360C28D6FEA900CD49AC /* TimeZone+Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0337360B28D6FEA900CD49AC /* TimeZone+Constant.swift */; };
+		0345BB1B28F7741600A6C79E /* CalendarDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0345BB1A28F7741600A6C79E /* CalendarDemoViewController.swift */; };
 		0348BD7428DFDD0100BBAE8A /* CalendarLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0348BD7328DFDD0100BBAE8A /* CalendarLayout.swift */; };
 		0348BD7628DFFA6100BBAE8A /* CalendarLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0348BD7528DFFA6100BBAE8A /* CalendarLayoutTests.swift */; };
 		034F930B28D572DF0035FDC9 /* FixedTimeIntervalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034F930A28D572DF0035FDC9 /* FixedTimeIntervalTests.swift */; };
@@ -86,6 +87,7 @@
 		031E6F2828D8A4D90012B3B1 /* CalendarAdapter.UICollectionViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAdapter.UICollectionViewAdapter.swift; sourceTree = "<group>"; };
 		031E6F2A28D8A56F0012B3B1 /* CalendarAdapter.UICollectionViewAdapter.LayoutPlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAdapter.UICollectionViewAdapter.LayoutPlanTests.swift; sourceTree = "<group>"; };
 		0337360B28D6FEA900CD49AC /* TimeZone+Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeZone+Constant.swift"; sourceTree = "<group>"; };
+		0345BB1A28F7741600A6C79E /* CalendarDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDemoViewController.swift; sourceTree = "<group>"; };
 		0348BD7328DFDD0100BBAE8A /* CalendarLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarLayout.swift; sourceTree = "<group>"; };
 		0348BD7528DFFA6100BBAE8A /* CalendarLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarLayoutTests.swift; sourceTree = "<group>"; };
 		034F930A28D572DF0035FDC9 /* FixedTimeIntervalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedTimeIntervalTests.swift; sourceTree = "<group>"; };
@@ -203,6 +205,14 @@
 			path = UIKit;
 			sourceTree = "<group>";
 		};
+		0345BB1928F76BFB00A6C79E /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				0345BB1A28F7741600A6C79E /* CalendarDemoViewController.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
 		034F930C28D576120035FDC9 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +229,7 @@
 		03554E8228BCECF200073345 /* BoosterKit-Demo */ = {
 			isa = PBXGroup;
 			children = (
+				0345BB1928F76BFB00A6C79E /* Calendar */,
 				03AB9DA628BCF55B00BD568B /* Toast */,
 				03554E8928BCECF200073345 /* AppDelegate.swift */,
 				03554E8428BCECF200073345 /* Assets.xcassets */,
@@ -623,6 +634,7 @@
 			files = (
 				03554E9828BCF39800073345 /* AppDelegate.swift in Sources */,
 				03AB9DA828BCF57400BD568B /* ImageTextView.swift in Sources */,
+				0345BB1B28F7741600A6C79E /* CalendarDemoViewController.swift in Sources */,
 				03554E9328BCF37C00073345 /* ToastDemoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

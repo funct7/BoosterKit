@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rPZ-Ge-Seb">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -37,8 +38,139 @@
             </objects>
             <point key="canvasLocation" x="132" y="116"/>
         </scene>
+        <!--Calendar Demo View Controller-->
+        <scene sceneID="zXf-H0-rUG">
+            <objects>
+                <viewController id="rPZ-Ge-Seb" customClass="CalendarDemoViewController" customModule="BoosterKit_Demo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mNt-zC-XRa">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="czP-MH-tag">
+                                <rect key="frame" x="0.0" y="44" width="414" height="380"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hcm-1l-I4g">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pfl-i1-zOg">
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="Pfl-i1-zOg" secondAttribute="height" multiplier="1:1" id="FdW-7m-c9e"/>
+                                                </constraints>
+                                                <state key="normal" image="chevron.left.circle" catalog="system"/>
+                                                <connections>
+                                                    <action selector="prevMonthAction:" destination="rPZ-Ge-Seb" eventType="touchUpInside" id="pvD-rJ-954"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jym-Ek-8sz">
+                                                <rect key="frame" x="50" y="0.0" width="314" height="50"/>
+                                                <state key="normal" title="MONTH"/>
+                                                <connections>
+                                                    <action selector="currentMonthAction:" destination="rPZ-Ge-Seb" eventType="touchUpInside" id="uyE-p5-YyA"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ofy-UA-efZ">
+                                                <rect key="frame" x="364" y="0.0" width="50" height="50"/>
+                                                <state key="normal" image="chevron.right.circle" catalog="system"/>
+                                                <connections>
+                                                    <action selector="nextMonthAction:" destination="rPZ-Ge-Seb" eventType="touchUpInside" id="4VL-EO-8Gs"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="Ofy-UA-efZ" firstAttribute="width" secondItem="Pfl-i1-zOg" secondAttribute="width" id="1sR-th-BzV"/>
+                                            <constraint firstAttribute="height" constant="50" id="Qqv-lu-JsU"/>
+                                        </constraints>
+                                    </stackView>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" prefetchingEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bAq-lV-r9p">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="330"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <collectionViewLayout key="collectionViewLayout" id="n4K-1c-up9" customClass="CalendarLayout" customModule="BoosterKit">
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="topInset">
+                                                    <real key="value" value="16"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
+                                                    <real key="value" value="16"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="bottomInset">
+                                                    <real key="value" value="16"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
+                                                    <real key="value" value="16"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="size" keyPath="itemSize">
+                                                    <size key="value" width="40" height="40"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </collectionViewLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CalendarDayCell" id="Gep-3B-HkJ" customClass="CalendarDayCell" customModule="BoosterKit_Demo" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="NSg-eF-gS5">
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hsw-7l-i5E">
+                                                            <rect key="frame" x="11" y="11" width="28" height="28"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="28" id="6ug-ym-AAa"/>
+                                                                <constraint firstAttribute="width" secondItem="Hsw-7l-i5E" secondAttribute="height" multiplier="1:1" id="g2r-Ob-10x"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hAb-FO-9QA">
+                                                            <rect key="frame" x="20.5" y="15" width="9" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="Hsw-7l-i5E" firstAttribute="centerX" secondItem="NSg-eF-gS5" secondAttribute="centerX" id="BRu-Np-wWE"/>
+                                                        <constraint firstItem="hAb-FO-9QA" firstAttribute="centerX" secondItem="NSg-eF-gS5" secondAttribute="centerX" id="Bf9-Ab-WQk"/>
+                                                        <constraint firstItem="Hsw-7l-i5E" firstAttribute="centerY" secondItem="NSg-eF-gS5" secondAttribute="centerY" id="FfZ-f9-09l"/>
+                                                        <constraint firstItem="hAb-FO-9QA" firstAttribute="centerY" secondItem="NSg-eF-gS5" secondAttribute="centerY" id="pVx-Oq-3oE"/>
+                                                    </constraints>
+                                                </collectionViewCellContentView>
+                                                <connections>
+                                                    <outlet property="label" destination="hAb-FO-9QA" id="fzX-WM-oGU"/>
+                                                    <outlet property="selectionView" destination="Hsw-7l-i5E" id="Qhg-aw-S18"/>
+                                                </connections>
+                                            </collectionViewCell>
+                                        </cells>
+                                    </collectionView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="380" id="XeU-6J-bGv"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="V6M-VT-syG"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="czP-MH-tag" firstAttribute="leading" secondItem="V6M-VT-syG" secondAttribute="leading" id="9cc-Eg-ZcB"/>
+                            <constraint firstItem="czP-MH-tag" firstAttribute="trailing" secondItem="V6M-VT-syG" secondAttribute="trailing" id="Ijm-7Z-nhg"/>
+                            <constraint firstItem="czP-MH-tag" firstAttribute="top" secondItem="V6M-VT-syG" secondAttribute="top" id="eBU-rI-EGC"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="calendarLayout" destination="n4K-1c-up9" id="fDV-yP-RN5"/>
+                        <outlet property="calendarView" destination="bAq-lV-r9p" id="J9P-Fv-dqr"/>
+                        <outlet property="currentMonthButton" destination="Jym-Ek-8sz" id="Xzr-UC-kI3"/>
+                        <outlet property="nextMonthButton" destination="Ofy-UA-efZ" id="JUJ-7V-yw9"/>
+                        <outlet property="prevMonthButton" destination="Pfl-i1-zOg" id="zxq-ts-9EO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dfP-Zv-4h4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="131.8840579710145" y="821.65178571428567"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="chevron.left.circle" catalog="system" width="128" height="121"/>
+        <image name="chevron.right.circle" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
