@@ -9,9 +9,13 @@ import UIKit
 import BoosterKit
 
 class TestCalendarAdapterComponentViewProvider : CalendarAdapterComponentViewProvider {
-    func getCell(collectionView: UICollectionView, for context: CalendarAdapterContext) -> TestCalendarAdapterCell {
-        withVar(TestCalendarAdapterCell()) {
-            $0.context = context
-        }
+    
+    typealias Cell = TestCalendarAdapterCell
+    
+    func getCellIdentifier() -> String { "\(TestCalendarAdapterCell.self)" }
+    
+    func configure(_ cell: TestCalendarAdapterCell, with context: CalendarAdapterContext) {
+        cell.context = context
     }
+    
 }

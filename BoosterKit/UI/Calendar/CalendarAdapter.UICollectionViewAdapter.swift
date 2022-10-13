@@ -11,6 +11,7 @@ extension CalendarAdapter {
     
     class UICollectionViewAdapter : NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout where Cell : UICollectionViewCell {
         
+        private var _viewProvider: AnyCalendarAdapterComponentViewProvider<Cell> { calendarAdapter.viewProvider }
         unowned let calendarAdapter: CalendarAdapter<Cell>
 
         init(calendarAdapter: CalendarAdapter<Cell>) {
@@ -36,19 +37,23 @@ extension CalendarAdapter {
         
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             let date = _getDate(indexPath: indexPath)
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: _viewProvider.getCellIdentifier(),
+                for: indexPath)
+                as! Cell
             
-            return calendarAdapter.viewProvider.getCell(
-                collectionView: collectionView,
-                for: CalendarAdapterContext(date: date, position: assign {
-                    let sectionMonth = _getMonth(section: indexPath.section)
-                    if date.month < sectionMonth {
-                        return .leading
-                    } else if date.month == sectionMonth {
-                        return .main
-                    } else {
-                        return .trailing
-                    }
-                }))
+            _viewProvider.configure(cell, with: CalendarAdapterContext(date: date, position: assign {
+                let sectionMonth = _getMonth(section: indexPath.section)
+                if date.month < sectionMonth {
+                    return .leading
+                } else if date.month == sectionMonth {
+                    return .main
+                } else {
+                    return .trailing
+                }
+            }))
+            
+            return cell
         }
         
     }

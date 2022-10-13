@@ -27,6 +27,8 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         monthRange: Pair<ISO8601Month?, ISO8601Month?>)
     {
         viewProvider = .init()
+        _Constant.collectionView.register(_Cell.self, forCellWithReuseIdentifier: "\(_Cell.self)")
+        
         adapter = .init(
             initialMonth: initialMonth,
             monthRange: monthRange,
