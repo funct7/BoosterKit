@@ -22,7 +22,7 @@ class CalendarLayoutTests : XCTestCase {
         initialMonth: ISO8601Month = .init(),
         monthRange: Pair<ISO8601Month?, ISO8601Month?> = Pair(nil, nil))
     {
-        sut = withVar(CalendarLayout()) { $0!.params = params }
+        sut = withVar(CalendarLayoutSpy()) { $0!.params = params }
         collectionView = .init(
             frame: frame,
             collectionViewLayout: sut)
@@ -181,18 +181,34 @@ class CalendarLayoutTests : XCTestCase {
         
         XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
         
+        adapter.currentMonth = sep2022.advanced(by: 10)
+        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
+        
+        adapter.currentMonth = sep2022.advanced(by: -10)
+        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
+        
+        // Constrained inifinite range
         adapter.currentMonth = sep2022.advanced(by: 1)
         adapter.monthRange = Pair(sep2022, nil)
         
         XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
         
+        adapter.currentMonth = sep2022.advanced(by: 10)
+        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
+        
+        adapter.currentMonth = sep2022 // edge case
+        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 2)
+        
         adapter.monthRange = Pair(nil, sep2022.advanced(by: 1))
         XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
+        
+        adapter.currentMonth = sep2022.advanced(by: 1) // edge case
+        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 2)
 
-        // 3-month range
+        // n-month range
         adapter.currentMonth = sep2022
-        adapter.monthRange = Pair(sep2022.advanced(by: -1), sep2022.advanced(by: 1))
-        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
+        adapter.monthRange = Pair(sep2022.advanced(by: -8), sep2022.advanced(by: 3)) // the year of 2022
+        XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 12)
         
         // 2-month range
         adapter.monthRange = Pair(sep2022, sep2022.advanced(by: 1))
@@ -206,6 +222,51 @@ class CalendarLayoutTests : XCTestCase {
         // 1-month range
         adapter.monthRange = Pair(sep2022.advanced(by: 1), sep2022.advanced(by: 1))
         XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width)
+    }
+    
+    func test_contentSize_height_whenFiniteRange_isMaxHeightOfAllMonths() throws {
+        let sep2022 = try ISO8601Month(year: 2022, month: 9)
+        
+        let frame = CGRect(
+            x: 0, y: 0,
+            width: CGSize.Device.iPhone12.width,
+            height: 320)
+        
+        setUp(
+            params: .init(sectionInset: .test, itemSize: .short),
+            frame: frame,
+            initialMonth: sep2022,
+            monthRange: Pair(sep2022, sep2022))
+        
+        // displayOption - DYNAMIC
+        XCTAssertEqual(sut.collectionViewContentSize.height, .short5week)
+        
+        adapter.monthRange = Pair(sep2022, sep2022.advanced(by: 1))
+        XCTAssertEqual(sut.collectionViewContentSize.height, .short6week) // oct 2022 is a 6-week month
+        
+        adapter.monthRange = Pair(sep2022.advanced(by: -1), sep2022)
+        XCTAssertEqual(sut.collectionViewContentSize.height, .short5week) // no 6-week month
+        
+        adapter.monthRange = Pair(sep2022.advanced(by: -2), sep2022)
+        XCTAssertEqual(sut.collectionViewContentSize.height, .short6week) // jul 2022 is a 6-week month
+        
+        // displayOption - FIXED
+        adapter.displayOption = .fixed
+        
+        adapter.monthRange = Pair(sep2022.advanced(by: -2), sep2022)
+        XCTAssertEqual(sut.collectionViewContentSize.height, .short6week)
+        
+        adapter.monthRange = Pair(sep2022.advanced(by: -1), sep2022)
+        XCTAssertEqual(sut.collectionViewContentSize.height, .short6week)
+        
+        // vertical align - FILLED
+        sut.params.alignment.vertical = .filled
+        
+        adapter.monthRange = Pair(sep2022.advanced(by: -2), sep2022)
+        XCTAssertEqual(sut.collectionViewContentSize.height, frame.height)
+        
+        adapter.monthRange = Pair(sep2022, sep2022.advanced(by: 1))
+        XCTAssertEqual(sut.collectionViewContentSize.height, frame.height)
     }
     
     func test_contentSize_height_packedVertical() throws {
@@ -696,6 +757,68 @@ class CalendarLayoutTests : XCTestCase {
         XCTAssertTrue(sut.shouldInvalidateLayout(forBoundsChange: withVar(initialFrame) { $0.size.width = 400 }))
         XCTAssertTrue(sut.shouldInvalidateLayout(forBoundsChange: withVar(initialFrame) { $0.size.height = 30 }))
         XCTAssertTrue(sut.shouldInvalidateLayout(forBoundsChange: withVar(initialFrame) { $0.size.height = 390 }))
+    }
+    
+    func test_invalidateLayoutIfNeeded() throws {
+        let sep2022 = try ISO8601Month(year: 2022, month: 9)
+            
+        setUp(
+            params: .init(itemSize: .short),
+            frame: CGRect(origin: .zero, size: .Device.iPhone12),
+            initialMonth: sep2022,
+            monthRange: Pair(nil, nil))
+        
+        let spy = sut as! CalendarLayoutSpy
+        expect(spy.invalidateLayoutCallCount).to(equal(1))
+        
+        spy.invalidateLayoutIfNeeded(
+            dataSet: CalendarLayout.DataSet(
+                displayOption: adapter.displayOption,
+                monthRange: adapter.monthRange,
+                currentMonth: sep2022.advanced(by: 3)))
+        
+        expect(spy.invalidateLayoutCallCount).to(equal(2))
+        
+        spy.invalidateLayoutIfNeeded(
+            dataSet: CalendarLayout.DataSet(
+                displayOption: adapter.displayOption,
+                monthRange: Pair(sep2022, nil),
+                currentMonth: sep2022))
+        spy.invalidateLayoutIfNeeded(
+            dataSet: CalendarLayout.DataSet(
+                displayOption: adapter.displayOption,
+                monthRange: Pair(sep2022, nil),
+                currentMonth: sep2022.advanced(by: 1)))
+        expect(spy.invalidateLayoutCallCount).to(equal(4))
+        
+        let boundedRange = Pair<ISO8601Month?, ISO8601Month?>(sep2022, sep2022.advanced(by: 4))
+        spy.invalidateLayoutIfNeeded(
+            dataSet: CalendarLayout.DataSet(
+                displayOption: adapter.displayOption,
+                monthRange: boundedRange,
+                currentMonth: sep2022))
+        expect(spy.invalidateLayoutCallCount).to(equal(5))
+        
+        // no layout invalidation
+        (1...4).forEach { offset in
+            spy.invalidateLayoutIfNeeded(
+                dataSet: CalendarLayout.DataSet(
+                    displayOption: adapter.displayOption,
+                    monthRange: boundedRange,
+                    currentMonth: sep2022.advanced(by: offset)))
+        }
+        expect(spy.invalidateLayoutCallCount).to(equal(5))
+    }
+    
+}
+
+private class CalendarLayoutSpy : CalendarLayout {
+    
+    var invalidateLayoutCallCount = 0
+    
+    override func invalidateLayout() {
+        invalidateLayoutCallCount += 1
+        super.invalidateLayout()
     }
     
 }

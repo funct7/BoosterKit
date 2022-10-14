@@ -289,9 +289,9 @@
 				031E6F2A28D8A56F0012B3B1 /* CalendarAdapter.UICollectionViewAdapter.LayoutPlanTests.swift */,
 				039A645228DA9F94007C1A90 /* CalendarAdapter.UICollectionViewAdapterTests.swift */,
 				039EC08428DEA2F800331AAF /* CalendarAdapterTests.swift */,
+				0348BD7528DFFA6100BBAE8A /* CalendarLayoutTests.swift */,
 				039EC08628DEA38600331AAF /* TestCalendarAdapterCell.swift */,
 				039EC08828DEA3C000331AAF /* TestCalendarAdapterComponentViewProvider.swift */,
-				0348BD7528DFFA6100BBAE8A /* CalendarLayoutTests.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
