@@ -39,6 +39,8 @@ public extension Span {
     
     func withEnd(_ value: CGFloat) -> Span { Span(start: start, end: value) }
     
+    func offset(by value: CGFloat) -> Span { Span(start: start + value, end: end + value) }
+    
     var length: CGFloat { end - start }
     
 }
