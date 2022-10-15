@@ -186,7 +186,16 @@ open class CalendarLayout : UICollectionViewLayout {
     
     private var _dataSet: DataSet!
     func invalidateLayoutIfNeeded(dataSet: DataSet) {
-        let shouldInvalidate = _dataSet != dataSet
+        let shouldInvalidate: Bool = assign {
+            guard let _dataSet = _dataSet else { return true }
+            if _dataSet.displayOption != dataSet.displayOption { return true }
+            if _dataSet.monthRange != dataSet.monthRange { return true }
+            
+            switch dataSet.monthRange.toTuple() {
+            case (.some, .some): return false
+            default: return _dataSet.currentMonth != dataSet.currentMonth
+            }
+        }
         _dataSet = dataSet
         if shouldInvalidate { invalidateLayout() }
     }

@@ -776,7 +776,7 @@ class CalendarLayoutTests : XCTestCase {
             initialMonth: sep2022,
             monthRange: Pair(nil, nil))
         
-        expect(self.sut.invalidateLayoutCallCount).to(equal(1))
+        let initialCallCount = sut.invalidateLayoutCallCount
         
         sut.invalidateLayoutIfNeeded(
             dataSet: CalendarLayout.DataSet(
@@ -784,7 +784,7 @@ class CalendarLayoutTests : XCTestCase {
                 monthRange: adapter.monthRange,
                 currentMonth: sep2022.advanced(by: 3)))
         
-        expect(self.sut.invalidateLayoutCallCount).to(equal(2))
+        expect(self.sut.invalidateLayoutCallCount).to(equal(initialCallCount + 1))
         
         sut.invalidateLayoutIfNeeded(
             dataSet: CalendarLayout.DataSet(
@@ -796,7 +796,7 @@ class CalendarLayoutTests : XCTestCase {
                 displayOption: adapter.displayOption,
                 monthRange: Pair(sep2022, nil),
                 currentMonth: sep2022.advanced(by: 1)))
-        expect(self.sut.invalidateLayoutCallCount).to(equal(4))
+        expect(self.sut.invalidateLayoutCallCount).to(equal(initialCallCount + 3))
         
         let boundedRange = Pair<ISO8601Month?, ISO8601Month?>(sep2022, sep2022.advanced(by: 4))
         sut.invalidateLayoutIfNeeded(
@@ -804,7 +804,7 @@ class CalendarLayoutTests : XCTestCase {
                 displayOption: adapter.displayOption,
                 monthRange: boundedRange,
                 currentMonth: sep2022))
-        expect(self.sut.invalidateLayoutCallCount).to(equal(5))
+        expect(self.sut.invalidateLayoutCallCount).to(equal(initialCallCount + 4))
         
         // no layout invalidation
         (1...4).forEach { offset in
@@ -814,7 +814,7 @@ class CalendarLayoutTests : XCTestCase {
                     monthRange: boundedRange,
                     currentMonth: sep2022.advanced(by: offset)))
         }
-        expect(self.sut.invalidateLayoutCallCount).to(equal(5))
+        expect(self.sut.invalidateLayoutCallCount).to(equal(initialCallCount + 4))
     }
     
 }
