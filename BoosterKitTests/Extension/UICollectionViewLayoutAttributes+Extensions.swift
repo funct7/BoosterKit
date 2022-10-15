@@ -10,7 +10,7 @@ import UIKit
 extension Array where Element : UICollectionViewLayoutAttributes {
     
     func attributes(at indices: [Int]) -> Element? {
-        first(where: { [Int]($0.indexPath.indices) == indices })
+        first(where: { [Int]($0.indexPath) == indices })
     }
     
 }

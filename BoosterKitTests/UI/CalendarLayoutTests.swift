@@ -14,7 +14,7 @@ class CalendarLayoutTests : XCTestCase {
     
     private var collectionView: UICollectionView!
     private var adapter: CalendarAdapter<TestCalendarAdapterCell>!
-    private var sut: CalendarLayout!
+    private var sut: CalendarLayoutSpy!
     
     private func setUp(
         params: CalendarLayout.Params,
@@ -317,11 +317,11 @@ class CalendarLayoutTests : XCTestCase {
         // frame < content height
         sut.params.itemSize = .tall
         
-        XCTAssertEqual(sut.collectionViewContentSize, CGSize(width: frame.size.width * 3, height: .short6week))
+        XCTAssertEqual(sut.collectionViewContentSize, CGSize(width: frame.size.width * 3, height: .tall6week))
         
         adapter.currentMonth = sep2022
         
-        XCTAssertEqual(sut.collectionViewContentSize, CGSize(width: frame.size.width * 3, height: .short6week))
+        XCTAssertEqual(sut.collectionViewContentSize, CGSize(width: frame.size.width * 3, height: .tall6week))
     }
     
     func test_contentSize_height_filledVertical() throws {
@@ -466,25 +466,25 @@ class CalendarLayoutTests : XCTestCase {
     func test_layoutAttributesForElementInRect() throws {
         let sep2022 = try ISO8601Month(year: 2022, month: 9)
         
-        let frame = CGRect(
+        let viewFrame = CGRect(
             x: 0, y: 0,
             width: CGSize.Device.iPhone12.width,
             height: 320)
         
         setUp(
             params: .init(sectionInset: .test, itemSize: .short),
-            frame: frame,
+            frame: viewFrame,
             initialMonth: sep2022)
         
-        let page1 = CGRect(origin: .zero, size: frame.size),
-            page2 = CGRect(x: frame.width, y: 0, width: frame.width, height: frame.height),
-            page3 = CGRect(x: frame.width * 2, y: 0, width: frame.width, height: frame.height)
+        let page1 = CGRect(origin: .zero, size: viewFrame.size),
+            page2 = CGRect(x: viewFrame.width, y: 0, width: viewFrame.width, height: viewFrame.height),
+            page3 = CGRect(x: viewFrame.width * 2, y: 0, width: viewFrame.width, height: viewFrame.height)
+        let weekCountList = (-1 ... 1).map { LayoutPlan.create(month: sep2022.advanced(by: $0)).numberOfWeeks }
         
         func getRect(_ pageIndex: Int) -> [CGRect] {
-            let weekCountList = (-1 ... 1).map { LayoutPlan.create(month: sep2022.advanced(by: $0)).numberOfWeeks }
             return CGRect
-                .make(params: sut.params, weekCount: weekCountList[pageIndex], viewSize: frame.size)
-                .map { frame in withVar(frame) { $0.origin.x += CGFloat(pageIndex) * frame.width } }
+                .make(params: sut.params, weekCount: adapter.displayOption == .dynamic ? weekCountList[pageIndex] : 6, viewSize: viewFrame.size)
+                .map { frame in withVar(frame) { $0.origin.x += CGFloat(pageIndex) * viewFrame.width } }
         }
         
         // displayOption - dynamic
@@ -495,7 +495,7 @@ class CalendarLayoutTests : XCTestCase {
             
             // H:|-16->=0-[SUN: 51][MON: 51][TUE: 51][WED: 51][THU: 51][FRI: 51][SAT: 51]->=0-16-| -> 0.5
             if let attribs = sut.layoutAttributesForElements(in: page1) {
-                guard attribs.indices == (0..<35) else { return XCTFail() }
+                guard attribs.indices == (0..<35) else { return XCTFail("expected: \(0..<35); got: \(attribs.indices)") }
                 
                 // V:|-16-[WEEK1: 40][WEEK2: 40][WEEK3: 40][WEEK4: 40][WEEK5: 40]->=16-|
                 expect(attribs.attributes(at: [0, 0])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 16.5, y: 16), size: .short), within: 0.1))    // week 1, sun
@@ -654,31 +654,39 @@ class CalendarLayoutTests : XCTestCase {
         
         // oversized pages
         do {
+            let newSize = CGSize(width: 300, height: 270)
+            let newPage1 = CGRect(origin: .zero, size: newSize),
+                newPage2 = newPage1.offsetBy(dx: newSize.width, dy: 0)
+            
             sut.params.spacing = .zero
             sut.params.sectionInset = .zero
             sut.params.alignment = .init(horizontal: .packed, vertical: .filled)
             sut.params.itemSize = CGSize(width: 50, height: 50)
-            adapter.view.frame.size = CGSize(width: 300, height: 270)
+            adapter.view.frame.size = newSize
+            sut.invalidateLayout() // explicitly invalidate since it is not called in test environment
             
             // H:|[S][M][T][W][T][F]| ([S]) - saturday spills over to the next page and overlaps the sunday of the next month
             // V:|[W1][W2][W3][W4][W5][W6]| - week 6 spills over the view frame
-            if let attribs = sut.layoutAttributesForElements(in: page1) {
-                guard attribs.indices == (0..<36) else { return XCTFail() }
+            if let attribs = sut.layoutAttributesForElements(in: newPage1) {
+                expect(attribs).to(haveCount(36))
                 
                 let expectedSize = CGSize(width: 50, height: 50)
-                expect(attribs.attributes(at: [0, 0])?.frame).to(beCloseTo(CGRect(origin: .zero, size: expectedSize), within: 0.1))                 // week 1, sun
-                expect(attribs.attributes(at: [0, 7])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 50, y: 50), size: expectedSize), within: 0.1)) // week 2, mon (only 6 days fit in the view frame)
-                expect(attribs.attributes(at: [0, 28])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 200, y: 200), size: expectedSize), within: 0.1))    // week 5, thu
-                expect(attribs.attributes(at: [0, 35])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 250, y: 250), size: expectedSize), within: 0.1))    // week 6, fri
+                // layout index paths are maintained regardless of being drawn in the rect
+                expect(attribs.attributes(at: [0, 0])?.frame).to(beCloseTo(CGRect(origin: .zero, size: expectedSize), within: 0.1))                    // week 1, sun
+                expect(attribs.attributes(at: [0, 6])?.frame).to(beNil())                                                                              // week 1 sat is not drawn in page 1
+                expect(attribs.attributes(at: [0, 8])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 50, y: 50), size: expectedSize), within: 0.1))    // week 2, mon
+                expect(attribs.attributes(at: [0, 32])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 200, y: 200), size: expectedSize), within: 0.1)) // week 5, thu
+                expect(attribs.attributes(at: [0, 40])?.frame).to(beCloseTo(CGRect(origin: CGPoint(x: 250, y: 250), size: expectedSize), within: 0.1)) // week 6, fri
+                expect(attribs.attributes(at: [0, 41])?.frame).to(beNil())                                                                             // week 6, sat
             } else {
                 XCTFail("expected a non-nil array")
             }
             
-            if let attribs = sut.layoutAttributesForElements(in: page2) {
-                guard attribs.indices == (0..<42) else { return XCTFail() }
+            if let attribs = sut.layoutAttributesForElements(in: newPage2) {
+                expect(attribs).to(haveCount(42)) // 36 days for oct calendar + saturdays from sep
                 
                 // next page still starts at the correct position
-                expect(attribs.filter { $0.frame.origin.x == 300 }).to(haveCount(12)) // prev month saturdays + current month sundays
+                expect(attribs.filter { $0.frame.origin.x == newPage2.origin.x }).to(haveCount(12)) // prev month saturdays + current month sundays
             } else {
                 XCTFail("expected a non-nil array")
             }
@@ -768,46 +776,45 @@ class CalendarLayoutTests : XCTestCase {
             initialMonth: sep2022,
             monthRange: Pair(nil, nil))
         
-        let spy = sut as! CalendarLayoutSpy
-        expect(spy.invalidateLayoutCallCount).to(equal(1))
+        expect(self.sut.invalidateLayoutCallCount).to(equal(1))
         
-        spy.invalidateLayoutIfNeeded(
+        sut.invalidateLayoutIfNeeded(
             dataSet: CalendarLayout.DataSet(
                 displayOption: adapter.displayOption,
                 monthRange: adapter.monthRange,
                 currentMonth: sep2022.advanced(by: 3)))
         
-        expect(spy.invalidateLayoutCallCount).to(equal(2))
+        expect(self.sut.invalidateLayoutCallCount).to(equal(2))
         
-        spy.invalidateLayoutIfNeeded(
+        sut.invalidateLayoutIfNeeded(
             dataSet: CalendarLayout.DataSet(
                 displayOption: adapter.displayOption,
                 monthRange: Pair(sep2022, nil),
                 currentMonth: sep2022))
-        spy.invalidateLayoutIfNeeded(
+        sut.invalidateLayoutIfNeeded(
             dataSet: CalendarLayout.DataSet(
                 displayOption: adapter.displayOption,
                 monthRange: Pair(sep2022, nil),
                 currentMonth: sep2022.advanced(by: 1)))
-        expect(spy.invalidateLayoutCallCount).to(equal(4))
+        expect(self.sut.invalidateLayoutCallCount).to(equal(4))
         
         let boundedRange = Pair<ISO8601Month?, ISO8601Month?>(sep2022, sep2022.advanced(by: 4))
-        spy.invalidateLayoutIfNeeded(
+        sut.invalidateLayoutIfNeeded(
             dataSet: CalendarLayout.DataSet(
                 displayOption: adapter.displayOption,
                 monthRange: boundedRange,
                 currentMonth: sep2022))
-        expect(spy.invalidateLayoutCallCount).to(equal(5))
+        expect(self.sut.invalidateLayoutCallCount).to(equal(5))
         
         // no layout invalidation
         (1...4).forEach { offset in
-            spy.invalidateLayoutIfNeeded(
+            sut.invalidateLayoutIfNeeded(
                 dataSet: CalendarLayout.DataSet(
                     displayOption: adapter.displayOption,
                     monthRange: boundedRange,
                     currentMonth: sep2022.advanced(by: offset)))
         }
-        expect(spy.invalidateLayoutCallCount).to(equal(5))
+        expect(self.sut.invalidateLayoutCallCount).to(equal(5))
     }
     
 }
@@ -815,10 +822,12 @@ class CalendarLayoutTests : XCTestCase {
 private class CalendarLayoutSpy : CalendarLayout {
     
     var invalidateLayoutCallCount = 0
+    var invokePrepareOnInvalidLayout = true
     
     override func invalidateLayout() {
         invalidateLayoutCallCount += 1
         super.invalidateLayout()
+        if invokePrepareOnInvalidLayout { prepare() }
     }
     
 }
@@ -830,7 +839,7 @@ private extension UIEdgeInsets {
 private extension CGSize {
     
     static let short = CGSize(width: 51, height: 40)
-    static let tall  = CGSize(width: 51, height: 50)
+    static let tall  = CGSize(width: 51, height: 60)
     
 }
 
@@ -862,11 +871,11 @@ private extension CGRect {
     }
     
     static private func originX(weekdayIndex: Int, leftInset: CGFloat, itemWidth: CGFloat, spacing: CGFloat) -> CGFloat {
-        leftInset + itemWidth * CGFloat(weekdayIndex) + spacing * CGFloat(max(weekdayIndex-1, 0))
+        leftInset + itemWidth * CGFloat(weekdayIndex) + spacing * CGFloat(weekdayIndex)
     }
     
     static private func originY(weekIndex: Int, topInset: CGFloat, itemHeight: CGFloat, spacing: CGFloat) -> CGFloat {
-        topInset + itemHeight * CGFloat(weekIndex) + spacing * CGFloat(max(weekIndex-1, 0))
+        topInset + itemHeight * CGFloat(weekIndex) + spacing * CGFloat(weekIndex)
     }
     
     /// - Returns: A list of `($ORIGIN_X, $WIDTH)` tuples.

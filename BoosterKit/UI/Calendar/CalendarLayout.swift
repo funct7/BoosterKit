@@ -20,13 +20,72 @@ open class CalendarLayout : UICollectionViewLayout {
         didSet { didChangeValue(for: \.collectionViewContentSize) }
     }
     open override var collectionViewContentSize: CGSize { _contentSize }
+
+    private var _cachedAttribs = [ISO8601Month : [UICollectionViewLayoutAttributes]]()
+    private var _contentRange: Pair<ISO8601Month, ISO8601Month> {
+        switch _dataSet.monthRange.toTuple() {
+        case (let lowerBound?, let upperBound?):
+            return Pair(lowerBound, upperBound)
+        case (let lowerBound?, nil) where lowerBound == _dataSet.currentMonth:
+            return Pair(lowerBound, lowerBound.advanced(by: 1))
+        case (nil, let upperBound?) where upperBound == _dataSet.currentMonth:
+            return Pair(upperBound.advanced(by: -1), upperBound)
+        default:
+            return Pair(_dataSet.currentMonth.advanced(by: -1), _dataSet.currentMonth.advanced(by: 1))
+        }
+    }
+    
+    open override func prepare() {
+        guard let view = collectionView, let _ = _dataSet else { return }
+        
+        super.prepare()
+        
+        let (lowerBound, upperBound) = _contentRange.toTuple()
+        let numberOfMonths = try! lowerBound.distance(to: upperBound) + 1
+        
+        _cachedAttribs = .init(uniqueKeysWithValues: (0 ..< numberOfMonths).map { offset in
+            let month = lowerBound.advanced(by: offset)
+            
+            let attribsList = CGRect
+                .make(
+                    params: params,
+                    weekCount: assign {
+                        _dataSet.displayOption == .dynamic
+                            ? CalendarAdapter.UICollectionViewAdapter.LayoutPlan.create(month: month).numberOfWeeks
+                            : 6
+                    },
+                    viewSize: view.frame.size)
+                .enumerated()
+                .map { index, frame in
+                    withVar(UICollectionViewLayoutAttributes(forCellWith: IndexPath(indexes: [offset, index]))) {
+                        $0.frame = frame.offsetBy(dx: CGFloat(offset) * view.frame.width, dy: 0)
+                    }
+                }
+            
+            return (month, attribsList)
+        })
+        
+        _contentSize = CGSize(
+            width: CGFloat(numberOfMonths) * view.frame.width,
+            height: assign {
+                let maxY: CGFloat = assign {
+                    switch _dataSet.monthRange.toTuple() {
+                    case (.some, .some): return _cachedAttribs.values.map(\.last!.frame.maxY).max()!
+                    default: return _cachedAttribs[_dataSet.currentMonth]!.last!.frame.maxY
+                    }
+                }
+                return maxY + params.sectionInset.bottom
+            })
+    }
     
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        nil
+        _cachedAttribs.values.reduce([]) { result, attribsList in
+            result + attribsList.compactMap { attribs in rect.intersects(attribs.frame) ? attribs : nil }
+        }
     }
     
     open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        nil
+        _cachedAttribs[_contentRange.first.advanced(by: indexPath.section)]?[indexPath.item]
     }
     
     open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
@@ -105,7 +164,11 @@ open class CalendarLayout : UICollectionViewLayout {
      These values are the **minimum** guidelines for layout,
      and each property will be given different priority based on which `alignment` is assigned.
      */
-    open var params: Params
+    open var params: Params {
+        didSet {
+            if params != oldValue { invalidateLayout() }
+        }
+    }
     
     @objc
     public dynamic var sectionHeight: CGFloat { 0.0 }
@@ -148,7 +211,7 @@ open class CalendarLayout : UICollectionViewLayout {
 
 public extension CalendarLayout {
     
-    struct Params {
+    struct Params : Equatable {
         /**
          The padding applied to each month section.
          
@@ -210,7 +273,7 @@ public extension CalendarLayout {
         case spread
     }
     
-    struct Alignment {
+    struct Alignment : Equatable {
         public var horizontal: Mode
         public var vertical: Mode
         
@@ -254,6 +317,80 @@ public extension CalendarLayout.Mode {
         case RawValue.filled: return .filled
         case RawValue.spread: return .spread
         default: throw BoosterKitError.illegalArgument
+        }
+    }
+}
+    
+private extension CGRect {
+    
+    static func make(params: CalendarLayout.Params, weekCount: UInt, viewSize: CGSize) -> [CGRect] {
+        let minContentSize = minContentSize(weekCount: Int(weekCount), params: params)
+        
+        return zip(
+            horizontalValues(params: params, weekCount: Int(weekCount), remainingSpace: viewSize.width - minContentSize.width),
+            verticalValues(params: params, weekCount: Int(weekCount), remainingSpace: viewSize.height - minContentSize.height))
+            .map { hor, ver in CGRect(x: hor.start, y: ver.start, width: hor.length, height: ver.length) }
+    }
+    
+    static private func minContentSize(weekCount: Int, params: CalendarLayout.Params) -> CGSize {
+        CGSize(
+            width: params.sectionInset.horizontal + params.itemSize.width * 7 + params.spacing.width * 6,
+            height: params.sectionInset.vertical + params.itemSize.height * CGFloat(weekCount) + params.spacing.height * CGFloat(weekCount - 1))
+    }
+    
+    static private func originX(weekdayIndex: Int, leftInset: CGFloat, itemWidth: CGFloat, spacing: CGFloat) -> CGFloat {
+        leftInset + itemWidth * CGFloat(weekdayIndex) + spacing * CGFloat(weekdayIndex)
+    }
+    
+    static private func originY(weekIndex: Int, topInset: CGFloat, itemHeight: CGFloat, spacing: CGFloat) -> CGFloat {
+        topInset + itemHeight * CGFloat(weekIndex) + spacing * CGFloat(weekIndex)
+    }
+    
+    /// - Returns: A list of `($ORIGIN_X, $WIDTH)` tuples.
+    static private func horizontalValues(params: CalendarLayout.Params, weekCount: Int, remainingSpace: CGFloat) -> [Span] {
+        let defaultLayout = (0 ..< weekCount).flatMap(bindNone {
+            (0 ..< 7).map { Span(start: originX(weekdayIndex: $0, leftInset: params.sectionInset.left, itemWidth: params.itemSize.width, spacing: params.spacing.width), length: params.itemSize.width) }
+        })
+        
+        if remainingSpace <= 0.0 {
+            return defaultLayout
+        } else {
+            switch params.alignment.horizontal {
+            case .packed:
+                let extraLeftInset = remainingSpace * 0.5
+                return defaultLayout.map { span in span.offset(by: extraLeftInset) }
+            case .filled:
+                let extraWidth = remainingSpace / 7
+                return defaultLayout.enumerated()
+                    .map { i, span in Span(start: span.start + extraWidth * CGFloat(i % 7), length: span.length + extraWidth) }
+            case .spread:
+                let extraSpace = remainingSpace / 6
+                return defaultLayout.enumerated()
+                    .map { i, span in span.offset(by: extraSpace * CGFloat(i % 7)) }
+            }
+        }
+    }
+    
+    /// - Returns: A list of `($ORIGIN_Y, $HEIGHT)` tuples.
+    static private func verticalValues(params: CalendarLayout.Params, weekCount: Int, remainingSpace: CGFloat) -> [Span] {
+        let defaultLayout = (0 ..< weekCount).flatMap { weekIndex in
+            (0 ..< 7).map(bindNone { Span(start: originY(weekIndex: Int(weekIndex), topInset: params.sectionInset.top, itemHeight: params.itemSize.height, spacing: params.spacing.height), length: params.itemSize.height) })
+        }
+        
+        if remainingSpace <= 0.0 {
+            return defaultLayout
+        } else {
+            switch params.alignment.vertical {
+            case .packed: return defaultLayout
+            case .filled:
+                let extraHeight = remainingSpace / CGFloat(weekCount)
+                return defaultLayout.enumerated()
+                    .map { i, span in Span(start: span.start + extraHeight * CGFloat(i/7), length: span.length + extraHeight) }
+            case .spread:
+                let extraSpace = remainingSpace / CGFloat(weekCount - 1)
+                return defaultLayout.enumerated()
+                    .map { i, span in span.offset(by: extraSpace * CGFloat(i/7)) }
+            }
         }
     }
     
