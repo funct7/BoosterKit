@@ -53,4 +53,8 @@ extension Span {
             && end == object.end
     }
     
+    public override var debugDescription: String { "\(super.description) { start: \(start), end: \(end) }" }
+
+    public override var description: String { "Span { start: \(start), end: \(end) }" }
+    
 }
