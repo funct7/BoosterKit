@@ -46,4 +46,20 @@ class PairExtensionTests : XCTestCase {
         }
     }
     
+    func test_predicate() {
+        typealias Pred = (Int) -> Bool
+        let pair = Pair<Int, Int>(2, 4)
+        let pred1: Pred = { $0 % 2 == 0 },
+            pred2: Pred = { $0 > 2 },
+            pred3: Pred = { $0 > 4 }
+        
+        XCTAssertTrue(pair.both(pred1))
+        XCTAssertFalse(pair.both(pred2))
+        XCTAssertFalse(pair.both(pred3))
+        
+        XCTAssertTrue(pair.any(pred1))
+        XCTAssertTrue(pair.any(pred2))
+        XCTAssertFalse(pair.any(pred3))
+    }
+    
 }

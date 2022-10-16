@@ -14,3 +14,15 @@ public extension Pair where First : Equatable, Second : Equatable {
     }
     
 }
+
+public extension Pair where First == Second {
+    
+    func both(_ predicate: (First) -> Bool) -> Bool {
+        predicate(first) && predicate(second)
+    }
+    
+    func any(_ predicate: (First) -> Bool) -> Bool {
+        predicate(first) || predicate(second)
+    }
+    
+}
