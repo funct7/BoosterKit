@@ -57,19 +57,27 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         }
     }
     
-    /// - Invariant: `currentMonth` must be within `monthRange`.
+    /// - Invariant: `currentMonth` must be within `monthRange` and have the same time zone as the values in `monthRange`.
     open var currentMonth: ISO8601Month {
         willSet {
             switch monthRange.toTuple() {
             case (nil, nil): return
-            case (let lowerBound?, nil): precondition(lowerBound <= newValue)
-            case (nil, let upperBound?): precondition(newValue <= upperBound)
-            case (let lowerBound?, let upperBound?): precondition(lowerBound <= newValue && newValue <= upperBound)
+            case (let lowerBound?, nil): precondition(lowerBound <= newValue && lowerBound.timeZone == newValue.timeZone)
+            case (nil, let upperBound?): precondition(newValue <= upperBound && upperBound.timeZone == newValue.timeZone)
+            case (let lowerBound?, let upperBound?): precondition(lowerBound <= newValue && newValue <= upperBound && lowerBound.timeZone == newValue.timeZone)
             }
         }
         didSet {
-            _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet)
-            view?.reloadData()
+            guard let _ = view else { return }
+            
+            _calendarLayout.invalidateLayoutIfNeeded(dataSet: _dataSet)
+            if monthRange.isInfinite && currentMonth != oldValue {
+                view.reloadData()
+            }
+            view.contentOffset.x = assign {
+                let pageIndex = monthRange.isInfinite ? 1 : try! monthRange.first!.distance(to: currentMonth)
+                return view.frame.width * CGFloat(pageIndex)
+            }
         }
     }
     
@@ -230,4 +238,10 @@ public struct CalendarAdapterContext : Equatable {
     
     public let date: ISO8601Date
     public let position: Position
+}
+
+private extension Pair where First == ISO8601Month?, Second == ISO8601Month? {
+    
+    var isInfinite: Bool { any({ $0 == nil }) }
+    
 }
