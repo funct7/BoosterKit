@@ -98,7 +98,14 @@ open class CalendarLayout : UICollectionViewLayout {
     }
     
     open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        false
+        guard let currentBounds = collectionView?.bounds else { return true }
+        
+        if params.alignment.vertical == .packed
+            && currentBounds.width == newBounds.width
+            && currentBounds.height != newBounds.height
+        { return false }
+        
+        return true
     }
     
     // MARK: Public
