@@ -170,7 +170,7 @@ class CalendarLayoutTests : XCTestCase {
         }
         
         do { // h-align: .filled, section insets - 7, spacing - 2
-            sut.params.sectionInset = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7)
+            sut.params.sectionInset = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7) // no changes (h-align packed)
             sut.params.spacing.width = 2
             sut.params.alignment.horizontal = .filled
             
@@ -184,7 +184,7 @@ class CalendarLayoutTests : XCTestCase {
                 Span(start: 331, end: 383),
             ]
             XCTAssertEqual(sut.weekdaySpans, expected)
-            expect(weekdaySpansList).to(haveCount(2))
+            expect(weekdaySpansList).to(haveCount(3))
             expect(weekdaySpansList.last).to(equal(expected))
         }
         
@@ -203,7 +203,7 @@ class CalendarLayoutTests : XCTestCase {
                 Span(start: 334, end: 374),
             ]
             XCTAssertEqual(sut.weekdaySpans, expected)
-            expect(weekdaySpansList).to(haveCount(3))
+            expect(weekdaySpansList).to(haveCount(6))
             expect(weekdaySpansList.last).to(equal(expected))
         }
     }

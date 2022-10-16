@@ -29,7 +29,9 @@ open class CalendarLayout : UICollectionViewLayout {
     }
     open override var collectionViewContentSize: CGSize { _contentSize }
 
-    private var _cachedAttribs = [ISO8601Month : [UICollectionViewLayoutAttributes]]()
+    private var _cachedAttribs = [ISO8601Month : [UICollectionViewLayoutAttributes]]() {
+        didSet { _updateWeekdaySpansIfNeeded() }
+    }
     private var _contentRange: Pair<ISO8601Month, ISO8601Month> {
         switch _dataSet.monthRange.toTuple() {
         case (let lowerBound?, let upperBound?):
@@ -120,10 +122,10 @@ open class CalendarLayout : UICollectionViewLayout {
      The x-axis `Span` for each weekday.
      
      Use this as a guide when implementing a weekday view for the calendar.
-     - Invariant: `weekdaySpans.count == 7`
+     - Invariant: After items have been laid out at least once, `weekdaySpans.count == 7`.
      */
     @objc
-    public dynamic var weekdaySpans: [Span] { [] }
+    open private(set) dynamic var weekdaySpans: [Span] = []
     
     // MARK: Internal
     
@@ -156,6 +158,16 @@ open class CalendarLayout : UICollectionViewLayout {
     }
     
     // MARK: Private
+    
+    private func _updateWeekdaySpansIfNeeded() {
+        guard let _ = _dataSet,
+              let attribsList = _cachedAttribs[_contentRange.first]
+        else { return }
+        
+        let newValue = attribsList[0...6].map { Span(start: $0.frame.minX, end: $0.frame.maxX) }
+        
+        if newValue != weekdaySpans { weekdaySpans = newValue }
+    }
     
     private var _currentSectionHeight: CGFloat = 0.0 {
         willSet {
