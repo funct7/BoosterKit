@@ -49,54 +49,99 @@ class CalendarLayoutTests : XCTestCase {
         var contentSizeList = [CGSize]()
         var sectionHeightList = [CGFloat]()
         
-        let contentObsToken = sut.observe(\.collectionViewContentSize, options: [.initial, .new]) { contentSizeList.append($1.newValue!) }
-        let heightObsToken = sut.observe(\.sectionHeight, options: [.initial, .new]) { sectionHeightList.append($1.newValue!) }
-        let _ = [contentObsToken, heightObsToken] // code inserted to suppress unused value compiler warning
+        var contentObsToken = sut.observe(\.collectionViewContentSize, options: [.initial, .new]) { contentSizeList.append($1.newValue!) }
+        var heightObsToken = sut.observe(\.sectionHeight, options: [.initial, .new]) { sectionHeightList.append($1.newValue!) }
+        let _ = [contentObsToken, heightObsToken] // code to suppress compiler warning
+
+        do { // infinite range
+            let width = frame.width * 3
+            
+            // dynamic, top, 5 week
+            XCTAssertEqual(contentSizeList.count, 1)
+            XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: .short5week))
+            
+            // dynamic, top, 6 week
+            adapter.currentMonth = sep2022.advanced(by: 1)
+            
+            XCTAssertEqual(contentSizeList.count, 2)
+            XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: .short6week))
+            
+            // fixed, filled
+            adapter.currentMonth = sep2022
+            adapter.displayOption = .fixed
+            XCTAssertEqual(contentSizeList.count, 4)
+            XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: .short6week))
+            
+            sut.params.alignment.vertical = .filled
+            XCTAssertEqual(contentSizeList.count, 5)
+            XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: frame.height))
+            
+            // fixed, filled, tall items
+            adapter.currentMonth = sep2022.advanced(by: 1) // no change in content height
+            sut.params.itemSize = .tall
+            XCTAssertEqual(contentSizeList.count, 6)
+            XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: .tall6week))
+            
+            // dynamic, top, 5 week, tall items
+            adapter.displayOption = .dynamic // no change in content height (already 6 weeks)
+            sut.params.alignment.vertical = .packed // no change in content height (min content height > frame height)
+            adapter.currentMonth = sep2022
+            XCTAssertEqual(contentSizeList.count, 7)
+            XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: .tall5week))
+            
+            // dynamic, filled, 5 week
+            sut.params.alignment.vertical = .filled // no change
+            sut.params.itemSize = .short
+            XCTAssertEqual(contentSizeList.count, 8)
+            XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: frame.height))
+            
+            // same content size doesn't emit changes
+            adapter.currentMonth = sep2022.advanced(by: -1)
+            XCTAssertEqual(contentSizeList.count, 8)
+            
+            // for infinite ranges, content height == section height
+            XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
+            zip(contentSizeList, sectionHeightList).forEach { XCTAssertEqual($0.height, $1) }
+        }
         
-        let width = frame.width * 3
-        
-        // dynamic, top, 5 week
-        XCTAssertEqual(contentSizeList.count, 1)
-        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: .short5week))
-        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
-        
-        // dynamic, top, 6 week
-        adapter.currentMonth = sep2022.advanced(by: 1)
-        
-        XCTAssertEqual(contentSizeList.count, 2)
-        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: .short6week))
-        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
-        
-        // fixed, filled
-        adapter.displayOption = .fixed
-        sut.params.alignment.vertical = .filled
-        
-        XCTAssertEqual(contentSizeList.count, 4)
-        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: frame.height))
-        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
-        
-        // fixed, filled, tall items
-        sut.params.itemSize = .tall
-        XCTAssertEqual(contentSizeList.count, 5)
-        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: .tall6week))
-        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
-        
-        // dynamic, top, 5 week, tall items
-        adapter.displayOption = .dynamic
-        sut.params.alignment.vertical = .packed
-        adapter.currentMonth = sep2022
-        XCTAssertEqual(contentSizeList.count, 8)
-        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: .tall5week))
-        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
-        
-        // dynamic, filled, 5 week
-        sut.params.alignment.vertical = .filled
-        sut.params.itemSize = .short
-        XCTAssertEqual(contentSizeList.count, 10)
-        XCTAssertEqual(contentSizeList.last, CGSize(width: width, height: frame.height))
-        XCTAssertEqual(contentSizeList.count, sectionHeightList.count)
-        
-        zip(contentSizeList, sectionHeightList).forEach { XCTAssertEqual($0.height, $1) }
+        do { // finite range
+            adapter.displayOption = .dynamic
+            adapter.monthRange = Pair(sep2022.advanced(by: -1), sep2022)
+            adapter.currentMonth = sep2022
+            sut.params = .init(sectionInset: .test, itemSize: .short)
+            
+            (contentSizeList, sectionHeightList) = ([], [])
+            contentObsToken = sut.observe(\.collectionViewContentSize, options: [.initial, .new]) { contentSizeList.append($1.newValue!) }
+            heightObsToken = sut.observe(\.sectionHeight, options: [.initial, .new]) { sectionHeightList.append($1.newValue!) }
+            
+            XCTAssertEqual(sut.collectionViewContentSize.height, .short5week)
+            XCTAssertEqual(sut.sectionHeight, .short5week)
+            
+            XCTAssertEqual(contentSizeList.count, 1)
+            XCTAssertEqual(contentSizeList.last, CGSize(width: frame.width * 2, height: .short5week))
+            XCTAssertEqual(sectionHeightList.count, 1)
+            XCTAssertEqual(sectionHeightList.last, contentSizeList.last?.height)
+            
+            adapter.currentMonth = sep2022.advanced(by: -1)
+            
+            XCTAssertEqual(contentSizeList.count, 1)
+            XCTAssertEqual(sectionHeightList.count, 1)
+            
+            // includes a 6-week month
+            adapter.monthRange.second = sep2022.advanced(by: 1)
+            
+            // the content size for finite range is the union rect of the content size of each month
+            XCTAssertEqual(contentSizeList.count, 2)
+            XCTAssertEqual(contentSizeList.last, CGSize(width: frame.width * 3, height: .short6week))
+            XCTAssertEqual(sectionHeightList.count, 1)
+            XCTAssertEqual(sectionHeightList.last, .short5week)
+            
+            adapter.currentMonth = sep2022
+            adapter.currentMonth = sep2022.advanced(by: 1)
+            XCTAssertEqual(contentSizeList.count, 2)   // doesn't change
+            XCTAssertEqual(sectionHeightList.count, 2) // no change for sep 2022; oct 2022 is a 6-week month
+            XCTAssertEqual(sectionHeightList.last, .short6week)
+        }
     }
     
     func test_weekdaySpans() throws {

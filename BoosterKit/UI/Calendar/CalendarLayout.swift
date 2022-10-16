@@ -16,8 +16,16 @@ open class CalendarLayout : UICollectionViewLayout {
     // MARK: Inherited
     
     private var _contentSize: CGSize = .zero {
-        willSet { willChangeValue(for: \.collectionViewContentSize) }
-        didSet { didChangeValue(for: \.collectionViewContentSize) }
+        willSet {
+            if _contentSize != newValue {
+                willChangeValue(for: \.collectionViewContentSize)
+            }
+        }
+        didSet {
+            if _contentSize != oldValue {
+                didChangeValue(for: \.collectionViewContentSize)
+            }
+        }
     }
     open override var collectionViewContentSize: CGSize { _contentSize }
 
@@ -65,16 +73,15 @@ open class CalendarLayout : UICollectionViewLayout {
             return (month, attribsList)
         })
         
+        _currentSectionHeight = _getSectionHeight(month: _dataSet.currentMonth)
+        
         _contentSize = CGSize(
             width: CGFloat(numberOfMonths) * view.frame.width,
             height: assign {
-                let maxY: CGFloat = assign {
-                    switch _dataSet.monthRange.toTuple() {
-                    case (.some, .some): return _cachedAttribs.values.map(\.last!.frame.maxY).max()!
-                    default: return _cachedAttribs[_dataSet.currentMonth]!.last!.frame.maxY
-                    }
+                switch _dataSet.monthRange.toTuple() {
+                case (.some, .some): return _cachedAttribs.values.map(\.last!.frame.maxY).max()! + params.sectionInset.bottom
+                default: return sectionHeight
                 }
-                return maxY + params.sectionInset.bottom
             })
     }
     
@@ -94,70 +101,6 @@ open class CalendarLayout : UICollectionViewLayout {
     
     // MARK: Public
     
-    @IBInspectable
-    open var topInset: CGFloat {
-        get { params.sectionInset.top }
-        set { params.sectionInset.top = newValue }
-    }
-    
-    @IBInspectable
-    open var rightInset: CGFloat {
-        get { params.sectionInset.right }
-        set { params.sectionInset.right = newValue }
-    }
-    
-    @IBInspectable
-    open var bottomInset: CGFloat {
-        get { params.sectionInset.bottom }
-        set { params.sectionInset.bottom = newValue }
-    }
-    
-    @IBInspectable
-    open var leftInset: CGFloat {
-        get { params.sectionInset.left }
-        set { params.sectionInset.left = newValue }
-    }
-    
-    @IBInspectable
-    open var itemSize: CGSize {
-        get { params.itemSize }
-        set { params.itemSize = newValue }
-    }
-    
-    @IBInspectable
-    open var spacing: CGSize {
-        get { params.spacing }
-        set { params.spacing = newValue }
-    }
-    
-    /**
-     A `String` representation of `params.alignment.horizontal`.
-     
-     Check `CalendarLayout.Mode.RawValue` for possible values.
-     */
-    @IBInspectable
-    open var horizontalAlignment: String {
-        get { params.alignment.horizontal.toRawValue() }
-        set {
-            guard let alignment = try? Mode.from(rawValue: newValue) else { return }
-            params.alignment.horizontal = alignment
-        }
-    }
-    
-    /**
-     A `String` representation of `params.alignment.vertical`.
-     
-     Check `CalendarLayout.Mode.RawValue` for possible values.
-     */
-    @IBInspectable
-    open var verticalAlignment: String {
-        get { params.alignment.vertical.toRawValue() }
-        set {
-            guard let aligment = try? Mode.from(rawValue: newValue) else { return }
-            params.alignment.vertical = aligment
-        }
-    }
-    
     /**
      The base parameters to guide the layout.
      
@@ -171,7 +114,7 @@ open class CalendarLayout : UICollectionViewLayout {
     }
     
     @objc
-    public dynamic var sectionHeight: CGFloat { 0.0 }
+    open dynamic var sectionHeight: CGFloat { _currentSectionHeight }
     
     /**
      The x-axis `Span` for each weekday.
@@ -186,18 +129,56 @@ open class CalendarLayout : UICollectionViewLayout {
     
     private var _dataSet: DataSet!
     func invalidateLayoutIfNeeded(dataSet: DataSet) {
-        let shouldInvalidate: Bool = assign {
-            guard let _dataSet = _dataSet else { return true }
-            if _dataSet.displayOption != dataSet.displayOption { return true }
-            if _dataSet.monthRange != dataSet.monthRange { return true }
+        // rollback to non-optimized version if bugs appear
+        enum FollowUp { case invalidateLayout, updateCurrentSectionHeight, ignore }
+        
+        let followUp: FollowUp = assign {
+            guard let _dataSet = _dataSet else { return .invalidateLayout }
+            if _dataSet.displayOption != dataSet.displayOption { return .invalidateLayout }
+            if _dataSet.monthRange != dataSet.monthRange { return .invalidateLayout }
             
             switch dataSet.monthRange.toTuple() {
-            case (.some, .some): return false
+            case (.some, .some): return _dataSet.currentMonth != dataSet.currentMonth
+                ? .updateCurrentSectionHeight
+                : .ignore
             default: return _dataSet.currentMonth != dataSet.currentMonth
+                ? .invalidateLayout
+                : .ignore
             }
         }
         _dataSet = dataSet
-        if shouldInvalidate { invalidateLayout() }
+        
+        switch followUp {
+        case .invalidateLayout: invalidateLayout()
+        case .updateCurrentSectionHeight: _currentSectionHeight = _getSectionHeight(month: _dataSet.currentMonth)
+        case .ignore: return
+        }
+    }
+    
+    // MARK: Private
+    
+    private var _currentSectionHeight: CGFloat = 0.0 {
+        willSet {
+            if _currentSectionHeight != newValue {
+                willChangeValue(for: \.sectionHeight)
+            }
+        }
+        didSet {
+            if _currentSectionHeight != oldValue {
+                didChangeValue(for: \.sectionHeight)
+            }
+        }
+    }
+    
+    /**
+     - Precondition: `_cachedAttribs.keys.contains(month)`.
+     - Note: This method has no side-effects.
+        It is up to the caller to make sure `_cachedAttribs` correctly reflects the current layout state.
+     - Returns: The section height for `month` (including section insets).
+     */
+    private func _getSectionHeight(month: ISO8601Month) -> CGFloat {
+        assert(_cachedAttribs.keys.contains(month))
+        return _cachedAttribs[_dataSet.currentMonth]!.last!.frame.maxY + params.sectionInset.bottom
     }
     
     // MARK: Initializer
@@ -217,6 +198,8 @@ open class CalendarLayout : UICollectionViewLayout {
     }
     
 }
+
+// MARK: Name-spaced types
 
 public extension CalendarLayout {
     
@@ -300,6 +283,76 @@ extension CalendarLayout {
         let displayOption: CalendarAdapterDisplayOption
         let monthRange: Pair<ISO8601Month?, ISO8601Month?>
         let currentMonth: ISO8601Month
+    }
+    
+}
+
+// MARK: Interface Builder support
+
+public extension CalendarLayout {
+    
+    @IBInspectable
+    var topInset: CGFloat {
+        get { params.sectionInset.top }
+        set { params.sectionInset.top = newValue }
+    }
+    
+    @IBInspectable
+    var rightInset: CGFloat {
+        get { params.sectionInset.right }
+        set { params.sectionInset.right = newValue }
+    }
+    
+    @IBInspectable
+    var bottomInset: CGFloat {
+        get { params.sectionInset.bottom }
+        set { params.sectionInset.bottom = newValue }
+    }
+    
+    @IBInspectable
+    var leftInset: CGFloat {
+        get { params.sectionInset.left }
+        set { params.sectionInset.left = newValue }
+    }
+    
+    @IBInspectable
+    var itemSize: CGSize {
+        get { params.itemSize }
+        set { params.itemSize = newValue }
+    }
+    
+    @IBInspectable
+    var spacing: CGSize {
+        get { params.spacing }
+        set { params.spacing = newValue }
+    }
+    
+    /**
+     A `String` representation of `params.alignment.horizontal`.
+     
+     Check `CalendarLayout.Mode.RawValue` for possible values.
+     */
+    @IBInspectable
+    var horizontalAlignment: String {
+        get { params.alignment.horizontal.toRawValue() }
+        set {
+            guard let alignment = try? Mode.from(rawValue: newValue) else { return }
+            params.alignment.horizontal = alignment
+        }
+    }
+    
+    /**
+     A `String` representation of `params.alignment.vertical`.
+     
+     Check `CalendarLayout.Mode.RawValue` for possible values.
+     */
+    @IBInspectable
+    var verticalAlignment: String {
+        get { params.alignment.vertical.toRawValue() }
+        set {
+            guard let aligment = try? Mode.from(rawValue: newValue) else { return }
+            params.alignment.vertical = aligment
+        }
     }
     
 }
