@@ -16,8 +16,16 @@ class CalendarDemoViewController : UIViewController {
     @IBOutlet weak var calendarView: UICollectionView! {
         didSet { _calendarAdapter.view = calendarView }
     }
+    @IBOutlet weak var calendarViewHeight: NSLayoutConstraint!
+    
+    private var _sectionHeightObserveToken: NSKeyValueObservation!
     @IBOutlet weak var calendarLayout: CalendarLayout!
-    private let _calendarAdapter = CalendarAdapter(viewProvider: DemoCalendarAdapterComponentViewProvider())
+    private lazy var _viewProvider = DemoCalendarAdapterComponentViewProvider()
+    private lazy var _calendarAdapter = CalendarAdapter(viewProvider: _viewProvider)
+    
+}
+
+extension CalendarDemoViewController {
     
     @IBAction func prevMonthAction(_ sender: UIButton) {
         _calendarAdapter.currentMonth = _calendarAdapter.currentMonth.advanced(by: -1)
@@ -31,6 +39,18 @@ class CalendarDemoViewController : UIViewController {
         _calendarAdapter.currentMonth = _calendarAdapter.currentMonth.advanced(by: 1)
     }
     
+    @IBAction func changeDisplayOptionAction(_ sender: UISegmentedControl) {
+        _calendarAdapter.displayOption = [.dynamic, .fixed][sender.selectedSegmentIndex]
+    }
+    
+    @IBAction func changeHorizontalAligmentAction(_ sender: UISegmentedControl) {
+        calendarLayout.params.alignment.horizontal = [.packed, .filled, .spread][sender.selectedSegmentIndex]
+    }
+    
+    @IBAction func changeVerticalAligmentAction(_ sender: UISegmentedControl) {
+        calendarLayout.params.alignment.vertical = [.packed, .filled, .spread][sender.selectedSegmentIndex]
+    }
+    
 }
 
 class DemoCalendarAdapterComponentViewProvider : CalendarAdapterComponentViewProvider {
@@ -42,6 +62,7 @@ class DemoCalendarAdapterComponentViewProvider : CalendarAdapterComponentViewPro
     func configure(_ cell: Cell, with context: CalendarAdapterContext) {
         cell.label.alpha = context.position == .main ? 1.0 : 0.3
         cell.label.text = "\(context.date.dateComponents([.day]).day!)"
+        cell.contentView.backgroundColor = .init(white: 0.93, alpha: 1)
     }
     
 }

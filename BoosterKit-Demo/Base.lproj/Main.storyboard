@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -46,11 +47,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="czP-MH-tag">
-                                <rect key="frame" x="0.0" y="44" width="414" height="380"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="czP-MH-tag">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hcm-1l-I4g">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                        <rect key="frame" x="129" y="0.0" width="156" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pfl-i1-zOg">
                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -63,14 +64,14 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jym-Ek-8sz">
-                                                <rect key="frame" x="50" y="0.0" width="314" height="50"/>
+                                                <rect key="frame" x="50" y="0.0" width="56" height="50"/>
                                                 <state key="normal" title="MONTH"/>
                                                 <connections>
                                                     <action selector="currentMonthAction:" destination="rPZ-Ge-Seb" eventType="touchUpInside" id="uyE-p5-YyA"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ofy-UA-efZ">
-                                                <rect key="frame" x="364" y="0.0" width="50" height="50"/>
+                                                <rect key="frame" x="106" y="0.0" width="50" height="50"/>
                                                 <state key="normal" image="chevron.right.circle" catalog="system"/>
                                                 <connections>
                                                     <action selector="nextMonthAction:" destination="rPZ-Ge-Seb" eventType="touchUpInside" id="4VL-EO-8Gs"/>
@@ -82,9 +83,19 @@
                                             <constraint firstAttribute="height" constant="50" id="Qqv-lu-JsU"/>
                                         </constraints>
                                     </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6r0-AQ-aod">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="40"/>
+                                        <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="x6W-vL-R8G"/>
+                                        </constraints>
+                                    </view>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" prefetchingEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bAq-lV-r9p">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="330"/>
+                                        <rect key="frame" x="0.0" y="90" width="414" height="290"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="290" id="JEB-jo-BGx"/>
+                                        </constraints>
                                         <collectionViewLayout key="collectionViewLayout" id="n4K-1c-up9" customClass="CalendarLayout" customModule="BoosterKit">
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="topInset">
@@ -141,9 +152,143 @@
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dKu-R1-5Nn">
+                                        <rect key="frame" x="0.0" y="380" width="414" height="438"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Vzm-C0-TYr">
+                                                <rect key="frame" x="16" y="16" width="382" height="406"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="E6f-zB-ftp">
+                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="57"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display Option" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RN9-EF-qFU">
+                                                                <rect key="frame" x="0.0" y="0.0" width="382" height="18"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="CGQ-Xh-r9q">
+                                                                <rect key="frame" x="0.0" y="26" width="382" height="32"/>
+                                                                <segments>
+                                                                    <segment title="Dynamic"/>
+                                                                    <segment title="Fixed"/>
+                                                                </segments>
+                                                                <connections>
+                                                                    <action selector="changeDisplayOptionAction:" destination="rPZ-Ge-Seb" eventType="valueChanged" id="Jb8-38-WZT"/>
+                                                                </connections>
+                                                            </segmentedControl>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="lXX-aZ-dGw">
+                                                        <rect key="frame" x="0.0" y="73" width="382" height="56"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Month Range" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NfS-Yt-0Bm">
+                                                                <rect key="frame" x="0.0" y="0.0" width="382" height="18"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="u75-ig-ZEK">
+                                                                <rect key="frame" x="0.0" y="26" width="382" height="30"/>
+                                                                <subviews>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Deq-VJ-sqx">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="191" height="30"/>
+                                                                        <subviews>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="from" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35c-6j-z6v">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="32" height="30"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q0p-Aq-roU">
+                                                                                <rect key="frame" x="32" y="0.0" width="159" height="30"/>
+                                                                                <state key="normal" title="Button"/>
+                                                                            </button>
+                                                                        </subviews>
+                                                                    </stackView>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EJj-wO-cT5">
+                                                                        <rect key="frame" x="191" y="0.0" width="191" height="30"/>
+                                                                        <subviews>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQk-Zp-gRa">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="14" height="30"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z46-Kz-lOv">
+                                                                                <rect key="frame" x="14" y="0.0" width="177" height="30"/>
+                                                                                <state key="normal" title="Button"/>
+                                                                            </button>
+                                                                        </subviews>
+                                                                    </stackView>
+                                                                </subviews>
+                                                            </stackView>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="nDR-HP-ZnN">
+                                                        <rect key="frame" x="0.0" y="145" width="382" height="57"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Horizontal Alignment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eGG-AE-SLG">
+                                                                <rect key="frame" x="0.0" y="0.0" width="382" height="18"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="CyD-c8-GxC">
+                                                                <rect key="frame" x="0.0" y="26" width="382" height="32"/>
+                                                                <segments>
+                                                                    <segment title="Packed"/>
+                                                                    <segment title="Filled"/>
+                                                                    <segment title="Spread"/>
+                                                                </segments>
+                                                                <connections>
+                                                                    <action selector="changeHorizontalAligmentAction:" destination="rPZ-Ge-Seb" eventType="valueChanged" id="jas-yM-ntd"/>
+                                                                </connections>
+                                                            </segmentedControl>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="AZR-LB-hV6">
+                                                        <rect key="frame" x="0.0" y="218" width="382" height="57"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vertical Alignment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YeQ-No-ByL">
+                                                                <rect key="frame" x="0.0" y="0.0" width="382" height="18"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="v2I-Qe-kzb">
+                                                                <rect key="frame" x="0.0" y="26" width="382" height="32"/>
+                                                                <segments>
+                                                                    <segment title="Packed"/>
+                                                                    <segment title="Filled"/>
+                                                                    <segment title="Spread"/>
+                                                                </segments>
+                                                                <connections>
+                                                                    <action selector="changeVerticalAligmentAction:" destination="rPZ-Ge-Seb" eventType="valueChanged" id="CRs-dh-Ocp"/>
+                                                                </connections>
+                                                            </segmentedControl>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="G68-ca-TDC">
+                                                        <rect key="frame" x="0.0" y="291" width="382" height="115"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Vzm-C0-TYr" secondAttribute="trailing" constant="16" id="DBr-YM-m53"/>
+                                            <constraint firstItem="Vzm-C0-TYr" firstAttribute="top" secondItem="dKu-R1-5Nn" secondAttribute="top" constant="16" id="IJs-SU-j1p"/>
+                                            <constraint firstItem="Vzm-C0-TYr" firstAttribute="leading" secondItem="dKu-R1-5Nn" secondAttribute="leading" constant="16" id="K3T-HR-OlV"/>
+                                            <constraint firstAttribute="bottom" secondItem="Vzm-C0-TYr" secondAttribute="bottom" constant="16" id="bp1-up-HzC"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="380" id="XeU-6J-bGv"/>
+                                    <constraint firstItem="bAq-lV-r9p" firstAttribute="width" secondItem="czP-MH-tag" secondAttribute="width" id="1BB-BG-JVw"/>
+                                    <constraint firstItem="dKu-R1-5Nn" firstAttribute="width" secondItem="czP-MH-tag" secondAttribute="width" id="4aO-h7-m5N"/>
+                                    <constraint firstItem="6r0-AQ-aod" firstAttribute="width" secondItem="bAq-lV-r9p" secondAttribute="width" id="btd-HK-5vG"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -153,11 +298,13 @@
                             <constraint firstItem="czP-MH-tag" firstAttribute="leading" secondItem="V6M-VT-syG" secondAttribute="leading" id="9cc-Eg-ZcB"/>
                             <constraint firstItem="czP-MH-tag" firstAttribute="trailing" secondItem="V6M-VT-syG" secondAttribute="trailing" id="Ijm-7Z-nhg"/>
                             <constraint firstItem="czP-MH-tag" firstAttribute="top" secondItem="V6M-VT-syG" secondAttribute="top" id="eBU-rI-EGC"/>
+                            <constraint firstItem="V6M-VT-syG" firstAttribute="bottom" secondItem="czP-MH-tag" secondAttribute="bottom" id="rEl-g7-D8w"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="calendarLayout" destination="n4K-1c-up9" id="fDV-yP-RN5"/>
                         <outlet property="calendarView" destination="bAq-lV-r9p" id="J9P-Fv-dqr"/>
+                        <outlet property="calendarViewHeight" destination="JEB-jo-BGx" id="28f-Pm-uub"/>
                         <outlet property="currentMonthButton" destination="Jym-Ek-8sz" id="Xzr-UC-kI3"/>
                         <outlet property="nextMonthButton" destination="Ofy-UA-efZ" id="JUJ-7V-yw9"/>
                         <outlet property="prevMonthButton" destination="Pfl-i1-zOg" id="zxq-ts-9EO"/>
@@ -173,6 +320,9 @@
         <image name="chevron.right.circle" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
