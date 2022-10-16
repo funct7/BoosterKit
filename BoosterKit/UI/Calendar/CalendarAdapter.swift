@@ -51,7 +51,10 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     
     private var _dataSet: CalendarLayout.DataSet { .init(displayOption: displayOption, monthRange: monthRange, currentMonth: currentMonth) }
     open var displayOption: CalendarAdapterDisplayOption = .dynamic {
-        didSet { _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet) }
+        didSet {
+            _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet)
+            view?.reloadData()
+        }
     }
     
     /// - Invariant: `currentMonth` must be within `monthRange`.
@@ -64,7 +67,10 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
             case (let lowerBound?, let upperBound?): precondition(lowerBound <= newValue && newValue <= upperBound)
             }
         }
-        didSet { _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet) }
+        didSet {
+            _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet)
+            view?.reloadData()
+        }
     }
     
     /**
@@ -93,9 +99,13 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
             case (let lowerBound?, let upperBound?):
                 if currentMonth < lowerBound { currentMonth = lowerBound }
                 else if upperBound < currentMonth { currentMonth = upperBound }
-                else { _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet) }
+                else {
+                    _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet)
+                    view?.reloadData()
+                }
             default:
                 _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet)
+                view?.reloadData()
             }
         }
     }
