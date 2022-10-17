@@ -49,7 +49,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     open var viewProvider: AnyCalendarAdapterComponentViewProvider<Cell>
     open var delegate: AnyCalendarAdapterDelegate<Cell>? = nil
     
-    private var _dataSet: CalendarLayout.DataSet { .init(displayOption: displayOption, monthRange: monthRange, currentMonth: currentMonth) }
+    private var _dataSet: CalendarLayout.DataSet { .init(displayOption: displayOption, monthRange: monthRange, currentMonth: _currentMonth) }
     open var displayOption: CalendarAdapterDisplayOption = .dynamic {
         didSet {
             _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet)
@@ -57,28 +57,39 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         }
     }
     
+    private var _currentMonth: ISO8601Month
+    
+    func setCurrentMonth(_ newValue: ISO8601Month, shouldUpdateContentOffset: Bool) {
+        switch monthRange.toTuple() {
+        case (nil, nil): break
+        case (let lowerBound?, nil): precondition(lowerBound <= newValue && lowerBound.timeZone == newValue.timeZone)
+        case (nil, let upperBound?): precondition(newValue <= upperBound && upperBound.timeZone == newValue.timeZone)
+        case (let lowerBound?, let upperBound?): precondition(lowerBound <= newValue && newValue <= upperBound && lowerBound.timeZone == newValue.timeZone)
+        }
+        
+        let oldValue = _currentMonth
+        _currentMonth = newValue
+        _calendarLayout.invalidateLayoutIfNeeded(dataSet: _dataSet)
+
+        guard let _ = view else { return }
+        
+        if monthRange.isInfinite && newValue != oldValue {
+            view.reloadData()
+        }
+        
+        guard shouldUpdateContentOffset else { return }
+        
+        view.contentOffset.x = assign {
+            let pageIndex = monthRange.isInfinite ? 1 : try! monthRange.first!.distance(to: newValue)
+            return view.frame.width * CGFloat(pageIndex)
+        }
+    }
+    
+    /// Updates the displayed month.
     /// - Invariant: `currentMonth` must be within `monthRange` and have the same time zone as the values in `monthRange`.
     open var currentMonth: ISO8601Month {
-        willSet {
-            switch monthRange.toTuple() {
-            case (nil, nil): return
-            case (let lowerBound?, nil): precondition(lowerBound <= newValue && lowerBound.timeZone == newValue.timeZone)
-            case (nil, let upperBound?): precondition(newValue <= upperBound && upperBound.timeZone == newValue.timeZone)
-            case (let lowerBound?, let upperBound?): precondition(lowerBound <= newValue && newValue <= upperBound && lowerBound.timeZone == newValue.timeZone)
-            }
-        }
-        didSet {
-            guard let _ = view else { return }
-            
-            _calendarLayout.invalidateLayoutIfNeeded(dataSet: _dataSet)
-            if monthRange.isInfinite && currentMonth != oldValue {
-                view.reloadData()
-            }
-            view.contentOffset.x = assign {
-                let pageIndex = monthRange.isInfinite ? 1 : try! monthRange.first!.distance(to: currentMonth)
-                return view.frame.width * CGFloat(pageIndex)
-            }
-        }
+        get { _currentMonth }
+        set { setCurrentMonth(newValue, shouldUpdateContentOffset: true) }
     }
     
     /**
@@ -102,11 +113,11 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         }
         didSet {
             switch monthRange.toTuple() {
-            case (let lowerBound?, nil) where currentMonth < lowerBound: currentMonth = lowerBound
-            case (nil, let upperBound?) where upperBound < currentMonth: currentMonth = upperBound
+            case (let lowerBound?, nil) where _currentMonth < lowerBound: _currentMonth = lowerBound
+            case (nil, let upperBound?) where upperBound < _currentMonth: _currentMonth = upperBound
             case (let lowerBound?, let upperBound?):
-                if currentMonth < lowerBound { currentMonth = lowerBound }
-                else if upperBound < currentMonth { currentMonth = upperBound }
+                if _currentMonth < lowerBound { _currentMonth = lowerBound }
+                else if upperBound < _currentMonth { _currentMonth = upperBound }
                 else {
                     _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet)
                     view?.reloadData()
@@ -155,7 +166,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         precondition(monthRange.first != nil ? monthRange.first! <= initialMonth : true)
         precondition(monthRange.second != nil ? initialMonth <= monthRange.second! : true)
         
-        self.currentMonth = initialMonth
+        self._currentMonth = initialMonth
         self.monthRange = monthRange
         self.viewProvider = .init(viewProvider)
     }
