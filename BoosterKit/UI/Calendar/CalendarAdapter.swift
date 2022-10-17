@@ -69,10 +69,10 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         
         let oldValue = _currentMonth
         _currentMonth = newValue
-        _calendarLayout.invalidateLayoutIfNeeded(dataSet: _dataSet)
 
         guard let _ = view else { return }
-        
+        _calendarLayout.invalidateLayoutIfNeeded(dataSet: _dataSet)
+
         if monthRange.isInfinite && newValue != oldValue {
             view.reloadData()
         }
