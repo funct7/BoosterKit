@@ -144,6 +144,53 @@ class CalendarLayoutTests : XCTestCase {
         }
     }
     
+    func test_getSectionHeightForMonth() throws {
+        let oct2022 = try ISO8601Month(year: 2022, month: 10)
+        let frame = CGRect(origin: .zero, size: CGSize(width: CGSize.Device.iPhone12.width, height: 320))
+        
+        setUp(
+            params: .init(sectionInset: .test, itemSize: .short),
+            frame: frame,
+            initialMonth: oct2022)
+        
+        // getSection(month:) is NOT affected by the current month,
+        // but only the month display option and layout params.
+        
+        expect(self.sut.sectionHeight(month: oct2022)).to(beCloseTo(.short6week, within: 0.1))
+        expect(self.sut.sectionHeight(month: oct2022.advanced(by: -1))).to(beCloseTo(.short5week, within: 0.1))
+        expect(self.sut.sectionHeight(month: oct2022.advanced(by: -2))).to(beCloseTo(.short5week, within: 0.1))
+        expect(self.sut.sectionHeight(month: oct2022.advanced(by: -3))).to(beCloseTo(.short6week, within: 0.1)) // jul 2022
+        expect(self.sut.sectionHeight(month: oct2022.advanced(by: 1))).to(beCloseTo(.short5week, within: 0.1))
+        
+        expect(self.sut.sectionHeight(month: try ISO8601Month(year: 2027, month: 1))).to(beCloseTo(.short6week, within: 0.1))
+        expect(self.sut.sectionHeight(month: try ISO8601Month(year: 2027, month: 2))).to(beCloseTo(.short5week, within: 0.1))
+        expect(self.sut.sectionHeight(month: try ISO8601Month(year: 2015, month: 2))).to(beCloseTo(192, within: 0.1))
+        
+        adapter.displayOption = .fixed
+        
+        expect(self.sut.sectionHeight(month: oct2022)).to(beCloseTo(.short6week, within: 0.1))
+        expect(self.sut.sectionHeight(month: oct2022.advanced(by: -1))).to(beCloseTo(.short6week, within: 0.1))
+        expect(self.sut.sectionHeight(month: oct2022.advanced(by: -2))).to(beCloseTo(.short6week, within: 0.1))
+        expect(self.sut.sectionHeight(month: oct2022.advanced(by: -3))).to(beCloseTo(.short6week, within: 0.1)) // jul 2022
+
+        adapter.displayOption = .dynamic
+        sut.params.alignment.vertical = .filled
+        
+        expect(self.sut.sectionHeight(month: oct2022)).to(beCloseTo(frame.height, within: 0.1))
+        expect(self.sut.sectionHeight(month: oct2022.advanced(by: -1))).to(beCloseTo(frame.height, within: 0.1))
+        
+        sut.params = withVar(sut.params) {
+            $0.itemSize = .tall
+            $0.sectionInset.top = 10
+            $0.sectionInset.bottom = 10
+            $0.spacing.height = 2
+            $0.alignment.vertical = .packed
+        }
+        
+        expect(self.sut.sectionHeight(month: oct2022)).to(beCloseTo(390, within: 0.1))
+        expect(self.sut.sectionHeight(month: oct2022.advanced(by: -1))).to(beCloseTo(328, within: 0.1))
+    }
+    
     func test_weekdaySpans() throws {
         let sep2022 = try ISO8601Month(year: 2022, month: 9)
         setUp(

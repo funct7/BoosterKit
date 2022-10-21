@@ -59,11 +59,7 @@ open class CalendarLayout : UICollectionViewLayout {
             let attribsList = CGRect
                 .make(
                     params: params,
-                    weekCount: assign {
-                        _dataSet.displayOption == .dynamic
-                            ? CalendarAdapter.UICollectionViewAdapter.LayoutPlan.create(month: month).numberOfWeeks
-                            : 6
-                    },
+                    weekCount: _dataSet.displayOption.numberOfWeeks(month: month),
                     viewSize: view.frame.size)
                 .enumerated()
                 .map { index, frame in
@@ -124,6 +120,19 @@ open class CalendarLayout : UICollectionViewLayout {
     
     @objc
     open dynamic var sectionHeight: CGFloat { _currentSectionHeight }
+    
+    /**
+     Calculates the section height given the current settings.
+     */
+    open func sectionHeight(month: ISO8601Month) -> CGFloat {
+        let weekCount = _dataSet.displayOption.numberOfWeeks(month: month)
+        let minHeight = CGRect.minContentSize(weekCount: weekCount, params: params).height
+        
+        switch params.alignment.vertical {
+        case .packed: return minHeight
+        case .filled, .spread: return max(minHeight, collectionView?.frame.height ?? 0)
+        }
+    }
     
     /**
      The x-axis `Span` for each weekday.
@@ -405,7 +414,7 @@ public extension CalendarLayout.Mode {
 private extension CGRect {
     
     static func make(params: CalendarLayout.Params, weekCount: UInt, viewSize: CGSize) -> [CGRect] {
-        let minContentSize = minContentSize(weekCount: Int(weekCount), params: params)
+        let minContentSize = minContentSize(weekCount: weekCount, params: params)
         
         return zip(
             horizontalValues(params: params, weekCount: Int(weekCount), remainingSpace: viewSize.width - minContentSize.width),
@@ -413,7 +422,7 @@ private extension CGRect {
             .map { hor, ver in CGRect(x: hor.start, y: ver.start, width: hor.length, height: ver.length) }
     }
     
-    static private func minContentSize(weekCount: Int, params: CalendarLayout.Params) -> CGSize {
+    static func minContentSize(weekCount: UInt, params: CalendarLayout.Params) -> CGSize {
         CGSize(
             width: params.sectionInset.horizontal + params.itemSize.width * 7 + params.spacing.width * 6,
             height: params.sectionInset.vertical + params.itemSize.height * CGFloat(weekCount) + params.spacing.height * CGFloat(weekCount - 1))
@@ -472,6 +481,17 @@ private extension CGRect {
                 return defaultLayout.enumerated()
                     .map { i, span in span.offset(by: extraSpace * CGFloat(i/7)) }
             }
+        }
+    }
+    
+}
+
+private extension CalendarAdapterDisplayOption {
+    
+    func numberOfWeeks(month: ISO8601Month) -> UInt {
+        switch self {
+        case .fixed: return 6
+        case .dynamic: return CalendarAdapter.UICollectionViewAdapter.LayoutPlan.create(month: month).numberOfWeeks
         }
     }
     
