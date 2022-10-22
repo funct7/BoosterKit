@@ -80,10 +80,8 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
 
         guard let _ = view else { return }
         
-        if monthRange.isInfinite {
-            _calendarLayout.invalidateLayoutIfNeeded(dataSet: _dataSet)
-            view.reloadData()
-        }
+        _calendarLayout.invalidateLayoutIfNeeded(dataSet: _dataSet)
+        if monthRange.isInfinite { view.reloadData() }
     }
     
     /// Updates the displayed month.

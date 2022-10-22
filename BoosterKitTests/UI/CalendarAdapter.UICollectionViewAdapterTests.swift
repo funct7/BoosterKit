@@ -11,35 +11,34 @@ import UIKit
 
 class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
     
-    private enum _Constant {
-        static let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-    }
-    
     private typealias _ViewProvider = TestCalendarAdapterComponentViewProvider
     private typealias _Cell = TestCalendarAdapterCell
     
     private var viewProvider: _ViewProvider!
     private var adapter: CalendarAdapter<_Cell>!
     private var sut: CalendarAdapter<_Cell>.UICollectionViewAdapter!
+    private var collectionView: UICollectionView!
     
     private func setUp(
         initialMonth: ISO8601Month,
         monthRange: Pair<ISO8601Month?, ISO8601Month?>)
     {
         viewProvider = .init()
-        _Constant.collectionView.register(_Cell.self, forCellWithReuseIdentifier: "\(_Cell.self)")
-        
         adapter = .init(
             initialMonth: initialMonth,
             monthRange: monthRange,
             viewProvider: viewProvider)
+        collectionView = withVar(.init(frame: .zero, collectionViewLayout: CalendarLayout())) {
+            $0.register(_Cell.self, forCellWithReuseIdentifier: "\(_Cell.self)")
+        }
+        adapter.view = collectionView
         
         sut = .init(calendarAdapter: adapter)
     }
     
     func test_numberOfSections() throws {
         let current = ISO8601Month()
-        let run = { self.sut.numberOfSections(in: _Constant.collectionView) }
+        let run = { self.sut.numberOfSections(in: self.collectionView) }
         
         // monthRange is finite
         setUp(initialMonth: current, monthRange: Pair(current, current))
@@ -94,7 +93,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         setUp(initialMonth: sep2022, monthRange: Pair(sep2022.advanced(by: -1), sep2022.advanced(by: 1)))
         
         let run: (Int) -> Int = {
-            self.sut.collectionView(_Constant.collectionView, numberOfItemsInSection: $0)
+            self.sut.collectionView(self.collectionView, numberOfItemsInSection: $0)
         }
         
         XCTAssertEqual(run(0), 35)
@@ -162,7 +161,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         adapter.displayOption = .fixed
         
         let run: (Int) -> Int = {
-            self.sut.collectionView(_Constant.collectionView, numberOfItemsInSection: $0)
+            self.sut.collectionView(self.collectionView, numberOfItemsInSection: $0)
         }
         
         XCTAssertEqual(run(0), 42)
@@ -181,10 +180,10 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
     
     func test_cellForItemAtIndexPath() throws {
         let getItemCount: (Int) -> Int = {
-            self.sut.collectionView(_Constant.collectionView, numberOfItemsInSection: $0)
+            self.sut.collectionView(self.collectionView, numberOfItemsInSection: $0)
         }
         let run: (Int, Int) -> _Cell = { section, index in
-            self.sut.collectionView(_Constant.collectionView, cellForItemAt: IndexPath(indexes: [section, index])) as! _Cell
+            self.sut.collectionView(self.collectionView, cellForItemAt: IndexPath(indexes: [section, index])) as! _Cell
         }
         
         // === 1-month range ===
