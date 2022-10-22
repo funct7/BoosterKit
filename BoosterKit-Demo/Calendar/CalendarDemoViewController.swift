@@ -23,20 +23,57 @@ class CalendarDemoViewController : UIViewController {
     private lazy var _viewProvider = DemoCalendarAdapterComponentViewProvider()
     private lazy var _calendarAdapter = CalendarAdapter(viewProvider: _viewProvider)
     
+    private var _needsInitialLayout = true
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        _calendarAdapter.delegate = AnyCalendarAdapterDelegate(self)
+        _sectionHeightObserveToken = calendarLayout.observe(
+            \.sectionHeight,
+            options: [.new])
+        { [weak calendarViewHeight] _, change in
+            calendarViewHeight?.constant = change.newValue!
+        }
+        
+        updateCurrentMonthButton(month: _calendarAdapter.currentMonth)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        _needsInitialLayout = false
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if _needsInitialLayout {
+            // This MUST be called at least once before the VC appears on screen.
+            _calendarAdapter.currentMonth = _calendarAdapter.currentMonth
+        }
+    }
+    
 }
 
 extension CalendarDemoViewController {
     
+    func updateCurrentMonthButton(month: ISO8601Month) {
+        currentMonthButton.setTitle("\(month)", for: .normal)
+    }
+    
     @IBAction func prevMonthAction(_ sender: UIButton) {
         _calendarAdapter.currentMonth = _calendarAdapter.currentMonth.advanced(by: -1)
+        updateCurrentMonthButton(month: _calendarAdapter.currentMonth)
     }
     
     @IBAction func currentMonthAction(_ sender: UIButton) {
         _calendarAdapter.currentMonth = ISO8601Month()
+        updateCurrentMonthButton(month: _calendarAdapter.currentMonth)
     }
     
     @IBAction func nextMonthAction(_ sender: UIButton) {
         _calendarAdapter.currentMonth = _calendarAdapter.currentMonth.advanced(by: 1)
+        updateCurrentMonthButton(month: _calendarAdapter.currentMonth)
     }
     
     @IBAction func changeDisplayOptionAction(_ sender: UISegmentedControl) {
@@ -49,6 +86,21 @@ extension CalendarDemoViewController {
     
     @IBAction func changeVerticalAligmentAction(_ sender: UISegmentedControl) {
         calendarLayout.params.alignment.vertical = [.packed, .filled, .spread][sender.selectedSegmentIndex]
+    }
+    
+}
+
+extension CalendarDemoViewController : CalendarAdapterDelegate {
+    
+    typealias Cell = CalendarDayCell
+    
+    func calendarPresenter(_ presenter: CalendarAdapter<Cell>, willChangeMonthFrom oldValue: ISO8601Month, to newValue: ISO8601Month) {
+        updateCurrentMonthButton(month: newValue)
+        calendarViewHeight.constant = calendarLayout.sectionHeight(month: newValue)
+    }
+    
+    func calendarPresenter(_ presenter: CalendarAdapter<Cell>, didChangeMonthFrom oldValue: ISO8601Month, to newValue: ISO8601Month) {
+        
     }
     
 }
