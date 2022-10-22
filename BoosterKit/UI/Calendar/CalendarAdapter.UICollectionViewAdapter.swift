@@ -56,31 +56,40 @@ extension CalendarAdapter {
             return cell
         }
         
-//        func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-//            let pageWidth = scrollView.frame.width
-//            let pageIndex = Int(targetContentOffset.pointee.x / pageWidth)
-//            let currentMonth = calendarAdapter.currentMonth
-//            let targetMonth = _getMonth(section: pageIndex)
-//
-//            if currentMonth == targetMonth { return }
-//
-//            calendarAdapter.delegate?.calendarPresenter(calendarAdapter, willChangeMonthFrom: currentMonth, to: targetMonth)
-//
-//            if pageIndex == 0 {
-//                scrollView.contentOffset.x += pageWidth
-//                targetContentOffset.pointee.x += pageWidth
-//            } else if pageIndex == 2 {
-//                scrollView.contentOffset.x -= pageWidth
-//                targetContentOffset.pointee.x -= pageWidth
-//            } else {
-//                assertionFailure("invalid page index: \(pageIndex)")
-//            }
-//
-//            calendarAdapter.setCurrentMonth(targetMonth, shouldUpdateContentOffset: false)
-//
-//            calendarAdapter.delegate?.calendarPresenter(calendarAdapter, didChangeMonthFrom: currentMonth, to: targetMonth)
-//        }
-//
+        private var _targetPageIndex: Int? = nil
+        func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+            let pageWidth = scrollView.frame.width
+            let pageIndex = Int(targetContentOffset.pointee.x / pageWidth)
+            let currentMonth = calendarAdapter.currentMonth
+            let targetMonth = _getMonth(section: pageIndex)
+            
+            if currentMonth == targetMonth { return }
+            
+            calendarAdapter.delegate?.calendarPresenter(calendarAdapter, willChangeMonthFrom: currentMonth, to: targetMonth)
+            
+            _targetPageIndex = pageIndex
+        }
+        
+        func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+            guard let targetPageIndex = _targetPageIndex else { return }
+            
+            let targetMonth = _getMonth(section: targetPageIndex)
+            let currentMonth = calendarAdapter.currentMonth
+            
+            calendarAdapter.loadCurrentMonthData(targetMonth)
+            
+            let pageWidth = scrollView.frame.width
+            switch targetPageIndex {
+            case 0: scrollView.contentOffset.x += pageWidth
+            case 2: scrollView.contentOffset.x -= pageWidth
+            default: assertionFailure("invalid page index: \(targetPageIndex)")
+            }
+            
+            _targetPageIndex = nil
+            
+            calendarAdapter.delegate?.calendarPresenter(calendarAdapter, didChangeMonthFrom: currentMonth, to: targetMonth)
+        }
+
     }
     
 }
@@ -133,17 +142,13 @@ private extension CalendarAdapter.UICollectionViewAdapter {
     
     func _getMonth(section: Int) -> ISO8601Month {
         switch calendarAdapter.monthRange.toTuple() {
-        case let (lowerBound?, _):
+        case let (lowerBound?, _?):
             return lowerBound.advanced(by: section)
-        case let (nil, upperBound?):
-            if upperBound == calendarAdapter.currentMonth {
-                let offset = section + 1 - _numberOfSections()
-                return upperBound.advanced(by: offset)
-            } else {
-                fallthrough
-            }
-            
-        case (nil, nil):
+        case let (lowerBound?, nil) where lowerBound == calendarAdapter.currentMonth:
+            return lowerBound.advanced(by: section)
+        case let (nil, upperBound?) where upperBound == calendarAdapter.currentMonth:
+            return upperBound.advanced(by: section - 1)
+        default:
             precondition((0...2).contains(section))
             return calendarAdapter.currentMonth.advanced(by: section - 1)
         }

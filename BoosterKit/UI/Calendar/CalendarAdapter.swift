@@ -59,7 +59,16 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     
     private var _currentMonth: ISO8601Month
     
-    func setCurrentMonth(_ newValue: ISO8601Month, shouldUpdateContentOffset: Bool) {
+    private func _alignContentOffsetToCurrentMonth() {
+        view.contentOffset.x = assign {
+            let pageIndex = monthRange.isInfinite ? 1 : try! monthRange.first!.distance(to: _currentMonth)
+            return view.frame.width * CGFloat(pageIndex)
+        }
+    }
+    
+    func loadCurrentMonthData(_ newValue: ISO8601Month) {
+        if _currentMonth == newValue { return }
+        
         switch monthRange.toTuple() {
         case (nil, nil): break
         case (let lowerBound?, nil): precondition(lowerBound <= newValue && lowerBound.timeZone == newValue.timeZone)
@@ -67,21 +76,13 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         case (let lowerBound?, let upperBound?): precondition(lowerBound <= newValue && newValue <= upperBound && lowerBound.timeZone == newValue.timeZone)
         }
         
-        let oldValue = _currentMonth
         _currentMonth = newValue
 
         guard let _ = view else { return }
-        _calendarLayout.invalidateLayoutIfNeeded(dataSet: _dataSet)
-
-        if monthRange.isInfinite && newValue != oldValue {
+        
+        if monthRange.isInfinite {
+            _calendarLayout.invalidateLayoutIfNeeded(dataSet: _dataSet)
             view.reloadData()
-        }
-        
-        guard shouldUpdateContentOffset else { return }
-        
-        view.contentOffset.x = assign {
-            let pageIndex = monthRange.isInfinite ? 1 : try! monthRange.first!.distance(to: newValue)
-            return view.frame.width * CGFloat(pageIndex)
         }
     }
     
@@ -89,11 +90,14 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     /// - Invariant: `currentMonth` must be within `monthRange` and have the same time zone as the values in `monthRange`.
     open var currentMonth: ISO8601Month {
         get { _currentMonth }
-        set { setCurrentMonth(newValue, shouldUpdateContentOffset: true) }
+        set {
+            loadCurrentMonthData(newValue)
+            _alignContentOffsetToCurrentMonth()
+        }
     }
     
     /**
-     - Note: `first` and `second` form inclusive bounds if non-`nil`.
+     - Note: `first` and `second` form **inclusive** bounds if non-`nil`.
      - Invariant:
         - `first` and `second` must have the same `timeZone` value if non-`nil`.
         - `first` <= `second` if non-`nil`.
