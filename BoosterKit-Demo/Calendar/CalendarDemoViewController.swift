@@ -13,12 +13,14 @@ class CalendarDemoViewController : UIViewController {
     @IBOutlet weak var prevMonthButton: UIButton!
     @IBOutlet weak var currentMonthButton: UIButton!
     @IBOutlet weak var nextMonthButton: UIButton!
+    @IBOutlet var weekdayLabels: [UILabel]!
     @IBOutlet weak var calendarView: UICollectionView! {
         didSet { _calendarAdapter.view = calendarView }
     }
     @IBOutlet weak var calendarViewHeight: NSLayoutConstraint!
     
     private var _sectionHeightObserveToken: NSKeyValueObservation!
+    private var _weekdaySpansObserveToken: NSKeyValueObservation!
     @IBOutlet weak var calendarLayout: CalendarLayout!
     private lazy var _viewProvider = DemoCalendarAdapterComponentViewProvider()
     private lazy var _calendarAdapter = CalendarAdapter(viewProvider: _viewProvider)
@@ -34,6 +36,15 @@ class CalendarDemoViewController : UIViewController {
             options: [.new])
         { [weak calendarViewHeight] _, change in
             calendarViewHeight?.constant = change.newValue!
+        }
+        _weekdaySpansObserveToken = calendarLayout.observe(
+            \.weekdaySpans,
+            options: [.new])
+        { [unowned self] _, change in
+            zip(self.weekdayLabels, change.newValue!).forEach { label, span in
+                label.frame.origin.x = span.start
+                label.frame.size.width = span.length
+            }
         }
         
         updateCurrentMonthButton(month: _calendarAdapter.currentMonth)
@@ -114,7 +125,6 @@ class DemoCalendarAdapterComponentViewProvider : CalendarAdapterComponentViewPro
     func configure(_ cell: Cell, with context: CalendarAdapterContext) {
         cell.label.alpha = context.position == .main ? 1.0 : 0.3
         cell.label.text = "\(context.date.dateComponents([.day]).day!)"
-        cell.contentView.backgroundColor = .init(white: 0.93, alpha: 1)
     }
     
 }
