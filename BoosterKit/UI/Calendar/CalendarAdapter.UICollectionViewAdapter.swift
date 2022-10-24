@@ -78,11 +78,13 @@ extension CalendarAdapter {
             
             calendarAdapter.loadCurrentMonthData(targetMonth)
             
-            let pageWidth = scrollView.frame.width
-            switch targetPageIndex {
-            case 0: scrollView.contentOffset.x += pageWidth
-            case 2: scrollView.contentOffset.x -= pageWidth
-            default: assertionFailure("invalid page index: \(targetPageIndex)")
+            if calendarAdapter.monthRange.isInfinite {
+                let pageWidth = scrollView.frame.width
+                switch targetPageIndex {
+                case 0: scrollView.contentOffset.x += pageWidth
+                case 2: scrollView.contentOffset.x -= pageWidth
+                default: assertionFailure("invalid page index: \(targetPageIndex)")
+                }
             }
             
             _targetPageIndex = nil
