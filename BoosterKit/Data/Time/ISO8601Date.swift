@@ -9,13 +9,8 @@ import Foundation
 
 public struct ISO8601Date {
     
-    public var timeZone: TimeZone {
-        didSet {
-            _dateFormatter.timeZone = timeZone
-        }
-    }
+    public var timeZone: TimeZone
     private let _range: Range<Date>
-    private let _dateFormatter: ISO8601DateFormatter
     
     /**
      - Precondition: Each provided date component must be valid; i.e. providing `2022`, `9`, `31` will throw an error because there is no Sep 31st.
@@ -31,7 +26,6 @@ public struct ISO8601Date {
         
         self.timeZone = timeZone
         self._range = (date ..< date.adding(.day(1)))
-        self._dateFormatter = .with(timeZone: timeZone)
     }
     
     public init(date: Date = Date(), timeZone: TimeZone = .autoupdatingCurrent) {
@@ -39,7 +33,6 @@ public struct ISO8601Date {
         
         self.timeZone = timeZone
         self._range = Range(dateInterval: cal.dateInterval(of: .day, for: date)!)
-        self._dateFormatter = .with(timeZone: timeZone)
     }
     
     /**
@@ -53,7 +46,6 @@ public struct ISO8601Date {
         
         self.timeZone = timeZone
         self._range = (date ..< date.adding(.day(1)))
-        self._dateFormatter = dateFormatter
     }
     
 }
@@ -116,7 +108,11 @@ extension ISO8601Date : Hashable {
 
 extension ISO8601Date : CustomStringConvertible {
     
-    public var description: String { _dateFormatter.string(from: _range.lowerBound) }
+    public var description: String {
+        ISO8601DateFormatter
+            .with(timeZone: timeZone)
+            .string(from: _range.lowerBound)
+    }
     
 }
 

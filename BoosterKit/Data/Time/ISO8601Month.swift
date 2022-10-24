@@ -11,7 +11,6 @@ public struct ISO8601Month {
     
     public let timeZone: TimeZone
     public let instantRange: Range<Date>
-    public let description: String
     
     public init(year: Int, month: Int, timeZone: TimeZone = .autoupdatingCurrent) throws {
         let cal = withVar(Calendar(identifier: .gregorian)) { $0.timeZone = timeZone }
@@ -27,7 +26,6 @@ public struct ISO8601Month {
         
         self.instantRange = (lowerBound ..< upperBound)
         self.timeZone = timeZone
-        self.description = ISO8601DateFormatter.makeMonthInstance(timeZone: timeZone).string(from: lowerBound)
     }
     
     public init(date: Date = Date(), timeZone: TimeZone = .autoupdatingCurrent) {
@@ -39,7 +37,6 @@ public struct ISO8601Month {
         
         self.instantRange = (lowerBound ..< upperBound)
         self.timeZone = timeZone
-        self.description = ISO8601DateFormatter.makeMonthInstance(timeZone: timeZone).string(from: lowerBound)
     }
     
     public init(string: String, timeZone: TimeZone = .autoupdatingCurrent) throws {
@@ -54,7 +51,6 @@ public struct ISO8601Month {
         
         self.instantRange = (lowerBound ..< upperBound)
         self.timeZone = timeZone
-        self.description = df.string(from: lowerBound)
     }
     
 }
@@ -70,7 +66,15 @@ public extension ISO8601Month {
     
 }
 
-extension ISO8601Month : CustomStringConvertible { }
+extension ISO8601Month : CustomStringConvertible {
+    
+    public var description: String {
+        ISO8601DateFormatter
+            .makeMonthInstance(timeZone: timeZone)
+            .string(from: instantRange.lowerBound)
+    }
+    
+}
 
 extension ISO8601Month : Equatable {
     
