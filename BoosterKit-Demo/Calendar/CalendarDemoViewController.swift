@@ -25,6 +25,21 @@ class CalendarDemoViewController : UIViewController {
     private lazy var _viewProvider = DemoCalendarAdapterComponentViewProvider()
     private lazy var _calendarAdapter = CalendarAdapter(viewProvider: _viewProvider)
     
+    private var _monthRange: Pair<ISO8601Month?, ISO8601Month?> = Pair(nil, nil) {
+        didSet {
+            bindMonthRange()
+            _calendarAdapter.monthRange = _monthRange
+            _calendarAdapter.reload()
+        }
+    }
+    @IBOutlet weak var lowerBoundSwitch: UISwitch!
+    @IBOutlet weak var lowerBoundSlider: UISlider!
+    @IBOutlet weak var lowerBoundLabel: UILabel!
+    
+    @IBOutlet weak var upperBoundSwitch: UISwitch!
+    @IBOutlet weak var upperBoundSlider: UISlider!
+    @IBOutlet weak var upperBoundLabel: UILabel!
+    
     private var _needsInitialLayout = true
     
     override func viewDidLoad() {
@@ -89,6 +104,58 @@ extension CalendarDemoViewController {
     
     @IBAction func changeDisplayOptionAction(_ sender: UISegmentedControl) {
         _calendarAdapter.displayOption = [.dynamic, .fixed][sender.selectedSegmentIndex]
+    }
+    
+    func bindMonthRange() {
+        if let lowerBound = _monthRange.first {
+            let now = ISO8601Month(),
+                diff = try! now.distance(to: lowerBound)
+            
+            lowerBoundSwitch.isOn = true
+            lowerBoundSlider.isEnabled = true
+            lowerBoundSlider.setNeedsLayout() // this is needed to update the slider appearance. Check out: https://developer.apple.com/forums/thread/658526
+            lowerBoundSlider.value = Float(diff)
+            lowerBoundLabel.text = "\(lowerBound)"
+        } else {
+            lowerBoundSwitch.isOn = false
+            lowerBoundSlider.isEnabled = false
+            lowerBoundSlider.setNeedsLayout()
+            lowerBoundLabel.text = "-"
+        }
+        
+        if let upperBound = _monthRange.second {
+            let now = ISO8601Month(),
+                diff = try! now.distance(to: upperBound)
+            
+            upperBoundSwitch.isOn = true
+            upperBoundSlider.isEnabled = true
+            upperBoundSlider.setNeedsLayout()
+            upperBoundSlider.value = Float(diff)
+            upperBoundLabel.text = "\(upperBound)"
+        } else {
+            upperBoundSwitch.isOn = false
+            upperBoundSlider.isEnabled = false
+            upperBoundSlider.setNeedsLayout()
+            upperBoundLabel.text = "-"
+        }
+    }
+    
+    @IBAction func toggleLowerBoundAction(_ sender: UISwitch) {
+        _monthRange.first = sender.isOn ? ISO8601Month() : nil
+    }
+    
+    @IBAction func lowerBoundChangeAction(_ sender: UISlider) {
+        guard let _ = _monthRange.first else { preconditionFailure() }
+        _monthRange.first = ISO8601Month().advanced(by: Int(sender.value))
+    }
+    
+    @IBAction func toggleUpperBoundAction(_ sender: UISwitch) {
+        _monthRange.second = sender.isOn ? ISO8601Month() : nil
+    }
+    
+    @IBAction func upperBoundChangeAction(_ sender: UISlider) {
+        guard let _ = _monthRange.second else { preconditionFailure() }
+        _monthRange.second = ISO8601Month().advanced(by: Int(sender.value))
     }
     
     @IBAction func changeHorizontalAligmentAction(_ sender: UISegmentedControl) {
