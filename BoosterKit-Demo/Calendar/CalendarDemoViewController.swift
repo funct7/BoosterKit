@@ -40,6 +40,21 @@ class CalendarDemoViewController : UIViewController {
     @IBOutlet weak var upperBoundSlider: UISlider!
     @IBOutlet weak var upperBoundLabel: UILabel!
     
+    @IBOutlet weak var topInsetLabel: UILabel!
+    @IBOutlet weak var topInsetStepper: UIStepper!
+    @IBOutlet weak var rightInsetLabel: UILabel!
+    @IBOutlet weak var rightInsetStepper: UIStepper!
+    @IBOutlet weak var bottomInsetLabel: UILabel!
+    @IBOutlet weak var bottomInsetStepper: UIStepper!
+    @IBOutlet weak var leftInsetLabel: UILabel!
+    @IBOutlet weak var leftInsetStepper: UIStepper!
+    
+    @IBOutlet weak var hSpacingLabel: UILabel!
+    @IBOutlet weak var hSpacingStepper: UIStepper!
+    
+    @IBOutlet weak var vSpacingLabel: UILabel!
+    @IBOutlet weak var vSpacingStepper: UIStepper!
+    
     private var _needsInitialLayout = true
     
     override func viewDidLoad() {
@@ -166,6 +181,40 @@ extension CalendarDemoViewController {
         calendarLayout.params.alignment.vertical = [.packed, .filled, .spread][sender.selectedSegmentIndex]
     }
     
+    @IBAction func changeInsetAction(_ sender: UIStepper) {
+        calendarLayout.params.sectionInset = withVar(calendarLayout.params.sectionInset) {
+            switch sender {
+            case topInsetStepper: $0.top = CGFloat(sender.value)
+            case rightInsetStepper: $0.right = CGFloat(sender.value)
+            case bottomInsetStepper: $0.bottom = CGFloat(sender.value)
+            case leftInsetStepper: $0.left = CGFloat(sender.value)
+            default: assertionFailure("unknown sender: \(sender)")
+            }
+        }
+        
+        let _ = withVar(calendarLayout.params.sectionInset) {
+            topInsetLabel.text = "\(Int($0.top))"
+            rightInsetLabel.text = "\(Int($0.right))"
+            bottomInsetLabel.text = "\(Int($0.bottom))"
+            leftInsetLabel.text = "\(Int($0.left))"
+        }
+    }
+    
+    @IBAction func changeSpacingAction(_ sender: UIStepper) {
+        calendarLayout.params.spacing = withVar(calendarLayout.params.spacing) {
+            switch sender {
+            case hSpacingStepper: $0.width = CGFloat(sender.value)
+            case vSpacingStepper: $0.height = CGFloat(sender.value)
+            default: assertionFailure("unknown sender: \(sender)")
+            }
+        }
+        
+        let _ = withVar(calendarLayout.params.spacing) {
+            hSpacingLabel.text = "\(Int($0.width))"
+            vSpacingLabel.text = "\(Int($0.height))"
+        }
+    }
+    
 }
 
 extension CalendarDemoViewController : CalendarAdapterDelegate {
@@ -192,6 +241,7 @@ class DemoCalendarAdapterComponentViewProvider : CalendarAdapterComponentViewPro
     func configure(_ cell: Cell, with context: CalendarAdapterContext) {
         cell.label.alpha = context.position == .main ? 1.0 : 0.3
         cell.label.text = "\(context.date.dateComponents([.day]).day!)"
+        cell.selectionView.isHidden = true
     }
     
 }
