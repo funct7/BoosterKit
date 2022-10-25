@@ -78,8 +78,13 @@ extension CalendarAdapter {
             
             calendarAdapter.loadCurrentMonthData(targetMonth)
             
-            if calendarAdapter.monthRange.isInfinite {
-                let pageWidth = scrollView.frame.width
+            let _ = withVar(scrollView.frame.width) { pageWidth in
+                guard calendarAdapter.monthRange.isInfinite else { return }
+                
+                if [currentMonth, targetMonth].contains(calendarAdapter.monthRange.first) {
+                    return assert((0...1).contains(targetPageIndex), "invalid page index: \(targetPageIndex)")
+                }
+                
                 switch targetPageIndex {
                 case 0: scrollView.contentOffset.x += pageWidth
                 case 2: scrollView.contentOffset.x -= pageWidth
