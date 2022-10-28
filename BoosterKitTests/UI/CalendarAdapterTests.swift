@@ -58,6 +58,109 @@ class CalendarAdapterTests : XCTestCase {
         XCTAssertEqual(sut.currentMonth, sep2022)
     }
     
+    func test_monthRange_settingNewValue_adjustsScrollPositionToCurrentMonth() throws {
+        let oct2022 = try ISO8601Month(year: 2022, month: 10)
+        setUp(initialMonth: oct2022.advanced(by: 2), monthRange: Pair(nil, nil))
+        
+        let frame = CGRect(origin: .zero, size: CGSize(width: 390, height: 320))
+        let layout = MockCalendarLayout(),
+            view = MockCollectionView(frame: frame, collectionViewLayout: layout)
+        
+        sut.view = view
+        
+        func resetMock() {
+            layout.invalidateLayoutIfNeededArgs = []
+            view.reloadDataCallCount = 0
+            view.contentOffsetArgs = []
+        }
+        
+        resetMock()
+        
+        // upperBound: unbounded -> bounded infinite -> unbounded
+        sut.monthRange.second = oct2022 // upper bound: sec 1 -> sec 1
+        
+        expect(self.sut.currentMonth).to(equal(oct2022))
+        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(1))
+        expect(view.reloadDataCallCount).to(equal(1))
+        expect(view.contentOffsetArgs).to(haveCount(1))
+        expect(view.contentOffsetArgs.last?.x).to(equal(frame.width))
+        
+        sut.monthRange.second = oct2022.advanced(by: -2) // upper bound: sec 1 -> sec 1
+        
+        expect(self.sut.currentMonth).to(equal(oct2022.advanced(by: -2)))
+        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(2))
+        expect(view.reloadDataCallCount).to(equal(2))
+        expect(view.contentOffsetArgs).to(haveCount(2))
+        expect(view.contentOffsetArgs.last?.x).to(equal(frame.width))
+        
+        sut.monthRange.second = nil // unbounded: sec 1 -> sec 1
+        
+        expect(self.sut.currentMonth).to(equal(oct2022.advanced(by: -2)))
+        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(3))
+        expect(view.reloadDataCallCount).to(equal(3))
+        expect(view.contentOffsetArgs).to(haveCount(3))
+        expect(view.contentOffsetArgs.last?.x).to(equal(frame.width))
+        
+        resetMock()
+        
+        // lowerBound: unbounded -> bounded infinite -> unbounded
+        sut.monthRange.first = oct2022 // lower bound: sec 1 -> sec 0
+        
+        expect(self.sut.currentMonth).to(equal(oct2022))
+        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(1))
+        expect(view.reloadDataCallCount).to(equal(1))
+        expect(view.contentOffsetArgs).to(haveCount(1))
+        expect(view.contentOffsetArgs.last?.x).to(equal(0))
+
+        sut.monthRange.first = oct2022.advanced(by: 2) // lower bound: sec 0 -> sec 0
+        
+        expect(self.sut.currentMonth).to(equal(oct2022.advanced(by: 2)))
+        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(2))
+        expect(view.reloadDataCallCount).to(equal(2))
+        expect(view.contentOffsetArgs).to(haveCount(2))
+        expect(view.contentOffsetArgs.last?.x).to(equal(0))
+        
+        sut.monthRange.first = oct2022.advanced(by: -2) // lower bound: sec 0 -> sec 1
+        
+        expect(self.sut.currentMonth).to(equal(oct2022.advanced(by: 2))) // unchanged
+        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(3))
+        expect(view.reloadDataCallCount).to(equal(3))
+        expect(view.contentOffsetArgs).to(haveCount(3))
+        expect(view.contentOffsetArgs.last?.x).to(equal(frame.width))
+        
+        sut.monthRange.first = oct2022
+        sut.currentMonth = oct2022
+        resetMock()
+        
+        sut.monthRange.first = nil // lower bound: sec 0 -> sec 1
+        
+        expect(self.sut.currentMonth).to(equal(oct2022)) // unchanged
+        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(1))
+        expect(view.reloadDataCallCount).to(equal(1))
+        expect(view.contentOffsetArgs).to(haveCount(1))
+        expect(view.contentOffsetArgs.last?.x).to(equal(frame.width))
+        
+        // finite -> finite
+        sut.monthRange = Pair(oct2022, oct2022.advanced(by: 2))
+        resetMock()
+        
+        sut.monthRange.first = oct2022.advanced(by: -9) // sec 0 -> sec 9
+        
+        expect(self.sut.currentMonth).to(equal(oct2022)) // unchanged
+        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(1))
+        expect(view.reloadDataCallCount).to(equal(1))
+        expect(view.contentOffsetArgs).to(haveCount(1))
+        expect(view.contentOffsetArgs.last?.x).to(equal(frame.width * 9))
+        
+        sut.monthRange.first = oct2022.advanced(by: -4) // sec 9 -> sec 4
+        
+        expect(self.sut.currentMonth).to(equal(oct2022)) // unchanged
+        expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(2))
+        expect(view.reloadDataCallCount).to(equal(2))
+        expect(view.contentOffsetArgs).to(haveCount(2))
+        expect(view.contentOffsetArgs.last?.x).to(equal(frame.width * 4))
+    }
+    
     func test_requestsLayoutInvalidationForDataChanges() throws {
         let sep2022 = try ISO8601Month(year: 2022, month: 9, timeZone: .seoul)
         setUp(initialMonth: sep2022, monthRange: Pair(nil, nil))
@@ -93,6 +196,23 @@ class CalendarAdapterTests : XCTestCase {
         sut.currentMonth = sep2022.advanced(by: 1)
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(7))
         expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(DataSet(displayOption: .fixed, monthRange: Pair(nil, nil), currentMonth: sep2022.advanced(by: 1))))
+    }
+    
+}
+
+private final class MockCollectionView : UICollectionView {
+    
+    var contentOffsetArgs: [CGPoint] = []
+    override var contentOffset: CGPoint {
+        didSet {
+            contentOffsetArgs.append(contentOffset)
+        }
+    }
+    
+    var reloadDataCallCount = 0
+    override func reloadData() {
+        reloadDataCallCount += 1
+        super.reloadData()
     }
     
 }

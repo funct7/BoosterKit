@@ -60,10 +60,19 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     private var _currentMonth: ISO8601Month
     
     private func _alignContentOffsetToCurrentMonth() {
-        view.contentOffset.x = assign {
-            let pageIndex = monthRange.isInfinite ? 1 : try! monthRange.first!.distance(to: _currentMonth)
-            return view.frame.width * CGFloat(pageIndex)
+        guard let view = view else { return }
+        
+        let pageIndex: Int = assign {
+            switch monthRange.toTuple() {
+            case (let lowerBound?, nil) where lowerBound == _currentMonth:
+                return 0
+            case (let lowerBound?, .some):
+                return try! lowerBound.distance(to: _currentMonth)
+            default:
+                return 1
+            }
         }
+        view.contentOffset.x = view.frame.width * CGFloat(pageIndex)
     }
     
     func loadCurrentMonthData(_ newValue: ISO8601Month) {
@@ -115,18 +124,24 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         }
         didSet {
             switch monthRange.toTuple() {
-            case (let lowerBound?, nil) where _currentMonth < lowerBound: _currentMonth = lowerBound
-            case (nil, let upperBound?) where upperBound < _currentMonth: _currentMonth = upperBound
+            case (let lowerBound?, nil) where _currentMonth < lowerBound:
+                currentMonth = lowerBound
+                
+            case (nil, let upperBound?) where upperBound < _currentMonth:
+                currentMonth = upperBound
+                
             case (let lowerBound?, let upperBound?):
-                if _currentMonth < lowerBound { _currentMonth = lowerBound }
-                else if upperBound < _currentMonth { _currentMonth = upperBound }
+                if _currentMonth < lowerBound { currentMonth = lowerBound }
+                else if upperBound < _currentMonth { currentMonth = upperBound }
                 else {
                     _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet)
                     view?.reloadData()
+                    if let _ = view { _alignContentOffsetToCurrentMonth() }
                 }
             default:
                 _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet)
                 view?.reloadData()
+                if let _ = view { _alignContentOffsetToCurrentMonth() }
             }
         }
     }
