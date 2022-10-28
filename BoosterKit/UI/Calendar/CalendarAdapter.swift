@@ -151,11 +151,6 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     open func reload() { }
     open func reloadDate(_ date: ISO8601Date) { }
     
-    /// Elements are ordered by their selection order, not the natural order of `ISO8601Date`.
-    open var selectedDates: [ISO8601Date] = []
-    open func toggleSelection(date: ISO8601Date) {
-    }
-    
     private lazy var _adapter = UICollectionViewAdapter(calendarAdapter: self)
     
     /**
