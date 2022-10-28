@@ -148,9 +148,39 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     open func getCell(date: ISO8601Date) -> Cell? { nil }
     open func scroll(to month: ISO8601Month) { }
     
-    open func reload() { }
-    open func reloadDate(_ date: ISO8601Date) { }
+    /**
+     Re-binds the calendar cells to the data set of the current month.
+     
+     - Note: Since `CalendarLayout` is designed for a UI where only a single month is displayed,
+        there is no use-case where the programmer needs to reload any other month than the current one.
+        
+        If there should be support for multiple months, please raise an issue at [the GitHub page](https://github.com/funct7/BoosterKit/issues)
+     */
+    open func reload() {
+        view?.reloadData()
+    }
     
+    /**
+     Re-binds the calendar cell to the data for `date`.
+     
+     If `date` is not a date that is currently displayed, this method does nothing.
+     
+     - Parameters:
+        - date: The date whose cells is to be refreshed.
+     
+     - Throws: `BoosterKitError.illegalArgument` `date` has time zone that is different than `currentMonth`.
+     
+     - Note: Since `CalendarLayout` is designed for a UI where only a single month is displayed,
+        there is no use-case where the programmer needs to reload any other month than the current one.
+        
+        If there should be support for multiple months, please raise an issue at [the GitHub page](https://github.com/funct7/BoosterKit/issues)
+     */
+    open func reloadDate(_ date: ISO8601Date) throws {
+        guard date.timeZone == currentMonth.timeZone else { throw BoosterKitError.illegalArgument }
+        guard let indexPath = try _adapter.getVisibleIndexPath(date: date) else { return }
+        view?.reloadItems(at: [indexPath])
+    }
+        
     private lazy var _adapter = UICollectionViewAdapter(calendarAdapter: self)
     
     /**

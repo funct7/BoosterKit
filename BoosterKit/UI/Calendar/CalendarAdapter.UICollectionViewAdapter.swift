@@ -134,6 +134,33 @@ extension CalendarAdapter.UICollectionViewAdapter {
 
 }
 
+extension CalendarAdapter.UICollectionViewAdapter {
+    
+    /**
+     - Parameters:
+        - date: The date whose visible index path to fetch.
+     
+     - Precondition: `date.timeZone` is the same as the time zone currently used by the class.
+     - Returns: `nil` if `date` is not visible or is out of range.
+     */
+    func getVisibleIndexPath(date: ISO8601Date) throws -> IndexPath? {
+        assert(date.timeZone == calendarAdapter.currentMonth.timeZone)
+        
+        let currentMonth = calendarAdapter.currentMonth
+        let layoutPlan = LayoutPlan.create(month: currentMonth)
+        let lowerBound = currentMonth.dateRange.lowerBound.advanced(by: -Int(layoutPlan.leadingDays)),
+            upperBound = currentMonth.dateRange.upperBound.advanced(by: Int(layoutPlan.trailingDays) - 1)
+        
+        guard (lowerBound...upperBound).contains(date) else { return nil }
+        
+        return IndexPath(indexes: [
+            _getSection(month: currentMonth)!,
+            try! lowerBound.distance(to: date)
+        ])
+    }
+    
+}
+
 private extension CalendarAdapter.UICollectionViewAdapter {
 
     func _numberOfSections() -> Int {
@@ -145,6 +172,24 @@ private extension CalendarAdapter.UICollectionViewAdapter {
         default:
             return 3
         }
+    }
+    
+    /// - Returns: The range of `ISO8601Month` that matches the bounds of the current data set of `UICollectionView`.
+    func _getDataSourceRange() -> ClosedRange<ISO8601Month> {
+        assert(_numberOfSections() > 0)
+        return (_getMonth(section: 0) ... _getMonth(section: _numberOfSections() - 1))
+    }
+    
+    /**
+     - Returns: The section of `month` as the collection view would show it.
+        `nil` may be returned even if `month` is within range of the `CalendarAdapter`.
+     */
+    func _getSection(month: ISO8601Month) -> Int? {
+        assert(month.timeZone == calendarAdapter.currentMonth.timeZone)
+        
+        let dataSourceRange = _getDataSourceRange()
+        guard dataSourceRange.contains(month) else { return nil }
+        return try! dataSourceRange.lowerBound.distance(to: month)
     }
     
     func _getMonth(section: Int) -> ISO8601Month {

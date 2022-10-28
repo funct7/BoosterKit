@@ -15,13 +15,14 @@ class CalendarAdapterTests : XCTestCase {
     private typealias _ViewProvider = TestCalendarAdapterComponentViewProvider
     private typealias _Cell = TestCalendarAdapterCell
     
+    private var viewProvider: _ViewProvider!
     private var sut: CalendarAdapter<_Cell>!
     
     private func setUp(initialMonth: ISO8601Month, monthRange: Pair<ISO8601Month?, ISO8601Month?>) {
         sut = .init(
             initialMonth: initialMonth,
             monthRange: monthRange,
-            viewProvider: _ViewProvider())
+            viewProvider: withVar(_ViewProvider()) { self.viewProvider = $0 })
     }
     
     func test_currentMonth_invariant() throws {
@@ -198,6 +199,66 @@ class CalendarAdapterTests : XCTestCase {
         expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(DataSet(displayOption: .fixed, monthRange: Pair(nil, nil), currentMonth: sep2022.advanced(by: 1))))
     }
     
+    func test_reload() {
+        let now = ISO8601Month()
+        setUp(initialMonth: now, monthRange: Pair(nil, nil))
+        
+        let layout = MockCalendarLayout(),
+            view = MockCollectionView(frame: .zero, collectionViewLayout: layout)
+        
+        sut.view = view
+        
+        // un-optimized
+        sut.reload()
+        expect(view.reloadDataCallCount).to(equal(2))
+        
+        sut.currentMonth = now.advanced(by: 12)
+        
+        sut.reload()
+        expect(view.reloadDataCallCount).to(equal(4))
+    }
+    
+    func test_reloadDate() throws {
+        let oct2022 = try ISO8601Month(year: 2022, month: 10, timeZone: .seoul)
+        setUp(initialMonth: oct2022, monthRange: Pair(nil, nil))
+        
+        let layout = MockCalendarLayout(),
+            view = MockCollectionView(frame: CGRect(origin: .zero, size: CGSize(width: 390, height: 320)), collectionViewLayout: layout)
+        
+        sut.view = withVar(view) {
+            $0.register(
+                TestCalendarAdapterCell.self,
+                forCellWithReuseIdentifier: viewProvider.getCellIdentifier())
+        }
+        
+        let sep24 = try ISO8601Date(year: 2022, month: 9, day: 24, timeZone: .seoul), // out of bounds
+            sep25 = try ISO8601Date(year: 2022, month: 9, day: 25, timeZone: .seoul),
+            oct28 = try ISO8601Date(year: 2022, month: 10, day: 28, timeZone: .seoul),
+            nov5 = try ISO8601Date(year: 2022, month: 11, day: 5, timeZone: .seoul),
+            nov6 = try ISO8601Date(year: 2022, month: 11, day: 6, timeZone: .seoul)   // out of bounds
+        
+        try sut.reloadDate(sep24)
+        expect(view.reloadItemsAtIndexPathsArgs).to(beEmpty())
+        
+        try sut.reloadDate(sep25)
+        expect(view.reloadItemsAtIndexPathsArgs).to(haveCount(1))
+        expect(view.reloadItemsAtIndexPathsArgs.last).to(equal([IndexPath(indexes: [1, 0])]))
+        
+        try sut.reloadDate(oct28)
+        expect(view.reloadItemsAtIndexPathsArgs).to(haveCount(2))
+        expect(view.reloadItemsAtIndexPathsArgs.last).to(equal([IndexPath(indexes: [1, 33])]))
+        
+        try sut.reloadDate(nov5)
+        expect(view.reloadItemsAtIndexPathsArgs).to(haveCount(3))
+        expect(view.reloadItemsAtIndexPathsArgs.last).to(equal([IndexPath(indexes: [1, 41])]))
+        
+        try sut.reloadDate(nov6)
+        expect(view.reloadItemsAtIndexPathsArgs).to(haveCount(3))
+        
+        expect(try self.sut.reloadDate(ISO8601Date(date: Date(), timeZone: .hongKong)))
+            .to(throwError(BoosterKitError.illegalArgument))
+    }
+    
 }
 
 private final class MockCollectionView : UICollectionView {
@@ -215,6 +276,12 @@ private final class MockCollectionView : UICollectionView {
         super.reloadData()
     }
     
+    var reloadItemsAtIndexPathsArgs: [[IndexPath]] = []
+    override func reloadItems(at indexPaths: [IndexPath]) {
+        reloadItemsAtIndexPathsArgs.append(indexPaths)
+        super.reloadItems(at: indexPaths)
+    }
+    
 }
 
 private final class MockCalendarLayout : CalendarLayout {
@@ -223,6 +290,7 @@ private final class MockCalendarLayout : CalendarLayout {
     
     override func invalidateLayoutIfNeeded(dataSet: CalendarLayout.DataSet) {
         invalidateLayoutIfNeededArgs.append(dataSet)
+        super.invalidateLayoutIfNeeded(dataSet: dataSet)
     }
     
 }
