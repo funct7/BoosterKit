@@ -148,8 +148,15 @@ extension CalendarAdapter.UICollectionViewAdapter {
         
         let currentMonth = calendarAdapter.currentMonth
         let layoutPlan = LayoutPlan.create(month: currentMonth)
-        let lowerBound = currentMonth.dateRange.lowerBound.advanced(by: -Int(layoutPlan.leadingDays)),
-            upperBound = currentMonth.dateRange.upperBound.advanced(by: Int(layoutPlan.trailingDays) - 1)
+        let lowerBound = currentMonth.dateRange.lowerBound.advanced(by: -Int(layoutPlan.leadingDays))
+        let upperBound: ISO8601Date = assign {
+            switch calendarAdapter.displayOption {
+            case .dynamic:
+                return currentMonth.dateRange.upperBound.advanced(by: Int(layoutPlan.trailingDays) - 1)
+            case .fixed:
+                return lowerBound.advanced(by: 41)
+            }
+        }
         
         guard (lowerBound...upperBound).contains(date) else { return nil }
         

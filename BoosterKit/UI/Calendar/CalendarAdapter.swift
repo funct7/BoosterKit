@@ -75,6 +75,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         view.contentOffset.x = view.frame.width * CGFloat(pageIndex)
     }
     
+    // - TODO: Rename method
     func loadCurrentMonthData(_ newValue: ISO8601Month) {
         if _currentMonth == newValue { return }
         
@@ -123,6 +124,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
             }
         }
         didSet {
+            // TODO: Refactor
             switch monthRange.toTuple() {
             case (let lowerBound?, nil) where _currentMonth < lowerBound:
                 currentMonth = lowerBound
@@ -145,7 +147,22 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
             }
         }
     }
-    open func getCell(date: ISO8601Date) -> Cell? { nil }
+    
+    /**
+     - Throws: `BoosterKitError.illegalArgument`: `date.timeZone != currentMonth.timeZone`
+     - Returns: The visible cell for `date`. `nil` if `date` is not a visible date for `currentMonth`.
+     */
+    open func getCell(date: ISO8601Date) throws -> Cell? {
+        guard date.timeZone == currentMonth.timeZone else { throw BoosterKitError.illegalArgument }
+        guard
+            let _ = view,
+            let indexPath = try _adapter.getVisibleIndexPath(date: date),
+            let cell = view.cellForItem(at: indexPath)
+        else { return nil }
+        
+        return (cell as! Cell)
+    }
+    
     open func scroll(to month: ISO8601Month) { }
     
     /**

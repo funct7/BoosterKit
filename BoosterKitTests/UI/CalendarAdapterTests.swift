@@ -199,6 +199,60 @@ class CalendarAdapterTests : XCTestCase {
         expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(DataSet(displayOption: .fixed, monthRange: Pair(nil, nil), currentMonth: sep2022.advanced(by: 1))))
     }
     
+    func test_getCellWithDate() throws {
+        typealias _Context = CalendarAdapterContext
+        
+        let oct2022 = try ISO8601Month(year: 2022, month: 10, timeZone: .seoul)
+        
+        setUp(initialMonth: oct2022, monthRange: Pair(nil, nil))
+        
+        let layout = MockCalendarLayout(),
+            view = MockCollectionView(
+                frame: CGRect(origin: .zero, size: CGSize(width: 390, height: 320)),
+                collectionViewLayout: layout)
+        
+        sut.view = withVar(view) {
+            $0.register(
+                TestCalendarAdapterCell.self,
+                forCellWithReuseIdentifier: viewProvider.getCellIdentifier())
+        }
+        sut.view.layoutIfNeeded()
+        sut.currentMonth = oct2022
+        sut.view.layoutIfNeeded()
+        
+        let sep24 = try ISO8601Date(year: 2022, month: 9, day: 24, timeZone: .seoul),
+            sep25 = try ISO8601Date(year: 2022, month: 9, day: 25, timeZone: .seoul),
+            oct31 = try ISO8601Date(year: 2022, month: 10, day: 31, timeZone: .seoul),
+            nov5 = try ISO8601Date(year: 2022, month: 11, day: 5, timeZone: .seoul),
+            nov6 = try ISO8601Date(year: 2022, month: 11, day: 6, timeZone: .seoul)
+        
+        XCTAssertNil(try sut.getCell(date: sep24))
+        XCTAssertEqual(try sut.getCell(date: sep25)?.context, _Context(date: sep25, position: .leading))
+        XCTAssertEqual(
+            try sut.getCell(date: oct2022.dateRange.lowerBound)?.context,
+            _Context(date: oct2022.dateRange.lowerBound, position: .main))
+        XCTAssertEqual(try sut.getCell(date: oct31)?.context, _Context(date: oct31, position: .main))
+        XCTAssertEqual(try sut.getCell(date: nov5)?.context, _Context(date: nov5, position: .trailing))
+        XCTAssertNil(try sut.getCell(date: nov6))
+        
+        let sep2022 = oct2022.advanced(by: -1)
+        
+        sut.currentMonth = sep2022
+        sut.view.layoutIfNeeded()
+        
+        XCTAssertEqual(try sut.getCell(date: sep24)?.context, _Context(date: sep24, position: .main))
+        XCTAssertNil(try sut.getCell(date: oct2022.dateRange.lowerBound.advanced(by: 1)))
+        
+        sut.displayOption = .fixed
+        sut.view.layoutIfNeeded()
+        
+        let oct2 = oct2022.dateRange.lowerBound.advanced(by: 1)
+        XCTAssertEqual(try sut.getCell(date: oct2)?.context, _Context(date: oct2, position: .trailing))
+        
+        let oct2HK = try ISO8601Date(year: 2022, month: 10, day: 2, timeZone: .hongKong)
+        expect(try self.sut.getCell(date: oct2HK)).to(throwError(BoosterKitError.illegalArgument))
+    }
+    
     func test_reload() {
         let now = ISO8601Month()
         setUp(initialMonth: now, monthRange: Pair(nil, nil))
