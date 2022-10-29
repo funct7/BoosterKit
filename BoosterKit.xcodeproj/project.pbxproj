@@ -61,6 +61,8 @@
 		03A95EBF28D6EB5300F24949 /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A95EBE28D6EB5300F24949 /* Pair.swift */; };
 		03AB9DA828BCF57400BD568B /* ImageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB9DA728BCF57400BD568B /* ImageTextView.swift */; };
 		03AB9DAA28BCF5AA00BD568B /* Toast.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03AB9DA928BCF5AA00BD568B /* Toast.xib */; };
+		03C86F1A290CAA810024C650 /* MonthToRangeRelationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C86F19290CAA810024C650 /* MonthToRangeRelationTests.swift */; };
+		03C86F1C290CAFCB0024C650 /* MonthToRangeRelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C86F1B290CAFCB0024C650 /* MonthToRangeRelation.swift */; };
 		1E245161C554809200B9E2AD /* Pods_BoosterKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47A1415A7F685026CA95891B /* Pods_BoosterKitTests.framework */; };
 		3A59D44A12247A317E98847E /* Pods_BoosterKit_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7EC8F81B467B8B42FA1E2E2 /* Pods_BoosterKit_Demo.framework */; };
 /* End PBXBuildFile section */
@@ -136,6 +138,8 @@
 		03A95EBE28D6EB5300F24949 /* Pair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pair.swift; sourceTree = "<group>"; };
 		03AB9DA728BCF57400BD568B /* ImageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTextView.swift; sourceTree = "<group>"; };
 		03AB9DA928BCF5AA00BD568B /* Toast.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Toast.xib; sourceTree = "<group>"; };
+		03C86F19290CAA810024C650 /* MonthToRangeRelationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthToRangeRelationTests.swift; sourceTree = "<group>"; };
+		03C86F1B290CAFCB0024C650 /* MonthToRangeRelation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthToRangeRelation.swift; sourceTree = "<group>"; };
 		137DD1CF50D8D399383005F2 /* Pods-BoosterKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoosterKitTests.debug.xcconfig"; path = "Target Support Files/Pods-BoosterKitTests/Pods-BoosterKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		47A1415A7F685026CA95891B /* Pods_BoosterKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BoosterKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94F50EBF2BC646348760C578 /* Pods-BoosterKit-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoosterKit-Demo.debug.xcconfig"; path = "Target Support Files/Pods-BoosterKit-Demo/Pods-BoosterKit-Demo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -224,6 +228,7 @@
 				031C490028F25D84000A0F06 /* CGRect+Matcher.swift */,
 				031C48FE28F25D45000A0F06 /* CGSize.Device.swift */,
 				034F930D28D5761C0035FDC9 /* Date.FixedTimeIntervalTests.swift */,
+				03C86F19290CAA810024C650 /* MonthToRangeRelationTests.swift */,
 				038BD8D228D9F81900E3CE51 /* PairExtensionTests.swift */,
 				0337360B28D6FEA900CD49AC /* TimeZone+Constant.swift */,
 				031C490228F26B77000A0F06 /* UICollectionViewLayoutAttributes+Extensions.swift */,
@@ -378,6 +383,7 @@
 				03A6E44628D0B2D400814DD5 /* CalendarAdapter.swift */,
 				031E6F2828D8A4D90012B3B1 /* CalendarAdapter.UICollectionViewAdapter.swift */,
 				0348BD7328DFDD0100BBAE8A /* CalendarLayout.swift */,
+				03C86F1B290CAFCB0024C650 /* MonthToRangeRelation.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -660,6 +666,7 @@
 				0375116328BC23FE0060D304 /* Combinator+Transform.swift in Sources */,
 				0348BD7428DFDD0100BBAE8A /* CalendarLayout.swift in Sources */,
 				0375115C28BC231D0060D304 /* CubicBezierPoint.swift in Sources */,
+				03C86F1C290CAFCB0024C650 /* MonthToRangeRelation.swift in Sources */,
 				03A95EBF28D6EB5300F24949 /* Pair.swift in Sources */,
 				038BD8CD28D9D53700E3CE51 /* ISO8601Date+Extension.swift in Sources */,
 				0375117428BC29CC0060D304 /* ToastController.AnimParams+Default.swift in Sources */,
@@ -695,6 +702,7 @@
 				038BD8D328D9F81900E3CE51 /* PairExtensionTests.swift in Sources */,
 				039EC08528DEA2F800331AAF /* CalendarAdapterTests.swift in Sources */,
 				031E6F2B28D8A56F0012B3B1 /* CalendarAdapter.UICollectionViewAdapter.LayoutPlanTests.swift in Sources */,
+				03C86F1A290CAA810024C650 /* MonthToRangeRelationTests.swift in Sources */,
 				039EC08728DEA38600331AAF /* TestCalendarAdapterCell.swift in Sources */,
 				034F930E28D5761C0035FDC9 /* Date.FixedTimeIntervalTests.swift in Sources */,
 				039EC08928DEA3C000331AAF /* TestCalendarAdapterComponentViewProvider.swift in Sources */,
