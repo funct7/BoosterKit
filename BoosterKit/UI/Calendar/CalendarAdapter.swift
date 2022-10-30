@@ -163,7 +163,44 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         return (cell as! Cell)
     }
     
-    open func scroll(to month: ISO8601Month) { }
+    /**
+     Animates the visible bounds to show `month`.
+     
+     If `month` is the same as `currentMonth` or is out of range, the method does nothing.
+     
+     - Throws: `BoosterKitError.illegalArgument`: `month.timeZone != currentMonth.timeZone`
+     */
+    open func scroll(to month: ISO8601Month) throws {
+        guard month.timeZone == currentMonth.timeZone else { throw BoosterKitError.illegalArgument }
+        
+        let relation = try! MonthToRangeRelation.from(month: month, range: monthRange)
+        
+        if [.lessThan, .greaterThan].contains(relation) { return }
+        if month == currentMonth { return }
+        
+        if monthRange.both({ $0 != nil }) {
+            let dataSourceRange = _adapter.getDataSourceRange()
+            
+            loadCurrentMonthData(month)
+            view.setContentOffset(
+                assign {
+                    let targetIndex = try! dataSourceRange.lowerBound.distance(to: month)
+                    return CGPoint(x: view.frame.width * CGFloat(targetIndex), y: 0)
+                },
+                animated: true)
+        } else {
+            let isPast = month < currentMonth
+            loadCurrentMonthData(month)
+            
+            let (animStartIndex, targetIndex): (Int, Int) = assign {
+                if relation == .minBound { return (1, 0) }
+                return isPast ? (2, 1) : (0, 1)
+            }
+            
+            view.contentOffset.x = view.frame.width * CGFloat(animStartIndex)
+            view.setContentOffset(CGPoint(x: view.frame.width * CGFloat(targetIndex), y: 0), animated: true)
+        }
+    }
     
     /**
      Re-binds the calendar cells to the data set of the current month.

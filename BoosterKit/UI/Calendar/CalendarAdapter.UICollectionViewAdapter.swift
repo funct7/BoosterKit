@@ -96,7 +96,7 @@ extension CalendarAdapter {
             
             calendarAdapter.delegate?.calendarPresenter(calendarAdapter, didChangeMonthFrom: currentMonth, to: targetMonth)
         }
-
+        
     }
     
 }
@@ -166,6 +166,12 @@ extension CalendarAdapter.UICollectionViewAdapter {
         ])
     }
     
+    /// - Returns: The range of `ISO8601Month` that matches the bounds of the current data set of `UICollectionView`.
+    func getDataSourceRange() -> ClosedRange<ISO8601Month> {
+        assert(_numberOfSections() > 0)
+        return (_getMonth(section: 0) ... _getMonth(section: _numberOfSections() - 1))
+    }
+    
 }
 
 private extension CalendarAdapter.UICollectionViewAdapter {
@@ -181,12 +187,6 @@ private extension CalendarAdapter.UICollectionViewAdapter {
         }
     }
     
-    /// - Returns: The range of `ISO8601Month` that matches the bounds of the current data set of `UICollectionView`.
-    func _getDataSourceRange() -> ClosedRange<ISO8601Month> {
-        assert(_numberOfSections() > 0)
-        return (_getMonth(section: 0) ... _getMonth(section: _numberOfSections() - 1))
-    }
-    
     /**
      - Returns: The section of `month` as the collection view would show it.
         `nil` may be returned even if `month` is within range of the `CalendarAdapter`.
@@ -194,7 +194,7 @@ private extension CalendarAdapter.UICollectionViewAdapter {
     func _getSection(month: ISO8601Month) -> Int? {
         assert(month.timeZone == calendarAdapter.currentMonth.timeZone)
         
-        let dataSourceRange = _getDataSourceRange()
+        let dataSourceRange = getDataSourceRange()
         guard dataSourceRange.contains(month) else { return nil }
         return try! dataSourceRange.lowerBound.distance(to: month)
     }
