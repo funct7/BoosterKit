@@ -11,4 +11,6 @@ extension Pair where First == ISO8601Month?, Second == ISO8601Month? {
     
     var isInfinite: Bool { any({ $0 == nil }) }
     
+    var isFinite: Bool { both({ $0 != nil }) }
+    
 }

@@ -178,7 +178,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         if [.lessThan, .greaterThan].contains(relation) { return }
         if month == currentMonth { return }
         
-        if monthRange.both({ $0 != nil }) {
+        if monthRange.isFinite {
             let dataSourceRange = _adapter.getDataSourceRange()
             
             loadCurrentMonthData(month)
