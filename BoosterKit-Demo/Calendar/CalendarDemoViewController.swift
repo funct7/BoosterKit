@@ -103,17 +103,17 @@ extension CalendarDemoViewController {
     }
     
     @IBAction func prevMonthAction(_ sender: UIButton) {
-        _calendarAdapter.currentMonth = _calendarAdapter.currentMonth.advanced(by: -1)
+        try! _calendarAdapter.scroll(to: _calendarAdapter.currentMonth.advanced(by: -1))
         updateCurrentMonthButton(month: _calendarAdapter.currentMonth)
     }
     
     @IBAction func currentMonthAction(_ sender: UIButton) {
-        _calendarAdapter.currentMonth = ISO8601Month()
+        try! _calendarAdapter.scroll(to: ISO8601Month())
         updateCurrentMonthButton(month: _calendarAdapter.currentMonth)
     }
     
     @IBAction func nextMonthAction(_ sender: UIButton) {
-        _calendarAdapter.currentMonth = _calendarAdapter.currentMonth.advanced(by: 1)
+        try! _calendarAdapter.scroll(to: _calendarAdapter.currentMonth.advanced(by: 1))
         updateCurrentMonthButton(month: _calendarAdapter.currentMonth)
     }
     
