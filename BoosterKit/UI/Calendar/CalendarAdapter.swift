@@ -19,7 +19,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
      */
     @IBOutlet open weak var view: UICollectionView! = nil {
         willSet {
-            assert(newValue.collectionViewLayout is CalendarLayout)
+            precondition(newValue.collectionViewLayout is CalendarLayout)
         }
         didSet {
             view.dataSource = _adapter
@@ -210,7 +210,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
      - Note: Since `CalendarLayout` is designed for a UI where only a single month is displayed,
         there is no use-case where the programmer needs to reload any other month than the current one.
         
-        If there should be support for multiple months, please raise an issue at [the GitHub page](https://github.com/funct7/BoosterKit/issues)
+        If there should be support for dates that are not shown for the current month, please raise an issue at [the GitHub page](https://github.com/funct7/BoosterKit/issues)
      */
     open func reloadDate(_ date: ISO8601Date) throws {
         guard date.timeZone == currentMonth.timeZone else { throw BoosterKitError.illegalArgument }
@@ -233,7 +233,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         - The `initialMonth` value must fall within the provided `monthRange`.
      - Attention: The constructed instance will hold an **unowned reference** to the `viewProvider`.
         It is up to the caller to make sure that `viewProvider` lives throughout the lifecycle of the created `CalendarAdapter` instance
-        or provide a new `AnyCalendarAdapterComponentViewProvider` should the `viewProvider` be released somewhere if the lifecycle.
+        or provide a new `AnyCalendarAdapterComponentViewProvider` should the `viewProvider` be released at some point in the lifecycle.
      */
     public init<P>(
         initialMonth: ISO8601Month = .init(),
