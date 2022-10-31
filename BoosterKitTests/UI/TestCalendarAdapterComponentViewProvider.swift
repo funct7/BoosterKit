@@ -14,7 +14,7 @@ class TestCalendarAdapterComponentViewProvider : CalendarAdapterComponentViewPro
     
     func getCellIdentifier() -> String { "\(TestCalendarAdapterCell.self)" }
     
-    func configure(_ cell: TestCalendarAdapterCell, with context: CalendarAdapterContext) {
+    func configure(_ cell: TestCalendarAdapterCell, with context: CalendarDateContext) {
         cell.context = context
     }
     

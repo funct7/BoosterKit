@@ -15,7 +15,7 @@ public protocol CalendarAdapterComponentViewProvider : AnyObject {
         The `UICollectionViewCell` that is dequeued from the collection view using the value **MUST** be a type of `Cell`.
      */
     func getCellIdentifier() -> String
-    func configure(_ cell: Cell, with context: CalendarAdapterContext)
+    func configure(_ cell: Cell, with context: CalendarDateContext)
 }
 
 /**
@@ -26,8 +26,8 @@ open class AnyCalendarAdapterComponentViewProvider<Cell> : CalendarAdapterCompon
     private let _getCellIdentifier: () -> String
     public func getCellIdentifier() -> String { _getCellIdentifier() }
 
-    private let _configureCellWithContext: (Cell, CalendarAdapterContext) -> Void
-    public func configure(_ cell: Cell, with context: CalendarAdapterContext) { _configureCellWithContext(cell, context) }
+    private let _configureCellWithContext: (Cell, CalendarDateContext) -> Void
+    public func configure(_ cell: Cell, with context: CalendarDateContext) { _configureCellWithContext(cell, context) }
     
     /**
      - Attention: The constructed instance will hold an **unowned reference** to the `viewProvider`.

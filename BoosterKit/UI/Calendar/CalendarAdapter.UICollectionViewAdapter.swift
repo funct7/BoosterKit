@@ -42,7 +42,7 @@ extension CalendarAdapter {
                 for: indexPath)
                 as! Cell
             
-            _viewProvider.configure(cell, with: CalendarAdapterContext(date: date, position: assign {
+            _viewProvider.configure(cell, with: CalendarDateContext(date: date, position: assign {
                 let sectionMonth = _getMonth(section: indexPath.section)
                 if date.month < sectionMonth {
                     return .leading

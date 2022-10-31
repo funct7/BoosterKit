@@ -238,7 +238,7 @@ class DemoCalendarAdapterComponentViewProvider : CalendarAdapterComponentViewPro
     
     func getCellIdentifier() -> String { "\(CalendarDayCell.self)" }
     
-    func configure(_ cell: Cell, with context: CalendarAdapterContext) {
+    func configure(_ cell: Cell, with context: CalendarDateContext) {
         cell.label.alpha = context.position == .main ? 1.0 : 0.3
         cell.label.text = "\(context.date.dateComponents([.day]).day!)"
         cell.selectionView.isHidden = true

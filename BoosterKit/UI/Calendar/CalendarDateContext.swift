@@ -1,5 +1,5 @@
 //
-//  CalendarAdapterContext.swift
+//  CalendarDateContext.swift
 //  BoosterKit
 //
 //  Created by Josh Woomin Park on 2022/10/31.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CalendarAdapterContext : Equatable {
+public struct CalendarDateContext : Equatable {
     public enum Position {
         case leading
         case main

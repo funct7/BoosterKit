@@ -200,7 +200,7 @@ class CalendarAdapterTests : XCTestCase {
     }
     
     func test_getCellWithDate() throws {
-        typealias _Context = CalendarAdapterContext
+        typealias _Context = CalendarDateContext
         
         let oct2022 = try ISO8601Month(year: 2022, month: 10, timeZone: .seoul)
         

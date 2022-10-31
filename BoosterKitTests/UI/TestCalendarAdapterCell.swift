@@ -9,5 +9,5 @@ import UIKit
 import BoosterKit
 
 class TestCalendarAdapterCell : UICollectionViewCell {
-    var context: CalendarAdapterContext!
+    var context: CalendarDateContext!
 }

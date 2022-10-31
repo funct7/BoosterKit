@@ -193,7 +193,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         // dynamic
         do {
             let itemCount = getItemCount(0)
-            let expected = try CalendarAdapterContext.create(year: 2022, month: 9, leadingDays: 4, trailingDays: 1)
+            let expected = try CalendarDateContext.create(year: 2022, month: 9, leadingDays: 4, trailingDays: 1)
             
             XCTAssertEqual(itemCount, expected.count)
             
@@ -208,7 +208,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         adapter.displayOption = .fixed
         do {
             let itemCount = getItemCount(0)
-            let expected = try CalendarAdapterContext.create(year: 2022, month: 9, leadingDays: 4, trailingDays: 8)
+            let expected = try CalendarDateContext.create(year: 2022, month: 9, leadingDays: 4, trailingDays: 8)
             
             XCTAssertEqual(itemCount, expected.count)
             
@@ -225,7 +225,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         // dynamic
         do {
             let itemCount1 = getItemCount(0)
-            let expected1 = try CalendarAdapterContext.create(year: 2022, month: 9, leadingDays: 4, trailingDays: 1)
+            let expected1 = try CalendarDateContext.create(year: 2022, month: 9, leadingDays: 4, trailingDays: 1)
             
             XCTAssertEqual(itemCount1, expected1.count)
             
@@ -234,7 +234,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
             }
             
             let itemCount2 = getItemCount(1)
-            let expected2 = try CalendarAdapterContext.create(year: 2022, month: 10, leadingDays: 6, trailingDays: 5)
+            let expected2 = try CalendarDateContext.create(year: 2022, month: 10, leadingDays: 6, trailingDays: 5)
             
             XCTAssertEqual(itemCount2, expected2.count)
             
@@ -243,7 +243,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
             }
             
             let itemCount3 = getItemCount(3)
-            let expected3 = try CalendarAdapterContext.create(year: 2022, month: 12, leadingDays: 4, trailingDays: 0)
+            let expected3 = try CalendarDateContext.create(year: 2022, month: 12, leadingDays: 4, trailingDays: 0)
             
             XCTAssertEqual(itemCount3, expected3.count)
             
@@ -252,7 +252,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
             }
             
             let itemCount4 = getItemCount(11)
-            let expected4 = try CalendarAdapterContext.create(year: 2023, month: 8, leadingDays: 2, trailingDays: 2)
+            let expected4 = try CalendarDateContext.create(year: 2023, month: 8, leadingDays: 2, trailingDays: 2)
             
             XCTAssertEqual(itemCount4, expected4.count)
             
@@ -268,7 +268,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         
         do {
             let itemCount1 = getItemCount(0)
-            let expected1 = try CalendarAdapterContext.create(year: 2022, month: 9, leadingDays: 4, trailingDays: 8)
+            let expected1 = try CalendarDateContext.create(year: 2022, month: 9, leadingDays: 4, trailingDays: 8)
             
             XCTAssertEqual(itemCount1, expected1.count)
             
@@ -277,7 +277,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
             }
             
             let itemCount2 = getItemCount(1)
-            let expected2 = try CalendarAdapterContext.create(year: 2022, month: 10, leadingDays: 6, trailingDays: 5)
+            let expected2 = try CalendarDateContext.create(year: 2022, month: 10, leadingDays: 6, trailingDays: 5)
             
             XCTAssertEqual(itemCount2, expected2.count)
             
@@ -286,7 +286,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
             }
             
             let itemCount3 = getItemCount(7)
-            let expected3 = try CalendarAdapterContext.create(year: 2023, month: 4, leadingDays: 6, trailingDays: 6)
+            let expected3 = try CalendarDateContext.create(year: 2023, month: 4, leadingDays: 6, trailingDays: 6)
             
             XCTAssertEqual(itemCount3, expected3.count)
             
@@ -305,7 +305,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         // dynamic
         do {
             let itemCount1 = getItemCount(0)
-            let expected1 = try CalendarAdapterContext.create(year: 2015, month: 1, leadingDays: 4, trailingDays: 0)
+            let expected1 = try CalendarDateContext.create(year: 2015, month: 1, leadingDays: 4, trailingDays: 0)
             
             XCTAssertEqual(itemCount1, expected1.count)
             
@@ -314,7 +314,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
             }
             
             let itemCount2 = getItemCount(1)
-            let expected2 = try CalendarAdapterContext.create(year: 2015, month: 2, leadingDays: 0, trailingDays: 0)
+            let expected2 = try CalendarDateContext.create(year: 2015, month: 2, leadingDays: 0, trailingDays: 0)
             
             XCTAssertEqual(itemCount2, expected2.count)
             
@@ -323,7 +323,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
             }
             
             let itemCount3 = getItemCount(2)
-            let expected3 = try CalendarAdapterContext.create(year: 2015, month: 3, leadingDays: 0, trailingDays: 4)
+            let expected3 = try CalendarDateContext.create(year: 2015, month: 3, leadingDays: 0, trailingDays: 4)
             
             XCTAssertEqual(itemCount3, expected3.count)
             
@@ -339,7 +339,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         
         do {
             let itemCount1 = getItemCount(0)
-            let expected1 = try CalendarAdapterContext.create(year: 2015, month: 1, leadingDays: 4, trailingDays: 7)
+            let expected1 = try CalendarDateContext.create(year: 2015, month: 1, leadingDays: 4, trailingDays: 7)
             
             XCTAssertEqual(itemCount1, expected1.count)
             
@@ -348,7 +348,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
             }
             
             let itemCount2 = getItemCount(1)
-            let expected2 = try CalendarAdapterContext.create(year: 2015, month: 2, leadingDays: 0, trailingDays: 14)
+            let expected2 = try CalendarDateContext.create(year: 2015, month: 2, leadingDays: 0, trailingDays: 14)
             
             XCTAssertEqual(itemCount2, expected2.count)
             
@@ -357,7 +357,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
             }
             
             let itemCount3 = getItemCount(2)
-            let expected3 = try CalendarAdapterContext.create(year: 2015, month: 3, leadingDays: 0, trailingDays: 11)
+            let expected3 = try CalendarDateContext.create(year: 2015, month: 3, leadingDays: 0, trailingDays: 11)
             
             XCTAssertEqual(itemCount3, expected3.count)
             
@@ -374,7 +374,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         
         do {
             let itemCount1 = getItemCount(0)
-            let expected1 = try CalendarAdapterContext.create(year: 2022, month: 8, leadingDays: 1, trailingDays: 3)
+            let expected1 = try CalendarDateContext.create(year: 2022, month: 8, leadingDays: 1, trailingDays: 3)
             
             XCTAssertEqual(itemCount1, expected1.count)
             
@@ -383,7 +383,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
             }
             
             let itemCount2 = getItemCount(1)
-            let expected2 = try CalendarAdapterContext.create(year: 2022, month: 9, leadingDays: 4, trailingDays: 1)
+            let expected2 = try CalendarDateContext.create(year: 2022, month: 9, leadingDays: 4, trailingDays: 1)
             
             XCTAssertEqual(itemCount2, expected2.count)
             
@@ -392,7 +392,7 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
             }
             
             let itemCount3 = getItemCount(2)
-            let expected3 = try CalendarAdapterContext.create(year: 2022, month: 10, leadingDays: 6, trailingDays: 5)
+            let expected3 = try CalendarDateContext.create(year: 2022, month: 10, leadingDays: 6, trailingDays: 5)
             
             XCTAssertEqual(itemCount3, expected3.count)
             
@@ -406,10 +406,10 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
     
 }
 
-private extension CalendarAdapterContext {
+private extension CalendarDateContext {
     
     static func create(year: Int, month: Int, leadingDays: Int, trailingDays: Int) throws -> [Self] {
-        var res = [CalendarAdapterContext]()
+        var res = [CalendarDateContext]()
         let mainMonth = try ISO8601Month(year: year, month: month)
         let firstDayOfMain = mainMonth.dateRange.lowerBound
         let firstDayOfNext = mainMonth.dateRange.upperBound
