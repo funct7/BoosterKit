@@ -7,23 +7,6 @@
 
 import UIKit
 
-/**
- A flag that determines the display behavior when `CalendarAdapter` displays a 6-week month.
- */
-public enum CalendarAdapterDisplayOption {
-    /**
-     Each month shows only the necessary number of weeks.
-     
-     For most months, 5 weeks will be shown.
-     For months like Feb 2015 or Oct 2022, 4 weeks and 6 weeks will be shown respectively.
-     */
-    case dynamic
-    /**
-     Six weeks are shown for all months, and for 4 or 5-week months, days from the following month fill the bottom row(s).
-     */
-    case fixed
-}
-
 // TODO: Generalize
 open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     
@@ -266,83 +249,5 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         self.monthRange = monthRange
         self.viewProvider = .init(viewProvider)
     }
-}
-
-public protocol CalendarAdapterComponentViewProvider : AnyObject {
-    associatedtype Cell : UICollectionViewCell
-    /**
-     - Returns: The identifier that is used to dequeue the `Cell`.
-        
-        The `UICollectionViewCell` that is dequeued from the collection view using the value **MUST** be a type of `Cell`.
-     */
-    func getCellIdentifier() -> String
-    func configure(_ cell: Cell, with context: CalendarAdapterContext)
-}
-
-/**
- A type-erased `CalendarAdapterComponentViewProvider`.
- */
-open class AnyCalendarAdapterComponentViewProvider<Cell> : CalendarAdapterComponentViewProvider where Cell : UICollectionViewCell {
     
-    private let _getCellIdentifier: () -> String
-    public func getCellIdentifier() -> String { _getCellIdentifier() }
-
-    private let _configureCellWithContext: (Cell, CalendarAdapterContext) -> Void
-    public func configure(_ cell: Cell, with context: CalendarAdapterContext) { _configureCellWithContext(cell, context) }
-    
-    /**
-     - Attention: The constructed instance will hold an **unowned reference** to the `viewProvider`.
-        It is up to the caller to make sure that `viewProvider` lives throughout the lifecycle of the created `AnyCalendarAdapterComponentViewProvider` instance.
-     */
-    public init<P>(_ viewProvider: P) where P : CalendarAdapterComponentViewProvider, P.Cell == Cell {
-        self._getCellIdentifier = { [unowned viewProvider] in viewProvider.getCellIdentifier() }
-        self._configureCellWithContext = { [unowned viewProvider] in viewProvider.configure($0, with: $1) }
-    }
-}
-
-public protocol CalendarAdapterDelegate : AnyObject {
-    associatedtype Cell : UICollectionViewCell
-    /**
-     This method is called immediately when the user stops dragging and it is determined which month the calendar will animate to.
-     */
-    func calendarPresenter(_ presenter: CalendarAdapter<Cell>, willChangeMonthFrom oldValue: ISO8601Month, to newValue: ISO8601Month)
-    func calendarPresenter(_ presenter: CalendarAdapter<Cell>, didChangeMonthFrom oldValue: ISO8601Month, to newValue: ISO8601Month)
-}
-
-private enum _CollectionViewSection {
-    static let prevMonth = 0
-    static let currentMonth = 1
-    static let nextMonth = 2
-}
-
-/**
- A type-erased `CalendarAdapterDelgate`.
- */
-open class AnyCalendarAdapterDelegate<Cell> : CalendarAdapterDelegate where Cell : UICollectionViewCell {
-    
-    private let _willChangeMonth: (CalendarAdapter<Cell>, ISO8601Month, ISO8601Month) -> Void
-    open func calendarPresenter(_ presenter: CalendarAdapter<Cell>, willChangeMonthFrom oldValue: ISO8601Month, to newValue: ISO8601Month) { _willChangeMonth(presenter, oldValue, newValue) }
-    
-    private let _didChangeMonth: (CalendarAdapter<Cell>, ISO8601Month, ISO8601Month) -> Void
-    open func calendarPresenter(_ presenter: CalendarAdapter<Cell>, didChangeMonthFrom oldValue: ISO8601Month, to newValue: ISO8601Month) { _didChangeMonth(presenter, oldValue, newValue) }
-    
-    /**
-     - Note: The constructed `AnyCalendarAdapterDelegate` instance will **NOT** hold a strong reference to the provided `delegate`.
-        As a result, invoking methods will have no effect if the `delegate` is released.
-     */
-    public init<D>(_ delegate: D) where D : CalendarAdapterDelegate, D.Cell == Cell {
-        self._willChangeMonth = { [weak delegate] in delegate?.calendarPresenter($0, willChangeMonthFrom: $1, to: $2) }
-        self._didChangeMonth = { [weak delegate] in delegate?.calendarPresenter($0, didChangeMonthFrom: $1, to: $2) }
-    }
-}
-
-public struct CalendarAdapterContext : Equatable {
-    public enum Position {
-        case leading
-        case main
-        case trailing
-    }
-    
-    public let date: ISO8601Date
-    public let position: Position
 }
