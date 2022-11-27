@@ -76,7 +76,7 @@ extension CalendarAdapter {
             let targetMonth = _getMonth(section: targetPageIndex)
             let currentMonth = calendarAdapter.currentMonth
             
-            calendarAdapter.loadCurrentMonthData(targetMonth)
+            calendarAdapter.loadFocusMonth(targetMonth)
             
             let _ = withVar(scrollView.frame.width) { pageWidth in
                 guard calendarAdapter.monthRange.isInfinite else { return }

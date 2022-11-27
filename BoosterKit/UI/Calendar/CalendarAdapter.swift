@@ -32,7 +32,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     open var viewProvider: AnyCalendarAdapterComponentViewProvider<Cell>
     open var delegate: AnyCalendarAdapterDelegate<Cell>? = nil
     
-    private var _dataSet: CalendarLayout.DataSet { .init(displayOption: displayOption, monthRange: monthRange, currentMonth: _currentMonth) }
+    private var _dataSet: CalendarLayout.DataSet { .init(displayOption: displayOption, monthRange: monthRange, focusMonth: _focusMonth) }
     open var displayOption: CalendarAdapterDisplayOption = .dynamic {
         didSet {
             _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet)
@@ -40,17 +40,17 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         }
     }
     
-    private var _currentMonth: ISO8601Month
+    private var _focusMonth: ISO8601Month
     
-    private func _alignContentOffsetToCurrentMonth() {
+    private func _adjustVisibleRectToFocusMonth() {
         guard let view = view else { return }
         
         let pageIndex: Int = assign {
             switch monthRange.toTuple() {
-            case (let lowerBound?, nil) where lowerBound == _currentMonth:
+            case (let lowerBound?, nil) where lowerBound == _focusMonth:
                 return 0
             case (let lowerBound?, .some):
-                return try! lowerBound.distance(to: _currentMonth)
+                return try! lowerBound.distance(to: _focusMonth)
             default:
                 return 1
             }
@@ -58,9 +58,8 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         view.contentOffset.x = view.frame.width * CGFloat(pageIndex)
     }
     
-    // - TODO: Rename method
-    func loadCurrentMonthData(_ newValue: ISO8601Month) {
-        if _currentMonth == newValue { return }
+    func loadFocusMonth(_ newValue: ISO8601Month) {
+        if _focusMonth == newValue { return }
         
         switch monthRange.toTuple() {
         case (nil, nil): break
@@ -69,7 +68,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         case (let lowerBound?, let upperBound?): precondition(lowerBound <= newValue && newValue <= upperBound && lowerBound.timeZone == newValue.timeZone)
         }
         
-        _currentMonth = newValue
+        _focusMonth = newValue
 
         guard let _ = view else { return }
         
@@ -80,10 +79,10 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     /// Updates the displayed month.
     /// - Invariant: `currentMonth` must be within `monthRange` and have the same time zone as the values in `monthRange`.
     open var currentMonth: ISO8601Month {
-        get { _currentMonth }
+        get { _focusMonth }
         set {
-            loadCurrentMonthData(newValue)
-            _alignContentOffsetToCurrentMonth()
+            loadFocusMonth(newValue)
+            _adjustVisibleRectToFocusMonth()
         }
     }
     
@@ -109,24 +108,24 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         didSet {
             // TODO: Refactor
             switch monthRange.toTuple() {
-            case (let lowerBound?, nil) where _currentMonth < lowerBound:
+            case (let lowerBound?, nil) where _focusMonth < lowerBound:
                 currentMonth = lowerBound
                 
-            case (nil, let upperBound?) where upperBound < _currentMonth:
+            case (nil, let upperBound?) where upperBound < _focusMonth:
                 currentMonth = upperBound
                 
             case (let lowerBound?, let upperBound?):
-                if _currentMonth < lowerBound { currentMonth = lowerBound }
-                else if upperBound < _currentMonth { currentMonth = upperBound }
+                if _focusMonth < lowerBound { currentMonth = lowerBound }
+                else if upperBound < _focusMonth { currentMonth = upperBound }
                 else {
                     _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet)
                     view?.reloadData()
-                    if let _ = view { _alignContentOffsetToCurrentMonth() }
+                    if let _ = view { _adjustVisibleRectToFocusMonth() }
                 }
             default:
                 _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet)
                 view?.reloadData()
-                if let _ = view { _alignContentOffsetToCurrentMonth() }
+                if let _ = view { _adjustVisibleRectToFocusMonth() }
             }
         }
     }
@@ -164,7 +163,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         if monthRange.isFinite {
             let dataSourceRange = _adapter.getDataSourceRange()
             
-            loadCurrentMonthData(month)
+            loadFocusMonth(month)
             view.setContentOffset(
                 assign {
                     let targetIndex = try! dataSourceRange.lowerBound.distance(to: month)
@@ -173,7 +172,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
                 animated: true)
         } else {
             let isPast = month < currentMonth
-            loadCurrentMonthData(month)
+            loadFocusMonth(month)
             
             let (animStartIndex, targetIndex): (Int, Int) = assign {
                 if relation == .minBound { return (1, 0) }
@@ -245,7 +244,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         precondition(monthRange.first != nil ? monthRange.first! <= initialMonth : true)
         precondition(monthRange.second != nil ? initialMonth <= monthRange.second! : true)
         
-        self._currentMonth = initialMonth
+        self._focusMonth = initialMonth
         self.monthRange = monthRange
         self.viewProvider = .init(viewProvider)
     }

@@ -36,12 +36,12 @@ open class CalendarLayout : UICollectionViewLayout {
         switch _dataSet.monthRange.toTuple() {
         case (let lowerBound?, let upperBound?):
             return Pair(lowerBound, upperBound)
-        case (let lowerBound?, nil) where lowerBound == _dataSet.currentMonth:
+        case (let lowerBound?, nil) where lowerBound == _dataSet.focusMonth:
             return Pair(lowerBound, lowerBound.advanced(by: 1))
-        case (nil, let upperBound?) where upperBound == _dataSet.currentMonth:
+        case (nil, let upperBound?) where upperBound == _dataSet.focusMonth:
             return Pair(upperBound.advanced(by: -1), upperBound)
         default:
-            return Pair(_dataSet.currentMonth.advanced(by: -1), _dataSet.currentMonth.advanced(by: 1))
+            return Pair(_dataSet.focusMonth.advanced(by: -1), _dataSet.focusMonth.advanced(by: 1))
         }
     }
     
@@ -71,7 +71,7 @@ open class CalendarLayout : UICollectionViewLayout {
             return (month, attribsList)
         })
         
-        _currentSectionHeight = _getSectionHeight(month: _dataSet.currentMonth)
+        _currentSectionHeight = _getSectionHeight(month: _dataSet.focusMonth)
         
         _contentSize = CGSize(
             width: CGFloat(numberOfMonths) * view.frame.width,
@@ -156,10 +156,10 @@ open class CalendarLayout : UICollectionViewLayout {
             if _dataSet.monthRange != dataSet.monthRange { return .invalidateLayout }
             
             switch dataSet.monthRange.toTuple() {
-            case (.some, .some): return _dataSet.currentMonth != dataSet.currentMonth
+            case (.some, .some): return _dataSet.focusMonth != dataSet.focusMonth
                 ? .updateCurrentSectionHeight
                 : .ignore
-            default: return _dataSet.currentMonth != dataSet.currentMonth
+            default: return _dataSet.focusMonth != dataSet.focusMonth
                 ? .invalidateLayout
                 : .ignore
             }
@@ -168,7 +168,7 @@ open class CalendarLayout : UICollectionViewLayout {
         
         switch followUp {
         case .invalidateLayout: invalidateLayout()
-        case .updateCurrentSectionHeight: _currentSectionHeight = _getSectionHeight(month: _dataSet.currentMonth)
+        case .updateCurrentSectionHeight: _currentSectionHeight = _getSectionHeight(month: _dataSet.focusMonth)
         case .ignore: return
         }
     }
@@ -206,7 +206,7 @@ open class CalendarLayout : UICollectionViewLayout {
      */
     private func _getSectionHeight(month: ISO8601Month) -> CGFloat {
         assert(_cachedAttribs.keys.contains(month))
-        return _cachedAttribs[_dataSet.currentMonth]!.last!.frame.maxY + params.sectionInset.bottom
+        return _cachedAttribs[_dataSet.focusMonth]!.last!.frame.maxY + params.sectionInset.bottom
     }
     
     // MARK: Initializer
@@ -310,7 +310,7 @@ extension CalendarLayout {
     struct DataSet : Equatable {
         let displayOption: CalendarAdapterDisplayOption
         let monthRange: Pair<ISO8601Month?, ISO8601Month?>
-        let currentMonth: ISO8601Month
+        let focusMonth: ISO8601Month
     }
     
 }

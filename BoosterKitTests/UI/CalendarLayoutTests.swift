@@ -874,7 +874,7 @@ class CalendarLayoutTests : XCTestCase {
             dataSet: CalendarLayout.DataSet(
                 displayOption: adapter.displayOption,
                 monthRange: adapter.monthRange,
-                currentMonth: sep2022.advanced(by: 3)))
+                focusMonth: sep2022.advanced(by: 3)))
         
         expect(self.sut.invalidateLayoutCallCount).to(equal(initialCallCount + 1))
         
@@ -882,12 +882,12 @@ class CalendarLayoutTests : XCTestCase {
             dataSet: CalendarLayout.DataSet(
                 displayOption: adapter.displayOption,
                 monthRange: Pair(sep2022, nil),
-                currentMonth: sep2022))
+                focusMonth: sep2022))
         sut.invalidateLayoutIfNeeded(
             dataSet: CalendarLayout.DataSet(
                 displayOption: adapter.displayOption,
                 monthRange: Pair(sep2022, nil),
-                currentMonth: sep2022.advanced(by: 1)))
+                focusMonth: sep2022.advanced(by: 1)))
         expect(self.sut.invalidateLayoutCallCount).to(equal(initialCallCount + 3))
         
         let boundedRange = Pair<ISO8601Month?, ISO8601Month?>(sep2022, sep2022.advanced(by: 4))
@@ -895,7 +895,7 @@ class CalendarLayoutTests : XCTestCase {
             dataSet: CalendarLayout.DataSet(
                 displayOption: adapter.displayOption,
                 monthRange: boundedRange,
-                currentMonth: sep2022))
+                focusMonth: sep2022))
         expect(self.sut.invalidateLayoutCallCount).to(equal(initialCallCount + 4))
         
         // no layout invalidation
@@ -904,7 +904,7 @@ class CalendarLayoutTests : XCTestCase {
                 dataSet: CalendarLayout.DataSet(
                     displayOption: adapter.displayOption,
                     monthRange: boundedRange,
-                    currentMonth: sep2022.advanced(by: offset)))
+                    focusMonth: sep2022.advanced(by: offset)))
         }
         expect(self.sut.invalidateLayoutCallCount).to(equal(initialCallCount + 4))
     }
