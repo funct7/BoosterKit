@@ -19,6 +19,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7tt-Fe-KNf">
+                                <rect key="frame" x="87.5" y="324.5" width="239" height="32"/>
+                                <segments>
+                                    <segment title="Fixed H Padding"/>
+                                    <segment title="Fit to text"/>
+                                </segments>
+                                <connections>
+                                    <action selector="_changeToastModeAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="LfQ-Vn-xoR"/>
+                                </connections>
+                            </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cAH-aH-3B4">
                                 <rect key="frame" x="158" y="438" width="98" height="30"/>
                                 <state key="normal" title="SHOW TOAST"/>
@@ -30,10 +40,15 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="7tt-Fe-KNf" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="0.75" id="Ffm-1u-o4C"/>
                             <constraint firstItem="cAH-aH-3B4" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="feN-PF-ZZQ"/>
                             <constraint firstItem="cAH-aH-3B4" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="pAG-I4-f1k"/>
+                            <constraint firstItem="7tt-Fe-KNf" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="rgI-Dr-1qR"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="modeSelector" destination="7tt-Fe-KNf" id="FlM-wn-gSh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
