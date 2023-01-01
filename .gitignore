@@ -18,4 +18,6 @@ xcuserdata/
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
 
+Pods/
+
 # End of https://www.toptal.com/developers/gitignore/api/xcode
