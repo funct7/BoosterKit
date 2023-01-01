@@ -20,18 +20,30 @@ public extension ToastController.AnimParams {
         // MARK: Inset
         
         static public func makeSafeAreaInset(
-            hInset: CGFloat,
+            hInset: CGFloat?,
             bottomInset: CGFloat,
             _ otherSetUp: SetUp? = nil) -> SetUp
         {
             return { canvas, toastView in
                 canvas.addSubview(toastView)
                 
-                NSLayoutConstraint.activate([
-                    toastView.leadingAnchor.constraint(equalTo: canvas.leadingAnchor, constant: hInset),
-                    canvas.trailingAnchor.constraint(equalTo: toastView.trailingAnchor, constant: hInset),
-                    canvas.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: toastView.bottomAnchor, constant: bottomInset),
-                ])
+                NSLayoutConstraint.activate(assign {
+                    var constraints = [
+                        canvas.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: toastView.bottomAnchor, constant: bottomInset),
+                    ]
+                    
+                    if let hInset = hInset {
+                        constraints += [
+                            toastView.leadingAnchor.constraint(equalTo: canvas.leadingAnchor, constant: hInset),
+                            canvas.trailingAnchor.constraint(equalTo: toastView.trailingAnchor, constant: hInset),]
+                    } else {
+                        constraints += [
+                            canvas.centerXAnchor.constraint(equalTo: toastView.centerXAnchor)
+                        ]
+                    }
+                    
+                    return constraints
+                })
                 
                 canvas.layoutIfNeeded()
                 
@@ -44,18 +56,30 @@ public extension ToastController.AnimParams {
         }
 
         static public func makeInset(
-            hInset: CGFloat,
+            hInset: CGFloat?,
             bottomInset: CGFloat,
             _ otherSetUp: SetUp? = nil) -> SetUp
         {
             return { canvas, toastView in
                 canvas.addSubview(toastView)
                 
-                NSLayoutConstraint.activate([
-                    toastView.leadingAnchor.constraint(equalTo: canvas.leadingAnchor, constant: hInset),
-                    canvas.trailingAnchor.constraint(equalTo: toastView.trailingAnchor, constant: hInset),
-                    canvas.bottomAnchor.constraint(equalTo: toastView.bottomAnchor, constant: bottomInset),
-                ])
+                NSLayoutConstraint.activate(assign {
+                    var constraints = [
+                        canvas.bottomAnchor.constraint(equalTo: toastView.bottomAnchor, constant: bottomInset),
+                    ]
+                    
+                    if let hInset = hInset {
+                        constraints += [
+                            toastView.leadingAnchor.constraint(equalTo: canvas.leadingAnchor, constant: hInset),
+                            canvas.trailingAnchor.constraint(equalTo: toastView.trailingAnchor, constant: hInset),]
+                    } else {
+                        constraints += [
+                            canvas.centerXAnchor.constraint(equalTo: toastView.centerXAnchor)
+                        ]
+                    }
+                    
+                    return constraints
+                })
                 
                 canvas.layoutIfNeeded()
                 
