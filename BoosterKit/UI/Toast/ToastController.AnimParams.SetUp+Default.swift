@@ -19,6 +19,10 @@ public extension ToastController.AnimParams {
         
         // MARK: Inset
         
+        /**
+         - Parameters:
+            - hInset: Centers toast when `nil`.
+         */
         static public func makeSafeAreaInset(
             hInset: CGFloat?,
             bottomInset: CGFloat,
@@ -55,6 +59,10 @@ public extension ToastController.AnimParams {
             makeSafeAreaInset(hInset: 16.0, bottomInset: 8.0, otherSetUp)
         }
 
+        /**
+         - Parameters:
+            - hInset: Centers toast when `nil`.
+         */
         static public func makeInset(
             hInset: CGFloat?,
             bottomInset: CGFloat,
