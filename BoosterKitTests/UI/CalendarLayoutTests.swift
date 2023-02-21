@@ -871,7 +871,7 @@ class CalendarLayoutTests : XCTestCase {
         let initialCallCount = sut.invalidateLayoutCallCount
         
         sut.invalidateLayoutIfNeeded(
-            dataSet: CalendarLayout.DataSet(
+            context: CalendarLayout.Context(
                 displayOption: adapter.displayOption,
                 monthRange: adapter.monthRange,
                 focusMonth: sep2022.advanced(by: 3)))
@@ -879,12 +879,12 @@ class CalendarLayoutTests : XCTestCase {
         expect(self.sut.invalidateLayoutCallCount).to(equal(initialCallCount + 1))
         
         sut.invalidateLayoutIfNeeded(
-            dataSet: CalendarLayout.DataSet(
+            context: CalendarLayout.Context(
                 displayOption: adapter.displayOption,
                 monthRange: Pair(sep2022, nil),
                 focusMonth: sep2022))
         sut.invalidateLayoutIfNeeded(
-            dataSet: CalendarLayout.DataSet(
+            context: CalendarLayout.Context(
                 displayOption: adapter.displayOption,
                 monthRange: Pair(sep2022, nil),
                 focusMonth: sep2022.advanced(by: 1)))
@@ -892,7 +892,7 @@ class CalendarLayoutTests : XCTestCase {
         
         let boundedRange = Pair<ISO8601Month?, ISO8601Month?>(sep2022, sep2022.advanced(by: 4))
         sut.invalidateLayoutIfNeeded(
-            dataSet: CalendarLayout.DataSet(
+            context: CalendarLayout.Context(
                 displayOption: adapter.displayOption,
                 monthRange: boundedRange,
                 focusMonth: sep2022))
@@ -901,7 +901,7 @@ class CalendarLayoutTests : XCTestCase {
         // no layout invalidation
         (1...4).forEach { offset in
             sut.invalidateLayoutIfNeeded(
-                dataSet: CalendarLayout.DataSet(
+                context: CalendarLayout.Context(
                     displayOption: adapter.displayOption,
                     monthRange: boundedRange,
                     focusMonth: sep2022.advanced(by: offset)))

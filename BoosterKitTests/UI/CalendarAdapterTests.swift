@@ -176,27 +176,27 @@ class CalendarAdapterTests : XCTestCase {
         // it is up to the `CalendarLayout` instance to check for changes.
         sut.displayOption = .dynamic
         
-        typealias DataSet = CalendarLayout.DataSet
+        typealias Context = CalendarLayout.Context
         
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(2))
-        expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(DataSet(displayOption: .dynamic, monthRange: Pair(nil, nil), focusMonth: sep2022)))
+        expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(Context(displayOption: .dynamic, monthRange: Pair(nil, nil), focusMonth: sep2022)))
         
         sut.displayOption = .fixed
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(3))
-        expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(DataSet(displayOption: .fixed, monthRange: Pair(nil, nil), focusMonth: sep2022)))
+        expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(Context(displayOption: .fixed, monthRange: Pair(nil, nil), focusMonth: sep2022)))
         
         sut.monthRange.first = sep2022
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(4))
-        expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(DataSet(displayOption: .fixed, monthRange: Pair(sep2022, nil), focusMonth: sep2022)))
+        expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(Context(displayOption: .fixed, monthRange: Pair(sep2022, nil), focusMonth: sep2022)))
         
         sut.monthRange.second = sep2022
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(5))
-        expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(DataSet(displayOption: .fixed, monthRange: Pair(sep2022, sep2022), focusMonth: sep2022)))
+        expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(Context(displayOption: .fixed, monthRange: Pair(sep2022, sep2022), focusMonth: sep2022)))
         
         sut.monthRange = Pair(nil, nil)
         sut.currentMonth = sep2022.advanced(by: 1)
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(7))
-        expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(DataSet(displayOption: .fixed, monthRange: Pair(nil, nil), focusMonth: sep2022.advanced(by: 1))))
+        expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(Context(displayOption: .fixed, monthRange: Pair(nil, nil), focusMonth: sep2022.advanced(by: 1))))
     }
     
     func test_getCellWithDate() throws {
@@ -340,11 +340,11 @@ private final class MockCollectionView : UICollectionView {
 
 private final class MockCalendarLayout : CalendarLayout {
     
-    var invalidateLayoutIfNeededArgs: [CalendarLayout.DataSet] = []
+    var invalidateLayoutIfNeededArgs: [CalendarLayout.Context] = []
     
-    override func invalidateLayoutIfNeeded(dataSet: CalendarLayout.DataSet) {
-        invalidateLayoutIfNeededArgs.append(dataSet)
-        super.invalidateLayoutIfNeeded(dataSet: dataSet)
+    override func invalidateLayoutIfNeeded(context: CalendarLayout.Context) {
+        invalidateLayoutIfNeededArgs.append(context)
+        super.invalidateLayoutIfNeeded(context: context)
     }
     
 }

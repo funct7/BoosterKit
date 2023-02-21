@@ -33,20 +33,20 @@ open class CalendarLayout : UICollectionViewLayout {
         didSet { _updateWeekdaySpansIfNeeded() }
     }
     private var _contentRange: Pair<ISO8601Month, ISO8601Month> {
-        switch _dataSet.monthRange.toTuple() {
+        switch _context.monthRange.toTuple() {
         case (let lowerBound?, let upperBound?):
             return Pair(lowerBound, upperBound)
-        case (let lowerBound?, nil) where lowerBound == _dataSet.focusMonth:
+        case (let lowerBound?, nil) where lowerBound == _context.focusMonth:
             return Pair(lowerBound, lowerBound.advanced(by: 1))
-        case (nil, let upperBound?) where upperBound == _dataSet.focusMonth:
+        case (nil, let upperBound?) where upperBound == _context.focusMonth:
             return Pair(upperBound.advanced(by: -1), upperBound)
         default:
-            return Pair(_dataSet.focusMonth.advanced(by: -1), _dataSet.focusMonth.advanced(by: 1))
+            return Pair(_context.focusMonth.advanced(by: -1), _context.focusMonth.advanced(by: 1))
         }
     }
     
     open override func prepare() {
-        guard let view = collectionView, let _ = _dataSet else { return }
+        guard let view = collectionView, let _ = _context else { return }
         
         super.prepare()
         
@@ -59,7 +59,7 @@ open class CalendarLayout : UICollectionViewLayout {
             let attribsList = CGRect
                 .make(
                     params: params,
-                    weekCount: _dataSet.displayOption.numberOfWeeks(month: month),
+                    weekCount: _context.displayOption.numberOfWeeks(month: month),
                     viewSize: view.frame.size)
                 .enumerated()
                 .map { index, frame in
@@ -71,12 +71,12 @@ open class CalendarLayout : UICollectionViewLayout {
             return (month, attribsList)
         })
         
-        _currentSectionHeight = _getSectionHeight(month: _dataSet.focusMonth)
+        _currentSectionHeight = _getSectionHeight(month: _context.focusMonth)
         
         _contentSize = CGSize(
             width: CGFloat(numberOfMonths) * view.frame.width,
             height: assign {
-                switch _dataSet.monthRange.toTuple() {
+                switch _context.monthRange.toTuple() {
                 case (.some, .some): return _cachedAttribs.values.map(\.last!.frame.maxY).max()! + params.sectionInset.bottom
                 default: return sectionHeight
                 }
@@ -125,7 +125,7 @@ open class CalendarLayout : UICollectionViewLayout {
      Calculates the section height given the current settings.
      */
     open func sectionHeight(month: ISO8601Month) -> CGFloat {
-        let weekCount = _dataSet.displayOption.numberOfWeeks(month: month)
+        let weekCount = _context.displayOption.numberOfWeeks(month: month)
         let minHeight = CGRect.minContentSize(weekCount: weekCount, params: params).height
         
         switch params.alignment.vertical {
@@ -145,30 +145,30 @@ open class CalendarLayout : UICollectionViewLayout {
     
     // MARK: Internal
     
-    private var _dataSet: DataSet!
-    func invalidateLayoutIfNeeded(dataSet: DataSet) {
+    private var _context: Context!
+    func invalidateLayoutIfNeeded(context: Context) {
         // rollback to non-optimized version if bugs appear
         enum FollowUp { case invalidateLayout, updateCurrentSectionHeight, ignore }
         
         let followUp: FollowUp = assign {
-            guard let _dataSet = _dataSet else { return .invalidateLayout }
-            if _dataSet.displayOption != dataSet.displayOption { return .invalidateLayout }
-            if _dataSet.monthRange != dataSet.monthRange { return .invalidateLayout }
+            guard let _context = _context else { return .invalidateLayout }
+            if _context.displayOption != context.displayOption { return .invalidateLayout }
+            if _context.monthRange != context.monthRange { return .invalidateLayout }
             
-            switch dataSet.monthRange.toTuple() {
-            case (.some, .some): return _dataSet.focusMonth != dataSet.focusMonth
+            switch context.monthRange.toTuple() {
+            case (.some, .some): return _context.focusMonth != context.focusMonth
                 ? .updateCurrentSectionHeight
                 : .ignore
-            default: return _dataSet.focusMonth != dataSet.focusMonth
+            default: return _context.focusMonth != context.focusMonth
                 ? .invalidateLayout
                 : .ignore
             }
         }
-        _dataSet = dataSet
+        _context = context
         
         switch followUp {
         case .invalidateLayout: invalidateLayout()
-        case .updateCurrentSectionHeight: _currentSectionHeight = _getSectionHeight(month: _dataSet.focusMonth)
+        case .updateCurrentSectionHeight: _currentSectionHeight = _getSectionHeight(month: _context.focusMonth)
         case .ignore: return
         }
     }
@@ -176,7 +176,7 @@ open class CalendarLayout : UICollectionViewLayout {
     // MARK: Private
     
     private func _updateWeekdaySpansIfNeeded() {
-        guard let _ = _dataSet,
+        guard let _ = _context,
               let attribsList = _cachedAttribs[_contentRange.first]
         else { return }
         
@@ -206,7 +206,7 @@ open class CalendarLayout : UICollectionViewLayout {
      */
     private func _getSectionHeight(month: ISO8601Month) -> CGFloat {
         assert(_cachedAttribs.keys.contains(month))
-        return _cachedAttribs[_dataSet.focusMonth]!.last!.frame.maxY + params.sectionInset.bottom
+        return _cachedAttribs[_context.focusMonth]!.last!.frame.maxY + params.sectionInset.bottom
     }
     
     // MARK: Initializer
@@ -307,7 +307,7 @@ public extension CalendarLayout {
 
 extension CalendarLayout {
     
-    struct DataSet : Equatable {
+    struct Context : Equatable {
         let displayOption: CalendarAdapterDisplayOption
         let monthRange: Pair<ISO8601Month?, ISO8601Month?>
         let focusMonth: ISO8601Month

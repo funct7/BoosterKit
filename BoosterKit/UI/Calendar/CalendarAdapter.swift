@@ -25,17 +25,17 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
             view.dataSource = _adapter
             view.delegate = _adapter
             // layout object needs initial data
-            _calendarLayout.invalidateLayoutIfNeeded(dataSet: _dataSet)
+            _calendarLayout.invalidateLayoutIfNeeded(context: _layoutContext)
             view.reloadData()
         }
     }
     open var viewProvider: AnyCalendarAdapterComponentViewProvider<Cell>
     open var delegate: AnyCalendarAdapterDelegate<Cell>? = nil
     
-    private var _dataSet: CalendarLayout.DataSet { .init(displayOption: displayOption, monthRange: monthRange, focusMonth: _focusMonth) }
+    private var _layoutContext: CalendarLayout.Context { .init(displayOption: displayOption, monthRange: monthRange, focusMonth: _focusMonth) }
     open var displayOption: CalendarAdapterDisplayOption = .dynamic {
         didSet {
-            _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet)
+            _calendarLayout?.invalidateLayoutIfNeeded(context: _layoutContext)
             view?.reloadData()
         }
     }
@@ -72,7 +72,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
 
         guard let _ = view else { return }
         
-        _calendarLayout.invalidateLayoutIfNeeded(dataSet: _dataSet)
+        _calendarLayout.invalidateLayoutIfNeeded(context: _layoutContext)
         if monthRange.isInfinite { view.reloadData() }
     }
     
@@ -118,12 +118,12 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
                 if _focusMonth < lowerBound { currentMonth = lowerBound }
                 else if upperBound < _focusMonth { currentMonth = upperBound }
                 else {
-                    _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet)
+                    _calendarLayout?.invalidateLayoutIfNeeded(context: _layoutContext)
                     view?.reloadData()
                     if let _ = view { _adjustVisibleRectToFocusMonth() }
                 }
             default:
-                _calendarLayout?.invalidateLayoutIfNeeded(dataSet: _dataSet)
+                _calendarLayout?.invalidateLayoutIfNeeded(context: _layoutContext)
                 view?.reloadData()
                 if let _ = view { _adjustVisibleRectToFocusMonth() }
             }
