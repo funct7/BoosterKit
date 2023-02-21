@@ -104,8 +104,7 @@ extension ISO8601Month {
     }
     
     /**
-     - Throws:
-        - `BoosterKitError.illegalArgument`: The `timeZone` of `other` has a different UTC offset
+     - Throws: `BoosterKitError.illegalArgument`: The `timeZone` of `other` has a different UTC offset
             from the `timeZone` value of  the instance on which the method is called.
      */
     public func distance(to other: ISO8601Month) throws -> Int {
