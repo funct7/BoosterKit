@@ -110,11 +110,12 @@ open class CalendarLayout : UICollectionViewLayout {
     open dynamic var sectionHeight: CGFloat { _currentSectionHeight }
     
     /**
-     Calculates the section height given the current settings.
+     Calculates the section height given the current layout parameters.
      */
     open func sectionHeight(month: ISO8601Month) -> CGFloat {
-        let weekCount = _context.displayOption.numberOfWeeks(month: month)
-        let minHeight = CGRect.minContentSize(weekCount: weekCount, params: params).height
+        let minHeight = CGSize.minContentSize(
+            layoutParams: params,
+            weekCount: _context.displayOption.numberOfWeeks(month: month)).height
         
         switch params.alignment.vertical {
         case .packed: return minHeight
@@ -419,18 +420,12 @@ public extension CalendarLayout.Mode {
 private extension CGRect {
     
     static func make(params: CalendarLayout.Params, weekCount: UInt, viewSize: CGSize) -> [CGRect] {
-        let minContentSize = minContentSize(weekCount: weekCount, params: params)
+        let minContentSize = CGSize.minContentSize(layoutParams: params, weekCount: weekCount)
         
         return zip(
             horizontalValues(params: params, weekCount: Int(weekCount), remainingSpace: viewSize.width - minContentSize.width),
             verticalValues(params: params, weekCount: Int(weekCount), remainingSpace: viewSize.height - minContentSize.height))
             .map { hor, ver in CGRect(x: hor.start, y: ver.start, width: hor.length, height: ver.length) }
-    }
-    
-    static func minContentSize(weekCount: UInt, params: CalendarLayout.Params) -> CGSize {
-        CGSize(
-            width: params.sectionInset.horizontal + params.itemSize.width * 7 + params.spacing.width * 6,
-            height: params.sectionInset.vertical + params.itemSize.height * CGFloat(weekCount) + params.spacing.height * CGFloat(weekCount - 1))
     }
     
     static private func originX(weekdayIndex: Int, leftInset: CGFloat, itemWidth: CGFloat, spacing: CGFloat) -> CGFloat {
@@ -487,6 +482,16 @@ private extension CGRect {
                     .map { i, span in span.offset(by: extraSpace * CGFloat(i/7)) }
             }
         }
+    }
+    
+}
+
+private extension CGSize {
+
+    static func minContentSize(layoutParams: CalendarLayout.Params, weekCount: UInt) -> CGSize {
+        CGSize(
+            width: layoutParams.sectionInset.horizontal + layoutParams.itemSize.width * 7 + layoutParams.spacing.width * 6,
+            height: layoutParams.sectionInset.vertical + layoutParams.itemSize.height * CGFloat(weekCount) + layoutParams.spacing.height * CGFloat(weekCount - 1))
     }
     
 }
