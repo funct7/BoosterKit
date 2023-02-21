@@ -32,25 +32,13 @@ open class CalendarLayout : UICollectionViewLayout {
     private var _cachedAttribs = [ISO8601Month : [UICollectionViewLayoutAttributes]]() {
         didSet { _updateWeekdaySpansIfNeeded() }
     }
-    private var _contentRange: Pair<ISO8601Month, ISO8601Month> {
-        switch _context.monthRange.toTuple() {
-        case (let lowerBound?, let upperBound?):
-            return Pair(lowerBound, upperBound)
-        case (let lowerBound?, nil) where lowerBound == _context.focusMonth:
-            return Pair(lowerBound, lowerBound.advanced(by: 1))
-        case (nil, let upperBound?) where upperBound == _context.focusMonth:
-            return Pair(upperBound.advanced(by: -1), upperBound)
-        default:
-            return Pair(_context.focusMonth.advanced(by: -1), _context.focusMonth.advanced(by: 1))
-        }
-    }
     
     open override func prepare() {
         guard let view = collectionView, let _ = _context else { return }
         
         super.prepare()
         
-        let (lowerBound, upperBound) = _contentRange.toTuple()
+        let (lowerBound, upperBound) = _context.contentRange.toTuple()
         let numberOfMonths = try! lowerBound.distance(to: upperBound) + 1
         
         _cachedAttribs = .init(uniqueKeysWithValues: (0 ..< numberOfMonths).map { offset in
@@ -90,7 +78,7 @@ open class CalendarLayout : UICollectionViewLayout {
     }
     
     open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        _cachedAttribs[_contentRange.first.advanced(by: indexPath.section)]?[indexPath.item]
+        _cachedAttribs[_context.contentRange.first.advanced(by: indexPath.section)]?[indexPath.item]
     }
     
     open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
@@ -177,7 +165,7 @@ open class CalendarLayout : UICollectionViewLayout {
     
     private func _updateWeekdaySpansIfNeeded() {
         guard let _ = _context,
-              let attribsList = _cachedAttribs[_contentRange.first]
+              let attribsList = _cachedAttribs[_context.contentRange.first]
         else { return }
         
         let newValue = attribsList[0...6].map { Span(start: $0.frame.minX, end: $0.frame.maxX) }
@@ -311,6 +299,23 @@ extension CalendarLayout {
         let displayOption: CalendarAdapterDisplayOption
         let monthRange: Pair<ISO8601Month?, ISO8601Month?>
         let focusMonth: ISO8601Month
+    }
+    
+}
+
+extension CalendarLayout.Context {
+    
+    var contentRange: Pair<ISO8601Month, ISO8601Month> {
+        switch monthRange.toTuple() {
+        case (let lowerBound?, let upperBound?):
+            return Pair(lowerBound, upperBound)
+        case (let lowerBound?, nil) where lowerBound == focusMonth:
+            return Pair(lowerBound, lowerBound.advanced(by: 1))
+        case (nil, let upperBound?) where upperBound == focusMonth:
+            return Pair(upperBound.advanced(by: -1), upperBound)
+        default:
+            return Pair(focusMonth.advanced(by: -1), focusMonth.advanced(by: 1))
+        }
     }
     
 }
