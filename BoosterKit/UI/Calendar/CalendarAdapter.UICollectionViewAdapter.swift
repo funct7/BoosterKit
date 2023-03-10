@@ -56,11 +56,7 @@ extension CalendarAdapter {
             return cell
         }
         
-        private var _targetPageIndex: Int? = nil
-        
-        func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-            if let _ = _targetPageIndex { _resolveMonthChange(scrollView: scrollView) }
-        }
+        private var _onScrollEnded: (() -> Void)? = nil
         
         private func _startMonthChange(scrollView: UIScrollView, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
             let pageWidth = scrollView.frame.width
@@ -72,16 +68,13 @@ extension CalendarAdapter {
             
             calendarAdapter.delegate?.calendarPresenter(calendarAdapter, willChangeMonthFrom: currentMonth, to: targetMonth)
             
-            _targetPageIndex = pageIndex
+            _onScrollEnded = { [unowned self, weak scrollView] in
+                guard let scrollView = scrollView else { return }
+                self._resolveMonthChange(scrollView: scrollView, targetPageIndex: pageIndex)
+            }
         }
         
-        func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-            _startMonthChange(scrollView: scrollView, targetContentOffset: targetContentOffset)
-        }
-        
-        private func _resolveMonthChange(scrollView: UIScrollView) {
-            guard let targetPageIndex = _targetPageIndex else { return }
-            
+        private func _resolveMonthChange(scrollView: UIScrollView, targetPageIndex: Int) {
             let targetMonth = _getMonth(section: targetPageIndex)
             let currentMonth = calendarAdapter.currentMonth
             
@@ -105,14 +98,17 @@ extension CalendarAdapter {
                 }
             }
             
-            _targetPageIndex = nil
-            
             calendarAdapter.delegate?.calendarPresenter(calendarAdapter, didChangeMonthFrom: currentMonth, to: targetMonth)
+            _onScrollEnded = nil
         }
         
-        func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-            _resolveMonthChange(scrollView: scrollView)
+        func scrollViewWillBeginDragging(_ scrollView: UIScrollView) { _onScrollEnded?() }
+        
+        func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+            _startMonthChange(scrollView: scrollView, targetContentOffset: targetContentOffset)
         }
+        
+        func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) { _onScrollEnded?() }
         
     }
     
