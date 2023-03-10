@@ -58,18 +58,11 @@ extension CalendarAdapter {
         
         private var _targetPageIndex: Int? = nil
         
-        private func _cleanUpPreviousMonthChange(scrollView: UIScrollView, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-            let currentOffsetX = scrollView.contentOffset.x
-            _resolveMonthChange(scrollView: scrollView)
-            let delta = currentOffsetX - scrollView.contentOffset.x
-            targetContentOffset.pointee.x -= delta
+        func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+            if let _ = _targetPageIndex { _resolveMonthChange(scrollView: scrollView) }
         }
         
         private func _startMonthChange(scrollView: UIScrollView, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-            if let _ = _targetPageIndex {
-                _cleanUpPreviousMonthChange(scrollView: scrollView, targetContentOffset: targetContentOffset)
-            }
-            
             let pageWidth = scrollView.frame.width
             let pageIndex = Int(targetContentOffset.pointee.x / pageWidth)
             let currentMonth = calendarAdapter.currentMonth
