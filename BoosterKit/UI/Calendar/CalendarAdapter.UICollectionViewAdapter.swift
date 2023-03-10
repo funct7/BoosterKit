@@ -57,7 +57,19 @@ extension CalendarAdapter {
         }
         
         private var _targetPageIndex: Int? = nil
-        func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        private func _cleanUpPreviousMonthChange(scrollView: UIScrollView, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+            let currentOffsetX = scrollView.contentOffset.x
+            _resolveMonthChange(scrollView: scrollView)
+            let delta = currentOffsetX - scrollView.contentOffset.x
+            targetContentOffset.pointee.x -= delta
+        }
+        
+        private func _startMonthChange(scrollView: UIScrollView, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+            if let _ = _targetPageIndex {
+                _cleanUpPreviousMonthChange(scrollView: scrollView, targetContentOffset: targetContentOffset)
+            }
+            
             let pageWidth = scrollView.frame.width
             let pageIndex = Int(targetContentOffset.pointee.x / pageWidth)
             let currentMonth = calendarAdapter.currentMonth
@@ -70,7 +82,11 @@ extension CalendarAdapter {
             _targetPageIndex = pageIndex
         }
         
-        func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+            _startMonthChange(scrollView: scrollView, targetContentOffset: targetContentOffset)
+        }
+        
+        private func _resolveMonthChange(scrollView: UIScrollView) {
             guard let targetPageIndex = _targetPageIndex else { return }
             
             let targetMonth = _getMonth(section: targetPageIndex)
@@ -81,9 +97,13 @@ extension CalendarAdapter {
             let _ = withVar(scrollView.frame.width) { pageWidth in
                 guard calendarAdapter.monthRange.isInfinite else { return }
                 
-                if [currentMonth, targetMonth].contains(calendarAdapter.monthRange.first) {
-                    return assert((0...1).contains(targetPageIndex), "invalid page index: \(targetPageIndex)")
+                let shouldAdjustOffset: Bool = assign {
+                    let isTargetMinPage = targetMonth == calendarAdapter.monthRange.first,
+                        isCurrentMinPage = currentMonth == calendarAdapter.monthRange.first
+                    return !(isTargetMinPage || isCurrentMinPage)
                 }
+                
+                guard shouldAdjustOffset else { assert((0...1).contains(targetPageIndex), "invalid page index: \(targetPageIndex)"); return }
                 
                 switch targetPageIndex {
                 case 0: scrollView.contentOffset.x += pageWidth
@@ -95,6 +115,10 @@ extension CalendarAdapter {
             _targetPageIndex = nil
             
             calendarAdapter.delegate?.calendarPresenter(calendarAdapter, didChangeMonthFrom: currentMonth, to: targetMonth)
+        }
+        
+        func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+            _resolveMonthChange(scrollView: scrollView)
         }
         
     }
