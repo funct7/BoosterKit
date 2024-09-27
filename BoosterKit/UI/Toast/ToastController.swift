@@ -115,7 +115,7 @@ private extension ToastController {
                 animations: { [animParams, canvas, toastView] in
                     animParams.animation(canvas, toastView)
                 })
-            self._token = _animator.observe(\.isRunning, options: [.new, .old]) { _, changes in
+            self._token = _animator.observe(\.isRunning, options: [.new, .old]) { [unowned self] _, changes in
                 switch (changes.oldValue, changes.newValue) {
                 case (true, false): self.transition()
                 default: return
@@ -146,6 +146,11 @@ private extension ToastController {
             
             animParams.setUp(canvas, toastView)
         }
+        
+        deinit {
+            if _animator.state == .active { _animator.stopAnimation(true) }
+            _timer.invalidate()
+        }
     }
     
 }
@@ -169,9 +174,7 @@ private extension ToastController._ToastFSM {
             animParams: controller.params,
             canvas: controller.canvas!,
             toastView: withVar(controller.toastViewFactory()) { $0.renderString(text) },
-            completion: { [unowned controller] in
-                controller._instances.remove($0)
-            })
+            completion: { [unowned controller] in controller._instances.remove($0) })
     }
     
 }
