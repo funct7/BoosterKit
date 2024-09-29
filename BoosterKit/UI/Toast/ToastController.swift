@@ -148,6 +148,7 @@ private extension ToastController {
         }
         
         deinit {
+            _token.invalidate()
             if _animator.state == .active { _animator.stopAnimation(true) }
             _timer.invalidate()
         }
