@@ -9,6 +9,6 @@ end
 
 target 'BoosterKit-Demo' do
 
-  pod 'BoosterKit', :path => '.'  
+  pod 'BoosterKit', :path => '.'
   
 end
