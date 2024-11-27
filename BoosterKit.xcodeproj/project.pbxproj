@@ -46,6 +46,7 @@
 		038BD8CF28D9D54E00E3CE51 /* ISO8601Month+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038BD8CE28D9D54E00E3CE51 /* ISO8601Month+Extension.swift */; };
 		038BD8D128D9F80400E3CE51 /* Pair+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038BD8D028D9F80400E3CE51 /* Pair+Extension.swift */; };
 		038BD8D328D9F81900E3CE51 /* PairExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038BD8D228D9F81900E3CE51 /* PairExtensionTests.swift */; };
+		0391BCEE2CF7C57100CE1BC4 /* Scoped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A96DC22CF7C4DB009CA1BC /* Scoped.swift */; };
 		03975DCF28F3AA33000485CF /* Span.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03975DCE28F3AA33000485CF /* Span.swift */; };
 		039A645328DA9F94007C1A90 /* CalendarAdapter.UICollectionViewAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039A645228DA9F94007C1A90 /* CalendarAdapter.UICollectionViewAdapterTests.swift */; };
 		039E0A512906BF4D002F1DB3 /* Pair+MonthRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039E0A502906BF4D002F1DB3 /* Pair+MonthRange.swift */; };
@@ -55,10 +56,10 @@
 		039EC08928DEA3C000331AAF /* TestCalendarAdapterComponentViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039EC08828DEA3C000331AAF /* TestCalendarAdapterComponentViewProvider.swift */; };
 		03A0FB4928BB25DD00B8D064 /* BoosterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A0FB3F28BB25DD00B8D064 /* BoosterKit.framework */; };
 		03A0FB5028BB25DD00B8D064 /* BoosterKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 03A0FB4228BB25DD00B8D064 /* BoosterKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		03A0FB5B28BB264400B8D064 /* Scoped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB5A28BB264400B8D064 /* Scoped.swift */; };
 		03A0FB5E28BB268F00B8D064 /* StringRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB5D28BB268F00B8D064 /* StringRenderer.swift */; };
 		03A95EBF28D6EB5300F24949 /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A95EBE28D6EB5300F24949 /* Pair.swift */; };
-		03A96DBC2CF7C2D3009CA1BC /* Scoped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB5A28BB264400B8D064 /* Scoped.swift */; };
+		03A96DC32CF7C4DB009CA1BC /* Scoped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A96DC22CF7C4DB009CA1BC /* Scoped.swift */; };
+		03A96DC42CF7C4DB009CA1BC /* Scoped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A96DC22CF7C4DB009CA1BC /* Scoped.swift */; };
 		03AB9DA828BCF57400BD568B /* ImageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB9DA728BCF57400BD568B /* ImageTextView.swift */; };
 		03AB9DAA28BCF5AA00BD568B /* Toast.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03AB9DA928BCF5AA00BD568B /* Toast.xib */; };
 		03B9828B290FEF8D00545908 /* CalendarAdapterComponentViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9828A290FEF8D00545908 /* CalendarAdapterComponentViewProvider.swift */; };
@@ -135,10 +136,10 @@
 		03A0FB4328BB25DD00B8D064 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03A0FB4828BB25DD00B8D064 /* BoosterKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoosterKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		03A0FB4F28BB25DD00B8D064 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		03A0FB5A28BB264400B8D064 /* Scoped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoped.swift; sourceTree = "<group>"; };
 		03A0FB5D28BB268F00B8D064 /* StringRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringRenderer.swift; sourceTree = "<group>"; };
 		03A6E44628D0B2D400814DD5 /* CalendarAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAdapter.swift; sourceTree = "<group>"; };
 		03A95EBE28D6EB5300F24949 /* Pair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pair.swift; sourceTree = "<group>"; };
+		03A96DC22CF7C4DB009CA1BC /* Scoped.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scoped.swift; sourceTree = "<group>"; };
 		03AB9DA728BCF57400BD568B /* ImageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTextView.swift; sourceTree = "<group>"; };
 		03AB9DA928BCF5AA00BD568B /* Toast.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Toast.xib; sourceTree = "<group>"; };
 		03B9828A290FEF8D00545908 /* CalendarAdapterComponentViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAdapterComponentViewProvider.swift; sourceTree = "<group>"; };
@@ -367,7 +368,7 @@
 		03A0FB5928BB263600B8D064 /* Function */ = {
 			isa = PBXGroup;
 			children = (
-				03A0FB5A28BB264400B8D064 /* Scoped.swift */,
+				03A96DC22CF7C4DB009CA1BC /* Scoped.swift */,
 			);
 			path = Function;
 			sourceTree = "<group>";
@@ -658,6 +659,7 @@
 				03AB9DA828BCF57400BD568B /* ImageTextView.swift in Sources */,
 				0345BB1B28F7741600A6C79E /* CalendarDemoViewController.swift in Sources */,
 				03554E9328BCF37C00073345 /* ToastDemoViewController.swift in Sources */,
+				0391BCEE2CF7C57100CE1BC4 /* Scoped.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -666,6 +668,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0375116E28BC27820060D304 /* ToastController.AnimParams.SetUp+Default.swift in Sources */,
+				03A96DC32CF7C4DB009CA1BC /* Scoped.swift in Sources */,
 				03B98291290FEFFA00545908 /* CalendarAdapterDisplayOption.swift in Sources */,
 				0328F1A728FBB1F50058496C /* Collection+Extension.swift in Sources */,
 				039E79AF28BD73F2004F356D /* ToastController+Extension.swift in Sources */,
@@ -689,7 +692,6 @@
 				0375117228BC27F80060D304 /* ToastController.AnimParams.TearDown+Default.swift in Sources */,
 				031E6F2928D8A4D90012B3B1 /* CalendarAdapter.UICollectionViewAdapter.swift in Sources */,
 				0313BA9228D56ABF00307576 /* Weekday.swift in Sources */,
-				03A0FB5B28BB264400B8D064 /* Scoped.swift in Sources */,
 				03A0FB5E28BB268F00B8D064 /* StringRenderer.swift in Sources */,
 				038BD8D128D9F80400E3CE51 /* Pair+Extension.swift in Sources */,
 				038BD8CF28D9D54E00E3CE51 /* ISO8601Month+Extension.swift in Sources */,
@@ -706,7 +708,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				039A645328DA9F94007C1A90 /* CalendarAdapter.UICollectionViewAdapterTests.swift in Sources */,
-				03A96DBC2CF7C2D3009CA1BC /* Scoped.swift in Sources */,
 				031C48FF28F25D45000A0F06 /* CGSize.Device.swift in Sources */,
 				0337360C28D6FEA900CD49AC /* TimeZone+Constant.swift in Sources */,
 				034F931228D578460035FDC9 /* ISO8601MonthTests.swift in Sources */,
@@ -720,6 +721,7 @@
 				039EC08728DEA38600331AAF /* TestCalendarAdapterCell.swift in Sources */,
 				034F930E28D5761C0035FDC9 /* Date.FixedTimeIntervalTests.swift in Sources */,
 				039EC08928DEA3C000331AAF /* TestCalendarAdapterComponentViewProvider.swift in Sources */,
+				03A96DC42CF7C4DB009CA1BC /* Scoped.swift in Sources */,
 				0313BA9728D56CC100307576 /* ISO8601DateTests.swift in Sources */,
 				031C490328F26B77000A0F06 /* UICollectionViewLayoutAttributes+Extensions.swift in Sources */,
 			);
