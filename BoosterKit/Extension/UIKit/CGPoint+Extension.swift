@@ -7,7 +7,7 @@
 
 import UIKit
 
-public extension CGPoint {
+extension CGPoint {
     
     init(_ fillValue: Int) {
         self.init(x: fillValue, y: fillValue)

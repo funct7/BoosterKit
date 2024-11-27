@@ -7,7 +7,7 @@
 
 import UIKit
 
-public extension UIEdgeInsets {
+extension UIEdgeInsets {
 
     var vertical: CGFloat { top + bottom }
 
