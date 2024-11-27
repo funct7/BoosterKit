@@ -20,7 +20,7 @@ extension CGRect {
     
 }
 
-func beCloseTo(_ expectedRect: CGRect, within delta: CGFloat) -> Predicate<CGRect> {
+func beCloseTo(_ expectedRect: CGRect, within delta: CGFloat) -> Nimble.Predicate<CGRect> {
     return Predicate.define { expr in
         let errorMessage = "be close to <\(stringify(expectedRect))> (within \(stringify(delta)))"
         let actualValue = try expr.evaluate()
@@ -36,7 +36,7 @@ func beCloseTo(_ expectedRect: CGRect, within delta: CGFloat) -> Predicate<CGRec
 
 func beCloseTo(
     _ expectedValues: [CGRect],
-    within delta: CGFloat) -> Predicate<[CGRect]>
+    within delta: CGFloat) -> Nimble.Predicate<[CGRect]>
 {
     let errorMessage = "be close to <\(stringify(expectedValues))> (each within \(stringify(delta)))"
     return Predicate.simple(errorMessage) { actualExpression in
