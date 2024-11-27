@@ -58,6 +58,7 @@
 		03A0FB5B28BB264400B8D064 /* Scoped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB5A28BB264400B8D064 /* Scoped.swift */; };
 		03A0FB5E28BB268F00B8D064 /* StringRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB5D28BB268F00B8D064 /* StringRenderer.swift */; };
 		03A95EBF28D6EB5300F24949 /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A95EBE28D6EB5300F24949 /* Pair.swift */; };
+		03A96DBC2CF7C2D3009CA1BC /* Scoped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0FB5A28BB264400B8D064 /* Scoped.swift */; };
 		03AB9DA828BCF57400BD568B /* ImageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB9DA728BCF57400BD568B /* ImageTextView.swift */; };
 		03AB9DAA28BCF5AA00BD568B /* Toast.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03AB9DA928BCF5AA00BD568B /* Toast.xib */; };
 		03B9828B290FEF8D00545908 /* CalendarAdapterComponentViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9828A290FEF8D00545908 /* CalendarAdapterComponentViewProvider.swift */; };
@@ -705,6 +706,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				039A645328DA9F94007C1A90 /* CalendarAdapter.UICollectionViewAdapterTests.swift in Sources */,
+				03A96DBC2CF7C2D3009CA1BC /* Scoped.swift in Sources */,
 				031C48FF28F25D45000A0F06 /* CGSize.Device.swift in Sources */,
 				0337360C28D6FEA900CD49AC /* TimeZone+Constant.swift in Sources */,
 				034F931228D578460035FDC9 /* ISO8601MonthTests.swift in Sources */,
