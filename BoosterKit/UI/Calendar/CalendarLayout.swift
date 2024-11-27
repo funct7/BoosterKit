@@ -438,9 +438,9 @@ private extension CGRect {
     
     /// - Returns: A list of `($ORIGIN_X, $WIDTH)` tuples.
     static private func horizontalValues(params: CalendarLayout.Params, weekCount: Int, remainingSpace: CGFloat) -> [Span] {
-        let defaultLayout = (0 ..< weekCount).flatMap(bindNone {
+        let defaultLayout = (0 ..< weekCount).flatMap { _ in
             (0 ..< 7).map { Span(start: originX(weekdayIndex: $0, leftInset: params.sectionInset.left, itemWidth: params.itemSize.width, spacing: params.spacing.width), length: params.itemSize.width) }
-        })
+        }
         
         if remainingSpace <= 0.0 {
             return defaultLayout
@@ -464,7 +464,7 @@ private extension CGRect {
     /// - Returns: A list of `($ORIGIN_Y, $HEIGHT)` tuples.
     static private func verticalValues(params: CalendarLayout.Params, weekCount: Int, remainingSpace: CGFloat) -> [Span] {
         let defaultLayout = (0 ..< weekCount).flatMap { weekIndex in
-            (0 ..< 7).map(bindNone { Span(start: originY(weekIndex: Int(weekIndex), topInset: params.sectionInset.top, itemHeight: params.itemSize.height, spacing: params.spacing.height), length: params.itemSize.height) })
+            (0 ..< 7).map { _ in Span(start: originY(weekIndex: Int(weekIndex), topInset: params.sectionInset.top, itemHeight: params.itemSize.height, spacing: params.spacing.height), length: params.itemSize.height) }
         }
         
         if remainingSpace <= 0.0 {

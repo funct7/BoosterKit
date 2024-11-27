@@ -125,9 +125,7 @@ private extension ToastController {
                 fire: Date().addingTimeInterval(animParams.animDuration + animParams.displayDuration),
                 interval: 0,
                 repeats: false,
-                block: bindNone { [unowned self] in
-                    self.transition()
-                })
+                block: { [unowned self] _ in self.transition() })
         }
         
         init(animParams: ToastController.AnimParams,
