@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import BoosterKit
+@testable import BoosterKit
 
 class FixedTimeIntervalTests : XCTestCase {
     

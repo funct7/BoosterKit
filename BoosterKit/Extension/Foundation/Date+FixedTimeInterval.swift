@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension Date {
+extension Date {
     
     func adding(_ fixedTimeInterval: FixedTimeInterval) -> Date { addingTimeInterval(fixedTimeInterval.value) }
     

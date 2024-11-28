@@ -7,14 +7,14 @@
 
 import Foundation
 
-public enum FixedTimeInterval {
+enum FixedTimeInterval {
     case millisecond(Int)
     case second(Int)
     case minute(Int)
     case hour(Int)
     case day(Int)
     
-    public var value: TimeInterval {
+    var value: TimeInterval {
         switch self {
         case .millisecond(let count): return TimeInterval(count) * ._secInMillis
         case .second(let count): return TimeInterval(count)
