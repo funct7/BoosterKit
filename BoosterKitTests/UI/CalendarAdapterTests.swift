@@ -19,9 +19,9 @@ class CalendarAdapterTests : XCTestCase {
     private var sut: CalendarAdapter<_Cell>!
     
     private func setUp(initialMonth: ISO8601Month, monthRange: Pair<ISO8601Month?, ISO8601Month?>) {
-        sut = .init(
+        sut = CalendarAdapter(
             initialMonth: initialMonth,
-            monthRange: monthRange,
+            monthRange: monthRange.toTuple(),
             viewProvider: withVar(_ViewProvider()) { self.viewProvider = $0 })
     }
     
@@ -41,21 +41,21 @@ class CalendarAdapterTests : XCTestCase {
         let sep2022 = try ISO8601Month(year: 2022, month: 9, timeZone: .seoul)
         setUp(initialMonth: sep2022, monthRange: Pair(sep2022, sep2022))
         
-        expect(self.sut.monthRange = Pair(sep2022, try ISO8601Month(year: 2022, month: 10, timeZone: .tokyo)))
+        expect(self.sut.monthRange = (sep2022, try ISO8601Month(year: 2022, month: 10, timeZone: .tokyo)))
             .to(throwAssertion())
-        expect(self.sut.monthRange = Pair(sep2022, try ISO8601Month(year: 2022, month: 10, timeZone: .hongKong)))
-            .to(throwAssertion())
-        
-        expect(self.sut.monthRange = Pair(sep2022, sep2022.advanced(by: -1)))
+        expect(self.sut.monthRange = (sep2022, try ISO8601Month(year: 2022, month: 10, timeZone: .hongKong)))
             .to(throwAssertion())
         
-        sut.monthRange = Pair(sep2022, sep2022.advanced(by: 10))
+        expect(self.sut.monthRange = (sep2022, sep2022.advanced(by: -1)))
+            .to(throwAssertion())
+        
+        sut.monthRange = (sep2022, sep2022.advanced(by: 10))
         XCTAssertEqual(sut.currentMonth, sep2022)
         
-        sut.monthRange = Pair(sep2022.advanced(by: 5), sep2022.advanced(by: 10))
+        sut.monthRange = (sep2022.advanced(by: 5), sep2022.advanced(by: 10))
         XCTAssertEqual(sut.currentMonth, sep2022.advanced(by: 5))
         
-        sut.monthRange = Pair(sep2022.advanced(by: -12), sep2022)
+        sut.monthRange = (sep2022.advanced(by: -12), sep2022)
         XCTAssertEqual(sut.currentMonth, sep2022)
     }
     
@@ -78,7 +78,7 @@ class CalendarAdapterTests : XCTestCase {
         resetMock()
         
         // upperBound: unbounded -> bounded infinite -> unbounded
-        sut.monthRange.second = oct2022 // upper bound: sec 1 -> sec 1
+        sut.monthRange.1 = oct2022 // upper bound: sec 1 -> sec 1
         
         expect(self.sut.currentMonth).to(equal(oct2022))
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(1))
@@ -86,7 +86,7 @@ class CalendarAdapterTests : XCTestCase {
         expect(view.contentOffsetArgs).to(haveCount(1))
         expect(view.contentOffsetArgs.last?.x).to(equal(frame.width))
         
-        sut.monthRange.second = oct2022.advanced(by: -2) // upper bound: sec 1 -> sec 1
+        sut.monthRange.1 = oct2022.advanced(by: -2) // upper bound: sec 1 -> sec 1
         
         expect(self.sut.currentMonth).to(equal(oct2022.advanced(by: -2)))
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(2))
@@ -94,7 +94,7 @@ class CalendarAdapterTests : XCTestCase {
         expect(view.contentOffsetArgs).to(haveCount(2))
         expect(view.contentOffsetArgs.last?.x).to(equal(frame.width))
         
-        sut.monthRange.second = nil // unbounded: sec 1 -> sec 1
+        sut.monthRange.1 = nil // unbounded: sec 1 -> sec 1
         
         expect(self.sut.currentMonth).to(equal(oct2022.advanced(by: -2)))
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(3))
@@ -105,7 +105,7 @@ class CalendarAdapterTests : XCTestCase {
         resetMock()
         
         // lowerBound: unbounded -> bounded infinite -> unbounded
-        sut.monthRange.first = oct2022 // lower bound: sec 1 -> sec 0
+        sut.monthRange.0 = oct2022 // lower bound: sec 1 -> sec 0
         
         expect(self.sut.currentMonth).to(equal(oct2022))
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(1))
@@ -113,7 +113,7 @@ class CalendarAdapterTests : XCTestCase {
         expect(view.contentOffsetArgs).to(haveCount(1))
         expect(view.contentOffsetArgs.last?.x).to(equal(0))
 
-        sut.monthRange.first = oct2022.advanced(by: 2) // lower bound: sec 0 -> sec 0
+        sut.monthRange.0 = oct2022.advanced(by: 2) // lower bound: sec 0 -> sec 0
         
         expect(self.sut.currentMonth).to(equal(oct2022.advanced(by: 2)))
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(2))
@@ -121,7 +121,7 @@ class CalendarAdapterTests : XCTestCase {
         expect(view.contentOffsetArgs).to(haveCount(2))
         expect(view.contentOffsetArgs.last?.x).to(equal(0))
         
-        sut.monthRange.first = oct2022.advanced(by: -2) // lower bound: sec 0 -> sec 1
+        sut.monthRange.0 = oct2022.advanced(by: -2) // lower bound: sec 0 -> sec 1
         
         expect(self.sut.currentMonth).to(equal(oct2022.advanced(by: 2))) // unchanged
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(3))
@@ -129,11 +129,11 @@ class CalendarAdapterTests : XCTestCase {
         expect(view.contentOffsetArgs).to(haveCount(3))
         expect(view.contentOffsetArgs.last?.x).to(equal(frame.width))
         
-        sut.monthRange.first = oct2022
+        sut.monthRange.0 = oct2022
         sut.currentMonth = oct2022
         resetMock()
         
-        sut.monthRange.first = nil // lower bound: sec 0 -> sec 1
+        sut.monthRange.0 = nil // lower bound: sec 0 -> sec 1
         
         expect(self.sut.currentMonth).to(equal(oct2022)) // unchanged
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(1))
@@ -142,10 +142,10 @@ class CalendarAdapterTests : XCTestCase {
         expect(view.contentOffsetArgs.last?.x).to(equal(frame.width))
         
         // finite -> finite
-        sut.monthRange = Pair(oct2022, oct2022.advanced(by: 2))
+        sut.monthRange = (oct2022, oct2022.advanced(by: 2))
         resetMock()
         
-        sut.monthRange.first = oct2022.advanced(by: -9) // sec 0 -> sec 9
+        sut.monthRange.0 = oct2022.advanced(by: -9) // sec 0 -> sec 9
         
         expect(self.sut.currentMonth).to(equal(oct2022)) // unchanged
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(1))
@@ -153,7 +153,7 @@ class CalendarAdapterTests : XCTestCase {
         expect(view.contentOffsetArgs).to(haveCount(1))
         expect(view.contentOffsetArgs.last?.x).to(equal(frame.width * 9))
         
-        sut.monthRange.first = oct2022.advanced(by: -4) // sec 9 -> sec 4
+        sut.monthRange.0 = oct2022.advanced(by: -4) // sec 9 -> sec 4
         
         expect(self.sut.currentMonth).to(equal(oct2022)) // unchanged
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(2))
@@ -185,15 +185,15 @@ class CalendarAdapterTests : XCTestCase {
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(3))
         expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(Context(displayOption: .fixed, monthRange: Pair(nil, nil), focusMonth: sep2022)))
         
-        sut.monthRange.first = sep2022
+        sut.monthRange.0 = sep2022
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(4))
         expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(Context(displayOption: .fixed, monthRange: Pair(sep2022, nil), focusMonth: sep2022)))
         
-        sut.monthRange.second = sep2022
+        sut.monthRange.1 = sep2022
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(5))
         expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(Context(displayOption: .fixed, monthRange: Pair(sep2022, sep2022), focusMonth: sep2022)))
         
-        sut.monthRange = Pair(nil, nil)
+        sut.monthRange = (nil, nil)
         sut.currentMonth = sep2022.advanced(by: 1)
         expect(layout.invalidateLayoutIfNeededArgs).to(haveCount(7))
         expect(layout.invalidateLayoutIfNeededArgs.last).to(equal(Context(displayOption: .fixed, monthRange: Pair(nil, nil), focusMonth: sep2022.advanced(by: 1))))

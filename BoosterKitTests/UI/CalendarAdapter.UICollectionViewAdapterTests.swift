@@ -23,10 +23,10 @@ class CalendarAdapter_UICollectionViewAdapterTests : XCTestCase {
         initialMonth: ISO8601Month,
         monthRange: Pair<ISO8601Month?, ISO8601Month?>)
     {
-        viewProvider = .init()
-        adapter = .init(
+        viewProvider = _ViewProvider()
+        adapter = CalendarAdapter(
             initialMonth: initialMonth,
-            monthRange: monthRange,
+            monthRange: monthRange.toTuple(),
             viewProvider: viewProvider)
         collectionView = withVar(.init(frame: .zero, collectionViewLayout: CalendarLayout())) {
             $0.register(_Cell.self, forCellWithReuseIdentifier: "\(_Cell.self)")

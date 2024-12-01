@@ -25,7 +25,7 @@ class CalendarDemoViewController : UIViewController {
     private lazy var _viewProvider = DemoCalendarAdapterComponentViewProvider()
     private lazy var _calendarAdapter = CalendarAdapter(viewProvider: _viewProvider)
     
-    private var _monthRange: Pair<ISO8601Month?, ISO8601Month?> = Pair(nil, nil) {
+    private var _monthRange: (ISO8601Month?, ISO8601Month?) = (nil, nil) {
         didSet {
             bindMonthRange()
             _calendarAdapter.monthRange = _monthRange
@@ -122,7 +122,7 @@ extension CalendarDemoViewController {
     }
     
     func bindMonthRange() {
-        if let lowerBound = _monthRange.first {
+        if let lowerBound = _monthRange.0 {
             let now = ISO8601Month(),
                 diff = try! now.distance(to: lowerBound)
             
@@ -138,7 +138,7 @@ extension CalendarDemoViewController {
             lowerBoundLabel.text = "-"
         }
         
-        if let upperBound = _monthRange.second {
+        if let upperBound = _monthRange.1 {
             let now = ISO8601Month(),
                 diff = try! now.distance(to: upperBound)
             
@@ -156,21 +156,21 @@ extension CalendarDemoViewController {
     }
     
     @IBAction func toggleLowerBoundAction(_ sender: UISwitch) {
-        _monthRange.first = sender.isOn ? ISO8601Month() : nil
+        _monthRange.0 = sender.isOn ? ISO8601Month() : nil
     }
     
     @IBAction func lowerBoundChangeAction(_ sender: UISlider) {
-        guard let _ = _monthRange.first else { preconditionFailure() }
-        _monthRange.first = ISO8601Month().advanced(by: Int(sender.value))
+        guard let _ = _monthRange.0 else { preconditionFailure() }
+        _monthRange.0 = ISO8601Month().advanced(by: Int(sender.value))
     }
     
     @IBAction func toggleUpperBoundAction(_ sender: UISwitch) {
-        _monthRange.second = sender.isOn ? ISO8601Month() : nil
+        _monthRange.1 = sender.isOn ? ISO8601Month() : nil
     }
     
     @IBAction func upperBoundChangeAction(_ sender: UISlider) {
-        guard let _ = _monthRange.second else { preconditionFailure() }
-        _monthRange.second = ISO8601Month().advanced(by: Int(sender.value))
+        guard let _ = _monthRange.1 else { preconditionFailure() }
+        _monthRange.1 = ISO8601Month().advanced(by: Int(sender.value))
     }
     
     @IBAction func changeHorizontalAligmentAction(_ sender: UISegmentedControl) {

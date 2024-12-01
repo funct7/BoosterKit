@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Pair<First, Second> {
+struct Pair<First, Second> {
     public var first: First
     public var second: Second
 
@@ -17,7 +17,7 @@ public struct Pair<First, Second> {
     }
 }
 
-public extension Pair {
+extension Pair {
     
     init(_ tuple: (First, Second)) {
         self.init(tuple.0, tuple.1)
@@ -29,7 +29,7 @@ public extension Pair {
     
 }
 
-public extension Pair {
+extension Pair {
     
     func toTuple() -> (First, Second) { (first, second) }
     

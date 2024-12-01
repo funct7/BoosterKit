@@ -23,12 +23,12 @@ class CalendarLayoutTests : XCTestCase {
         monthRange: Pair<ISO8601Month?, ISO8601Month?> = Pair(nil, nil))
     {
         sut = withVar(CalendarLayoutSpy()) { $0!.params = params }
-        collectionView = .init(
+        collectionView = UICollectionView(
             frame: frame,
             collectionViewLayout: sut)
-        adapter = .init(
+        adapter = CalendarAdapter(
             initialMonth: initialMonth,
-            monthRange: monthRange,
+            monthRange: monthRange.toTuple(),
             viewProvider: TestCalendarAdapterComponentViewProvider())
         adapter.view = collectionView
     }
@@ -106,7 +106,7 @@ class CalendarLayoutTests : XCTestCase {
         
         do { // finite range
             adapter.displayOption = .dynamic
-            adapter.monthRange = Pair(sep2022.advanced(by: -1), sep2022)
+            adapter.monthRange = (sep2022.advanced(by: -1), sep2022)
             adapter.currentMonth = sep2022
             sut.params = .init(sectionInset: .test, itemSize: .short)
             
@@ -128,7 +128,7 @@ class CalendarLayoutTests : XCTestCase {
             XCTAssertEqual(sectionHeightList.count, 1)
             
             // includes a 6-week month
-            adapter.monthRange.second = sep2022.advanced(by: 1)
+            adapter.monthRange.1 = sep2022.advanced(by: 1)
             
             // the content size for finite range is the union rect of the content size of each month
             XCTAssertEqual(contentSizeList.count, 2)
@@ -281,7 +281,7 @@ class CalendarLayoutTests : XCTestCase {
         
         // Constrained inifinite range
         adapter.currentMonth = sep2022.advanced(by: 1)
-        adapter.monthRange = Pair(sep2022, nil)
+        adapter.monthRange = (sep2022, nil)
         
         XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
         
@@ -291,7 +291,7 @@ class CalendarLayoutTests : XCTestCase {
         adapter.currentMonth = sep2022 // edge case
         XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 2)
         
-        adapter.monthRange = Pair(nil, sep2022.advanced(by: 1))
+        adapter.monthRange = (nil, sep2022.advanced(by: 1))
         XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 3)
         
         adapter.currentMonth = sep2022.advanced(by: 1) // edge case
@@ -299,11 +299,11 @@ class CalendarLayoutTests : XCTestCase {
 
         // n-month range
         adapter.currentMonth = sep2022
-        adapter.monthRange = Pair(sep2022.advanced(by: -8), sep2022.advanced(by: 3)) // the year of 2022
+        adapter.monthRange = (sep2022.advanced(by: -8), sep2022.advanced(by: 3)) // the year of 2022
         XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 12)
         
         // 2-month range
-        adapter.monthRange = Pair(sep2022, sep2022.advanced(by: 1))
+        adapter.monthRange = (sep2022, sep2022.advanced(by: 1))
         
         XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 2)
         
@@ -312,7 +312,7 @@ class CalendarLayoutTests : XCTestCase {
         XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width * 2)
         
         // 1-month range
-        adapter.monthRange = Pair(sep2022.advanced(by: 1), sep2022.advanced(by: 1))
+        adapter.monthRange = (sep2022.advanced(by: 1), sep2022.advanced(by: 1))
         XCTAssertEqual(sut.collectionViewContentSize.width, frame.size.width)
     }
     
@@ -333,31 +333,31 @@ class CalendarLayoutTests : XCTestCase {
         // displayOption - DYNAMIC
         XCTAssertEqual(sut.collectionViewContentSize.height, .short5week)
         
-        adapter.monthRange = Pair(sep2022, sep2022.advanced(by: 1))
+        adapter.monthRange = (sep2022, sep2022.advanced(by: 1))
         XCTAssertEqual(sut.collectionViewContentSize.height, .short6week) // oct 2022 is a 6-week month
         
-        adapter.monthRange = Pair(sep2022.advanced(by: -1), sep2022)
+        adapter.monthRange = (sep2022.advanced(by: -1), sep2022)
         XCTAssertEqual(sut.collectionViewContentSize.height, .short5week) // no 6-week month
         
-        adapter.monthRange = Pair(sep2022.advanced(by: -2), sep2022)
+        adapter.monthRange = (sep2022.advanced(by: -2), sep2022)
         XCTAssertEqual(sut.collectionViewContentSize.height, .short6week) // jul 2022 is a 6-week month
         
         // displayOption - FIXED
         adapter.displayOption = .fixed
         
-        adapter.monthRange = Pair(sep2022.advanced(by: -2), sep2022)
+        adapter.monthRange = (sep2022.advanced(by: -2), sep2022)
         XCTAssertEqual(sut.collectionViewContentSize.height, .short6week)
         
-        adapter.monthRange = Pair(sep2022.advanced(by: -1), sep2022)
+        adapter.monthRange = (sep2022.advanced(by: -1), sep2022)
         XCTAssertEqual(sut.collectionViewContentSize.height, .short6week)
         
         // vertical align - FILLED
         sut.params.alignment.vertical = .filled
         
-        adapter.monthRange = Pair(sep2022.advanced(by: -2), sep2022)
+        adapter.monthRange = (sep2022.advanced(by: -2), sep2022)
         XCTAssertEqual(sut.collectionViewContentSize.height, frame.height)
         
-        adapter.monthRange = Pair(sep2022, sep2022.advanced(by: 1))
+        adapter.monthRange = (sep2022, sep2022.advanced(by: 1))
         XCTAssertEqual(sut.collectionViewContentSize.height, frame.height)
     }
     
@@ -815,7 +815,7 @@ class CalendarLayoutTests : XCTestCase {
         XCTAssertNil(sut.layoutAttributesForItem(at: IndexPath(indexes: [3, 0])))
         
         // infinite range bounded on one-side
-        adapter.monthRange = Pair(nil, sep2022)
+        adapter.monthRange = (nil, sep2022)
         XCTAssertNotNil(sut.layoutAttributesForItem(at: IndexPath(indexes: [0, 0])))
         XCTAssertNotNil(sut.layoutAttributesForItem(at: IndexPath(indexes: [1, 0])))
         XCTAssertNil(sut.layoutAttributesForItem(at: IndexPath(indexes: [2, 0])))
@@ -826,7 +826,7 @@ class CalendarLayoutTests : XCTestCase {
         XCTAssertNotNil(sut.layoutAttributesForItem(at: IndexPath(indexes: [2, 0])))
         
         // finite range
-        adapter.monthRange = Pair(sep2022.advanced(by: -1), sep2022)
+        adapter.monthRange = (sep2022.advanced(by: -1), sep2022)
         XCTAssertNotNil(sut.layoutAttributesForItem(at: IndexPath(indexes: [0, 0])))
         XCTAssertNotNil(sut.layoutAttributesForItem(at: IndexPath(indexes: [1, 0])))
         XCTAssertNil(sut.layoutAttributesForItem(at: IndexPath(indexes: [2, 0])))
@@ -873,7 +873,7 @@ class CalendarLayoutTests : XCTestCase {
         sut.invalidateLayoutIfNeeded(
             context: CalendarLayout.Context(
                 displayOption: adapter.displayOption,
-                monthRange: adapter.monthRange,
+                monthRange: Pair(adapter.monthRange),
                 focusMonth: sep2022.advanced(by: 3)))
         
         expect(self.sut.invalidateLayoutCallCount).to(equal(initialCallCount + 1))

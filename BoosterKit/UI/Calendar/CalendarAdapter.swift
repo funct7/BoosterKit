@@ -32,7 +32,9 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     open var viewProvider: AnyCalendarAdapterComponentViewProvider<Cell>
     open var delegate: AnyCalendarAdapterDelegate<Cell>? = nil
     
-    private var _layoutContext: CalendarLayout.Context { .init(displayOption: displayOption, monthRange: monthRange, focusMonth: _focusMonth) }
+    private var _layoutContext: CalendarLayout.Context { 
+        CalendarLayout.Context(displayOption: displayOption, monthRange: Pair(monthRange), focusMonth: _focusMonth)
+    }
     open var displayOption: CalendarAdapterDisplayOption = .dynamic {
         didSet {
             _calendarLayout?.invalidateLayoutIfNeeded(context: _layoutContext)
@@ -46,7 +48,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         guard let view = view else { return }
         
         let pageIndex: Int = assign {
-            switch monthRange.toTuple() {
+            switch monthRange {
             case (let lowerBound?, nil) where lowerBound == _focusMonth:
                 return 0
             case (let lowerBound?, .some):
@@ -61,7 +63,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     func loadFocusMonth(_ newValue: ISO8601Month) {
         if _focusMonth == newValue { return }
         
-        switch monthRange.toTuple() {
+        switch monthRange {
         case (nil, nil): break
         case (let lowerBound?, nil): precondition(lowerBound <= newValue && lowerBound.timeZone == newValue.timeZone)
         case (nil, let upperBound?): precondition(newValue <= upperBound && upperBound.timeZone == newValue.timeZone)
@@ -73,7 +75,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         guard let _ = view else { return }
         
         _calendarLayout.invalidateLayoutIfNeeded(context: _layoutContext)
-        if monthRange.isInfinite { view.reloadData() }
+        if Pair(monthRange).isInfinite { view.reloadData() }
     }
     
     /// Updates the displayed month.
@@ -98,16 +100,16 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
             For example, if `currentMonth` is Sep 2022 and `monthRange` is set to [Jan 2023, nil],
             the value of `currentMonth` will be changed to Jan 2023.
      */
-    open var monthRange: Pair<ISO8601Month?, ISO8601Month?> {
+    open var monthRange: (ISO8601Month?, ISO8601Month?) {
         willSet {
-            if let first = newValue.first, let second = newValue.second {
+            if let first = newValue.0, let second = newValue.1 {
                 precondition(first.timeZone == second.timeZone)
                 precondition(first <= second)
             }
         }
         didSet {
             // TODO: Refactor
-            switch monthRange.toTuple() {
+            switch monthRange {
             case (let lowerBound?, nil) where _focusMonth < lowerBound:
                 currentMonth = lowerBound
                 
@@ -155,12 +157,12 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
     open func scroll(to month: ISO8601Month) throws {
         guard month.timeZone == currentMonth.timeZone else { throw BoosterKitError.illegalArgument }
         
-        let relation = try! MonthToRangeRelation.from(month: month, range: monthRange)
+        let relation = try! MonthToRangeRelation.from(month: month, range: Pair(monthRange))
         
         if [.lessThan, .greaterThan].contains(relation) { return }
         if month == currentMonth { return }
         
-        if monthRange.isFinite {
+        if Pair(monthRange).isFinite {
             let dataSourceRange = _adapter.getDataSourceRange()
             
             loadFocusMonth(month)
@@ -236,13 +238,13 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
      */
     public init<P>(
         initialMonth: ISO8601Month = .init(),
-        monthRange: Pair<ISO8601Month?, ISO8601Month?> = Pair((nil, nil)),
+        monthRange: (ISO8601Month?, ISO8601Month?) = (nil, nil),
         viewProvider: P)
     where P : CalendarAdapterComponentViewProvider, P.Cell == Cell
     {
-        precondition(monthRange.first == nil || monthRange.second == nil || monthRange.first! <= monthRange.second!)
-        precondition(monthRange.first != nil ? monthRange.first! <= initialMonth : true)
-        precondition(monthRange.second != nil ? initialMonth <= monthRange.second! : true)
+        precondition(monthRange.0 == nil || monthRange.1 == nil || monthRange.0! <= monthRange.1!)
+        precondition(monthRange.0 != nil ? monthRange.0! <= initialMonth : true)
+        precondition(monthRange.1 != nil ? initialMonth <= monthRange.1! : true)
         
         self._focusMonth = initialMonth
         self.monthRange = monthRange

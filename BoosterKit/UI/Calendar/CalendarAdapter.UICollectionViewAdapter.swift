@@ -81,11 +81,11 @@ extension CalendarAdapter {
             calendarAdapter.loadFocusMonth(targetMonth)
             
             let _ = withVar(scrollView.frame.width) { pageWidth in
-                guard calendarAdapter.monthRange.isInfinite else { return }
+                guard Pair(calendarAdapter.monthRange).isInfinite else { return }
                 
                 let shouldAdjustOffset: Bool = assign {
-                    let isTargetMinPage = targetMonth == calendarAdapter.monthRange.first,
-                        isCurrentMinPage = currentMonth == calendarAdapter.monthRange.first
+                    let isTargetMinPage = targetMonth == calendarAdapter.monthRange.0,
+                        isCurrentMinPage = currentMonth == calendarAdapter.monthRange.0
                     return !(isTargetMinPage || isCurrentMinPage)
                 }
                 
@@ -190,7 +190,7 @@ extension CalendarAdapter.UICollectionViewAdapter {
 private extension CalendarAdapter.UICollectionViewAdapter {
 
     func _numberOfSections() -> Int {
-        switch calendarAdapter.monthRange.toTuple() {
+        switch calendarAdapter.monthRange {
         case let (lowerBound?, upperBound?):
             return try! lowerBound.distance(to: upperBound) + 1
         case (let someBound?, nil), (nil, let someBound?):
@@ -213,7 +213,7 @@ private extension CalendarAdapter.UICollectionViewAdapter {
     }
     
     func _getMonth(section: Int) -> ISO8601Month {
-        switch calendarAdapter.monthRange.toTuple() {
+        switch calendarAdapter.monthRange {
         case let (lowerBound?, _?):
             return lowerBound.advanced(by: section)
         case let (lowerBound?, nil) where lowerBound == calendarAdapter.currentMonth:
