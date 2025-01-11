@@ -147,6 +147,7 @@ open class CalendarAdapter<Cell> where Cell : UICollectionViewCell {
         return (cell as! Cell)
     }
     
+#warning("FIXME: 스크롤 중에 scroll(to:)를 호출할 경우 잘못된 달로 이동. 에: 11->12월로 가는 중간에 scroll(to: dec) 할 경우 12월이 아닌 1월로 간다")
     /**
      Animates the visible bounds to show `month`.
      
