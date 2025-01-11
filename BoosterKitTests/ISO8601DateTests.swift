@@ -46,6 +46,8 @@ class ISO8601DateTests : XCTestCase {
         expect(sut3).to(equal(sut3))
         expect(sut3).to(equal(sut2))
         expect(sut3).to(equal(sut_sep7))
+        
+        expect(try ISO8601Date(string: "20220907")).to(equal(sut_sep7))
     }
     
     func test_instantRange() throws {

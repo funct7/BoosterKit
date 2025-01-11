@@ -40,9 +40,10 @@ public struct ISO8601Date {
      - Throws:`BoosterKitError.illegalArgument` -  `String` with an unsupported format.
      */
     public init(string: String, timeZone: TimeZone = .autoupdatingCurrent) throws {
-        let dateFormatter = ISO8601DateFormatter.with(timeZone: timeZone)
+        let parseResult = ISO8601DateFormatter._makeExtended(timeZone: timeZone).date(from: string)
+            ?? ISO8601DateFormatter._makeBasic(timeZone: timeZone).date(from: string)
         
-        guard let date = dateFormatter.date(from: string) else { throw BoosterKitError.illegalArgument }
+        guard let date = parseResult else { throw BoosterKitError.illegalArgument }
         
         self.timeZone = timeZone
         self._range = (date ..< date.adding(.day(1)))
@@ -110,7 +111,7 @@ extension ISO8601Date : CustomStringConvertible {
     
     public var description: String {
         ISO8601DateFormatter
-            .with(timeZone: timeZone)
+            ._makeExtended(timeZone: timeZone)
             .string(from: _range.lowerBound)
     }
     
@@ -118,9 +119,16 @@ extension ISO8601Date : CustomStringConvertible {
 
 private extension ISO8601DateFormatter {
     
-    static func with(timeZone: TimeZone) -> ISO8601DateFormatter {
+    static func _makeExtended(timeZone: TimeZone) -> ISO8601DateFormatter {
         withVar(ISO8601DateFormatter()) {
             $0.formatOptions = [.withFullDate, .withDashSeparatorInDate,]
+            $0.timeZone = timeZone
+        }
+    }
+    
+    static func _makeBasic(timeZone: TimeZone) -> ISO8601DateFormatter {
+        withVar(ISO8601DateFormatter()) {
+            $0.formatOptions = [.withYear, .withMonth, .withDay,]
             $0.timeZone = timeZone
         }
     }
