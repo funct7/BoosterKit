@@ -20,4 +20,9 @@ xcuserdata/
 
 Pods/
 
+### SwiftPM ###
+Packages
+.build/
+DerivedData/
+
 # End of https://www.toptal.com/developers/gitignore/api/xcode
